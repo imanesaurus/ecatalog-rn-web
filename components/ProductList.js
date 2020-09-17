@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { PrimaryColor, AccentColor2, AccentColor } from "../constant/ColorsConst";
+import { isMobile } from "../constant/isMobile";
 
 const { width, height } = Dimensions.get("window");
 const ProductList = (props) => {
@@ -20,8 +21,8 @@ const ProductList = (props) => {
         boxShadow: "0px 0px 5px rgba(0,0,0,.4)",
         marginVertical: 20,
         borderRadius: 10,
-        maxWidth: 300,
-        maxHeight: 350,
+        maxWidth: isMobile ? 150 : 300,
+        maxHeight: isMobile ? 350/2 : 350,
         overflow: "hidden",
       }}
     >
@@ -61,7 +62,7 @@ const ProductList = (props) => {
       >
         <View style={{ flex: 1, alignItems: "center" }}>
           <TouchableOpacity>
-            <Text style={{ ...styles.text, fontWeight: "bold", fontSize: 20, color: AccentColor }}>
+            <Text style={{ ...styles.text, fontWeight: "bold", fontSize: isMobile ? 10 : 20, color: AccentColor }}>
               {props.price}
             </Text>
           </TouchableOpacity>
@@ -82,12 +83,13 @@ const styles = StyleSheet.create({
   },
   touchable: {
     color: "white",
-    paddingHorizontal: 10,
-    paddingVertical: 5,
+    paddingHorizontal: isMobile ? 5 : 10,
+    paddingVertical: isMobile ? 3 : 5,
     backgroundColor: AccentColor2,
+    fontSize: isMobile ? 9 : 18,
   },
   title: {
-      fontSize: 18,
+      fontSize: isMobile ? 9 : 18,
     color: PrimaryColor,
     textShadowRadius: 1,
     textShadowOffset: {

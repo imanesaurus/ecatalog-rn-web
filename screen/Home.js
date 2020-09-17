@@ -19,6 +19,7 @@ import data from "../data/data.json";
 import ProductList from "../components/ProductList";
 import SideBar from "../components/SideBar";
 import { LinearGradient } from "expo-linear-gradient";
+import { isMobile } from "../constant/isMobile";
 
 const { width, height } = Dimensions.get("window");
 
@@ -59,7 +60,6 @@ class Home extends Component {
         <View style={styles.body}>
           <View style={styles.panel}>
             <Image
-              blurRadius={5}
               source={{
                 uri:
                   "https://scontent.fcgk8-2.fna.fbcdn.net/v/t1.0-9/s1080x2048/118214863_10220242973257913_3054991116457242156_o.jpg?_nc_cat=106&_nc_sid=e3f864&_nc_eui2=AeF2yXoK0wpvMhsIWItTzIY_QsIfyZM6uFNCwh_Jkzq4U-hHxpYUZe45cAGNbLPEVZI&_nc_ohc=8ApR30iMHRoAX88_276&_nc_ht=scontent.fcgk8-2.fna&tp=7&oh=7e4a9a4264aaf7a2465575a9d3175570&oe=5F8906C0",
@@ -71,7 +71,7 @@ class Home extends Component {
             <Text style={styles.headerFlatlistText}>All Products</Text>
           </View>
           <FlatList
-            numColumns={4}
+            numColumns={isMobile ? 2 : 4}
             data={this.state.products}
             keyExtractor={(item) => item.id}
             renderItem={renderItem}
@@ -124,12 +124,15 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     flex: 1,
     width: width * 0.9,
-    height: 1000,
+    height: height * 0.8,
     boxShadow: "2px 2px 50px rgb(0,0,0,0.1)",
     borderRadius: 20,
     overflow: "hidden",
   },
   headerFlatlist: {
+    width: isMobile ? width*.5 : width*.25,
+    height: height*.08,
+
     justifyContent: "center",
     alignItems: "center",
     boxShadow: "2px 2px 5px rgb(0,0,0,0.5)",
@@ -140,7 +143,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   headerFlatlistText: {
-    fontSize: 40,
+    fontSize: isMobile? 20 : 40,
   },
   footer: {
     flexDirection: "row",
@@ -152,13 +155,14 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
   },
   footerLogo: {
-    width: 100,
-    height: 100,
+    width: isMobile ? 50 : 100,
+    height: isMobile ? 50 : 100,
   },
   footerText: {
     fontFamily: "Helvetica",
     color: "white",
     marginTop: 10,
+    fontSize: isMobile ? 10 : 20,
   },
   absoluteBottom: {
     position: "absolute",
