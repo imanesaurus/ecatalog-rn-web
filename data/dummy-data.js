@@ -1,6 +1,6 @@
 import Product from "../models/product";
 
-export const PRODUCTS = [
+const PRODUCTS = [
   new Product(
     "NB/SB1M1",
     "Hedgehog",
@@ -27,3 +27,5 @@ export const PRODUCTS = [
     ""
   ),
 ];
+
+export default PRODUCTS;
