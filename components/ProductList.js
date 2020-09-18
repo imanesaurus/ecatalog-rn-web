@@ -7,7 +7,7 @@ import {
   Dimensions,
   TouchableOpacity,
 } from "react-native";
-import { PrimaryColor, AccentColor2, AccentColor } from "../constant/ColorsConst";
+import { PrimaryColor, AccentColor2, AccentColor, DarkAccent, LittleDarkAccent } from "../constant/ColorsConst";
 import { isMobile } from "../constant/isMobile";
 
 const { width, height } = Dimensions.get("window");
@@ -62,8 +62,8 @@ const ProductList = (props) => {
       >
         <View style={{ flex: 1, alignItems: "center" }}>
           <TouchableOpacity>
-            <Text style={{ ...styles.text, fontWeight: "bold", fontSize: isMobile ? 10 : 20, color: AccentColor }}>
-              {props.price}
+            <Text style={{ ...styles.text, fontWeight: "bold", fontSize: isMobile ? 10 : 20, color: DarkAccent }}>
+              Rp.{props.price}
             </Text>
           </TouchableOpacity>
         </View>
@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
   },
   title: {
       fontSize: isMobile ? 9 : 18,
-    color: PrimaryColor,
+    color: LittleDarkAccent,
     textShadowRadius: 1,
     textShadowOffset: {
         width: 1,
