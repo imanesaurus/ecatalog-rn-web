@@ -1,6 +1,10 @@
 import React from "react";
-import { View, Text, Picker, Dimensions } from "react-native";
-import { AccentColor2, AccentColor, DarkAccent, LittleDarkAccent } from "../constant/ColorsConst";
+import { Dimensions, Picker, Text, View } from "react-native";
+import {
+  AccentColor2,
+  DarkAccent,
+  LittleDarkAccent,
+} from "../constant/ColorsConst";
 import { isMobile } from "../constant/isMobile";
 
 const { width, height } = Dimensions.get("window");
@@ -14,7 +18,6 @@ const FilterPicker = (props) => {
     <View
       style={{
         flex: 1,
-        // justifyContent: isMobile ? 'space-evenly' : null,
         flexDirection: "row",
         alignItems: "center",
         width: "80%",
@@ -35,14 +38,13 @@ const FilterPicker = (props) => {
         selectedValue={props.selectedValue}
         onValueChange={props.onValueChange}
         style={{
-            backgroundColor: 'white',
-          height: isMobile? height*0.04 : height * 0.05,
-          width: isMobile ? width*0.15 : width * 0.09,
+          backgroundColor: "white",
+          height: isMobile ? height * 0.04 : height * 0.05,
+          width: isMobile ? width * 0.15 : width * 0.09,
           borderRadius: 20,
           paddingLeft: isMobile ? null : 10,
           borderColor: AccentColor2,
           color: LittleDarkAccent,
-          fontSize: isMobile ? 10 : 20,
         }}
       >
         {props.age &&
@@ -57,9 +59,6 @@ const FilterPicker = (props) => {
           availableStatus.map((item, index) => {
             return <Picker.Item label={item} value={item} key={index} />;
           })}
-        {/* <Picker.Item label="All" value={""} />
-        <Picker.Item label="0-3 Tahun" value={BABY} />
-        <Picker.Item label={"1-3 Tahun"} value={KIDS} /> */}
       </Picker>
     </View>
   );

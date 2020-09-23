@@ -8,70 +8,97 @@ import {
   Text,
   View,
 } from "react-native";
+import CartPopUp from "../components/CartPopUp";
 import FilterPicker from "../components/FilterPicker";
 import FooterGroupText from "../components/FooterGroupText";
 import ProductList from "../components/ProductList";
 import SideBar from "../components/SideBar";
+import { _adjustSizes } from "../constant/adjustedSizes";
 import {
   AccentColor,
   AccentColor2,
   DarkAccent,
+  LittleDarkAccent,
   PrimaryColor,
 } from "../constant/ColorsConst";
 import { isMobile } from "../constant/isMobile";
 import data from "../data/data.json";
 
 const { width, height } = Dimensions.get("window");
-const HEADER_HEIGHT = height * 0.08;
+const HEADER_HEIGHT = height * 0.06;
 
-const renderItem = ({ item }) => {
-  return (
-    <ProductList
-      title={item.title}
-      image={item.image_link}
-      price={item.price}
-    />
-  );
-};
-
-function Home() {
+const Home = (props) => {
+  const { navigation } = props;
   const availableProducts = data.products;
   const [products, setProducts] = useState(availableProducts);
+  const [visible, setVisible] = useState(false);
+  const [filteredProd, setFilteredProducts] = useState(products);
+  const [cartItems, setCartItems] = useState([]);
   const [ageFilter, setAgeFilter] = useState("Semua");
   const [color, setColor] = useState("Semua");
   const [inStock, setInstock] = useState("In Stock");
-  const [isGreen, setisGreen] = useState(false);
-  const [isBlue, setisBlue] = useState(false);
-  const [isPink, setisPink] = useState(false);
-  const [isYellow, setisYellow] = useState(false);
-  // constructor() {
-  //   super();
-  //   this.state = {
-  //     products: data.products,
-  //     ageFilter: false,
-  //   };
-  // }
+  // const { addTocart } = props;
+  const addTocart = (item) => {
+    let currentCart = cartItems;
+    let upCart;
+    const selectedItem = cartItems.find((i) => i.id === item.id);
 
-  const filteredProducts = (itemValue) => {
-    console.log(itemValue);
-    setAgeFilter(itemValue);
-    if (itemValue === "Semua") {
-      setProducts(availableProducts);
+    if (selectedItem) {
+      selectedItem.count += 1;
     } else {
-      setProducts(
+      upCart = currentCart.push({ ...item, count: 1 });
+      setCartItems(currentCart);
+    }
+  };
+
+  const removeFromCart = (item) => {
+    // let currentCart = [...cartItems];
+    // currentCart = currentCart.filter((cartItem) => cartItem.id !== item.id);
+    // setCartItems(currentCart);
+    let currentCart = cartItems;
+    const selectedItem = cartItems.find((i) => i.id === item.id);
+
+    if (selectedItem.count < 2) {
+      let removedItem;
+      removedItem = currentCart.filter((i) => i !== item);
+      setCartItems(removedItem);
+    } else {
+      selectedItem.count -= 1;
+    }
+  };
+
+  const total = cartItems.reduce(
+    (prevValue, { price = 0, count = 0 }) => prevValue + price * count,
+    0
+  );
+
+  const cartTotal = (total) => {
+    var angka = total.toString().split("").reverse().join("");
+    var tiga = angka.match(/\d{1,3}/g);
+    var join = tiga.join(".").split("").reverse().join("");
+    return join;
+  };
+
+  // Todo : optimize logic filter
+  const filteredProducts = async (itemValue) => {
+    await setAgeFilter(itemValue);
+    await console.log(itemValue);
+    if (itemValue === "Semua") {
+      await setProducts(availableProducts);
+    } else {
+      await setProducts(
         availableProducts.filter(
-          (p) => p.age_group.toLowerCase().indexOf(itemValue.toLowerCase()) >= 0
+          (p) => p.age_group.toLowerCase().indexOf(itemValue.toLowerCase()) < 0
         )
       );
     }
   };
-  const filteredColors = (itemValue) => {
-    console.log(itemValue);
+  const filteredColors = async (itemValue) => {
     setColor(itemValue);
     if (itemValue === "Semua") {
       setProducts(availableProducts);
     } else {
-      setProducts(
+      await setProducts(
         availableProducts.filter(
           (p) => p.color.toLowerCase().indexOf(itemValue.toLowerCase()) >= 0
         )
@@ -94,7 +121,13 @@ function Home() {
   };
 
   return (
-    <View style={{ flex: 1, justifyContent: "space-between" }}>
+    <View
+      style={{
+        flex: 1,
+        justifyContent: "space-between",
+        backgroundColor: "white",
+      }}
+    >
       <View
         style={[
           styles.header,
@@ -107,11 +140,23 @@ function Home() {
           },
         ]}
       ></View>
-      <View style={styles.header}>
+      <View
+        style={[
+          styles.header,
+          {
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "center",
+          },
+        ]}
+      >
         <Text style={styles.headerText}>Baju Bayi Luwuk</Text>
       </View>
-      <View style={{ zIndex: 3 }}>
-        <SideBar />
+      <View style={{ zIndex: 3, position: "relative" }}>
+        <SideBar
+          cartHandler={() => setVisible(!visible)}
+          badgeData={cartItems.length}
+        />
       </View>
       <View style={styles.body}>
         <View style={styles.panel}>
@@ -123,6 +168,15 @@ function Home() {
             style={{ flex: 1, width: "100%", height: "100%" }}
           ></Image>
         </View>
+        {visible ? (
+          <CartPopUp
+            isTotal={total > 0}
+            data={cartItems}
+            close={() => setVisible(false)}
+            removeCart={removeFromCart}
+            cartTotal={cartTotal(total)}
+          />
+        ) : null}
         <View style={styles.headerFlatlist}>
           <Text style={styles.headerFlatlistText}>Produk</Text>
         </View>
@@ -138,16 +192,16 @@ function Home() {
             selectedValue={ageFilter}
             onValueChange={filteredProducts}
             title={"Usia"}
-            age
+            age={true}
           />
           <FilterPicker
-            _color
+            _color={true}
             selectedValue={color}
             onValueChange={filteredColors}
             title={"Warna"}
           />
           <FilterPicker
-            ready
+            ready={true}
             selectedValue={inStock}
             onValueChange={filteredReady}
             title={"In Stock"}
@@ -156,8 +210,15 @@ function Home() {
         <FlatList
           numColumns={isMobile ? 2 : 4}
           data={products}
-          keyExtractor={(item) => item.id}
-          renderItem={renderItem}
+          keyExtractor={(item, index) => item}
+          renderItem={({ item }) => (
+            <ProductList
+              title={item.title}
+              image={item.image_link}
+              price={item.price}
+              onPress={() => addTocart(item)}
+            />
+          )}
         />
       </View>
       <LinearGradient
@@ -178,12 +239,14 @@ function Home() {
       {/* <View style={{...styles.absoluteBottom, flex: 0.1, backgroundColor: AccentColor}}></View> */}
     </View>
   );
-}
+};
 
 export default Home;
 
 const styles = StyleSheet.create({
   header: {
+    display: "flex",
+    paddingTop: height * 0.02,
     flex: 1,
     position: "fixed",
     zIndex: 1,
@@ -195,14 +258,15 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   headerText: {
-    color: "black",
+    color: LittleDarkAccent,
     fontFamily: "Helvetica",
-    fontSize: 25,
+    fontSize: 20,
   },
   body: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    position: "relative",
   },
   panel: {
     marginTop: HEADER_HEIGHT + 20,
@@ -210,14 +274,13 @@ const styles = StyleSheet.create({
     flex: 1,
     width: width * 0.9,
     height: height * 0.8,
-    // boxShadow: "2px 2px 50px rgb(0,0,0,0.1)",
     boxShadow: "2px 2px 5px rgb(0,0,0,0.5)",
     borderRadius: 20,
     overflow: "hidden",
   },
   headerFlatlist: {
-    width: isMobile ? width * 0.5 : width * 0.25,
-    height: HEADER_HEIGHT,
+    width: isMobile ? width * 0.5 : width * 0.1,
+    height: HEADER_HEIGHT + 10,
 
     justifyContent: "center",
     alignItems: "center",
@@ -230,7 +293,7 @@ const styles = StyleSheet.create({
   },
   headerFlatlistText: {
     color: DarkAccent,
-    fontSize: isMobile ? 20 : 40,
+    fontSize: _adjustSizes(30),
   },
   footer: {
     flexDirection: "row",
@@ -242,8 +305,8 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
   },
   footerLogo: {
-    width: isMobile ? 50 : 100,
-    height: isMobile ? 50 : 100,
+    width: _adjustSizes(100),
+    height: _adjustSizes(100),
   },
   footerText: {
     fontFamily: "Helvetica",

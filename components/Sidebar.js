@@ -9,7 +9,7 @@ import {
   Dimensions,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { AccentColor2 } from "../constant/ColorsConst";
+import { AccentColor2, AccentColor } from "../constant/ColorsConst";
 import { isMobile } from "../constant/isMobile";
 
 const { width } = Dimensions.get("window");
@@ -47,6 +47,29 @@ const SideBar = (props) => {
           size={!isMobile ? 50 : 35}
           color={AccentColor2}
         />
+      </TouchableOpacity>
+      <TouchableOpacity onPress={props.cartHandler}>
+        <Ionicons
+          style={{ marginBottom: isMobile ? null : 10 }}
+          name="md-cart"
+          size={!isMobile ? 50 : 35}
+          color={AccentColor2}
+        />
+        {props.badgeData > 0 && (
+          <Text
+            style={{
+              position: "absolute",
+              right: 0,
+              backgroundColor: AccentColor,
+              paddingHorizontal: 5,
+              borderRadius: 20,
+              color: "white",
+              fontSize: isMobile ? 12 : 15,
+            }}
+          >
+            {props.badgeData}
+          </Text>
+        )}
       </TouchableOpacity>
     </View>
   );

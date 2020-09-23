@@ -1,13 +1,17 @@
 import React from "react";
 import {
-  StyleSheet,
-  Image,
-  Text,
-  View,
   Dimensions,
+  Image,
+  StyleSheet,
+  Text,
   TouchableOpacity,
+  View,
 } from "react-native";
-import { PrimaryColor, AccentColor2, AccentColor, DarkAccent, LittleDarkAccent } from "../constant/ColorsConst";
+import {
+  AccentColor2,
+  DarkAccent,
+  LittleDarkAccent,
+} from "../constant/ColorsConst";
 import { isMobile } from "../constant/isMobile";
 
 const { width, height } = Dimensions.get("window");
@@ -22,7 +26,7 @@ const ProductList = (props) => {
         marginVertical: 20,
         borderRadius: 10,
         maxWidth: isMobile ? 150 : 300,
-        maxHeight: isMobile ? 350/2 : 350,
+        maxHeight: isMobile ? 350 / 2 : 350,
         overflow: "hidden",
       }}
     >
@@ -62,13 +66,20 @@ const ProductList = (props) => {
       >
         <View style={{ flex: 1, alignItems: "center" }}>
           <TouchableOpacity>
-            <Text style={{ ...styles.text, fontWeight: "bold", fontSize: isMobile ? 10 : 20, color: DarkAccent }}>
+            <Text
+              style={{
+                ...styles.text,
+                fontWeight: "bold",
+                fontSize: isMobile ? 10 : 20,
+                color: DarkAccent,
+              }}
+            >
               Rp.{props.price}
             </Text>
           </TouchableOpacity>
         </View>
         <View style={{ flex: 1 }}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={props.onPress}>
             <Text style={[styles.text, styles.touchable]}>Add To Cart</Text>
           </TouchableOpacity>
         </View>
@@ -87,17 +98,20 @@ const styles = StyleSheet.create({
     paddingVertical: isMobile ? 3 : 5,
     backgroundColor: AccentColor2,
     fontSize: isMobile ? 9 : 18,
+    hove: {
+      fontSize: 30,
+    },
   },
   title: {
-      fontSize: isMobile ? 9 : 18,
+    fontSize: isMobile ? 9 : 18,
     color: LittleDarkAccent,
     textShadowRadius: 1,
     textShadowOffset: {
-        width: 1,
-        height: 1,
+      width: 1,
+      height: 1,
     },
-    textShadowColor: 'rgba(0,0,0,0.2)'
-  }
+    textShadowColor: "rgba(0,0,0,0.2)",
+  },
 });
 
 export default ProductList;

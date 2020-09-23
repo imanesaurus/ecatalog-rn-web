@@ -1,10 +1,30 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import Home from './screen/Home';
+import { createStackNavigator } from "@react-navigation/stack";
+import React from "react";
+import Home from "./screen/Home";
 
+
+const linking = {
+  config: {
+    Home: "",
+    About: "about",
+  },
+};
+
+const Stack = createStackNavigator();
 export default function App() {
   return (
-      <Home />
+    // <NavigationContainer linking={linking}>
+    //   <Stack.Navigator>
+    //     <Stack.Screen name="Home" component={Home} options={
+    //       {
+    //         ...TransitionPresets.FadeFromBottomAndroid,
+    //         headerShown: false
+          
+    //       }
+    //     } />
+    //     <Stack.Screen name="Cart" component={Cart} />
+    //   </Stack.Navigator>
+    // </NavigationContainer>
+    <Home />
   );
 }
