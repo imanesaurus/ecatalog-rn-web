@@ -6,6 +6,7 @@ import {
   LittleDarkAccent,
 } from "../constant/ColorsConst";
 import { isMobile } from "../constant/isMobile";
+import { _adjustSizes } from "../constant/adjustedSizes";
 
 const { width, height } = Dimensions.get("window");
 
@@ -45,6 +46,7 @@ const FilterPicker = (props) => {
           paddingLeft: isMobile ? null : 10,
           borderColor: AccentColor2,
           color: LittleDarkAccent,
+          fontSize: _adjustSizes(20),
         }}
       >
         {props.age &&

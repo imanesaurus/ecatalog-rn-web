@@ -60,7 +60,7 @@ const CartPopUp = (props) => {
           <Text style={{ fontSize: _adjustSizes(20) }}>
             {item.count} x {item.price}
           </Text>
-          <CustomButton title="Remove" onPress={() => props.removeCart(item)} />
+          <CustomButton style={{backgroundColor: AccentColor2, color: 'white'}} title="Remove" onPress={() => props.removeCart(item)} />
         </View>
       </View>
     );
@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
     boxShadow: "2px 2px 5px rgb(0,0,0,0.5)",
   },
   subText: {
-    marginRight: _adjustSizes(20),
+    marginRight: _adjustSizes(10),
     backgroundColor: AccentColor,
     paddingVertical: _adjustSizes(5),
     paddingHorizontal: _adjustSizes(10),

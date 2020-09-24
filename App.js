@@ -1,4 +1,3 @@
-import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
 import Home from "./screen/Home";
 
@@ -10,7 +9,6 @@ const linking = {
   },
 };
 
-const Stack = createStackNavigator();
 export default function App() {
   return (
     // <NavigationContainer linking={linking}>
