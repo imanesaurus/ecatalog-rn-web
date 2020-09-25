@@ -1,5 +1,5 @@
 import { LinearGradient } from "expo-linear-gradient";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Dimensions,
   FlatList,
@@ -23,6 +23,7 @@ import {
 } from "../constant/ColorsConst";
 import { isMobile } from "../constant/isMobile";
 import data from "../data/data.json";
+import CategoryList from "../components/CategoryList";
 
 const { width, height } = Dimensions.get("window");
 const HEADER_HEIGHT = height * 0.06;
@@ -30,7 +31,9 @@ const HEADER_HEIGHT = height * 0.06;
 const Home = (props) => {
   const { navigation } = props;
   const availableProducts = data.products;
+  const availableCategory = data.categories;
   const [products, setProducts] = useState(availableProducts);
+  const [category, setCategory] = useState(availableCategory);
   const [visible, setVisible] = useState(false);
   const [filteredProd, setFilteredProducts] = useState(products);
   const [cartItems, setCartItems] = useState([]);
@@ -38,6 +41,13 @@ const Home = (props) => {
   const [color, setColor] = useState("Semua");
   const [inStock, setInstock] = useState("In Stock");
   // const { addTocart } = props;
+
+  useEffect(() => {
+    console.log(availableCategory);
+    return () => {
+      //
+    };
+  }, []);
   const addTocart = (item) => {
     let currentCart = cartItems;
     let upCart;
@@ -134,7 +144,7 @@ const Home = (props) => {
           {
             flex: 1,
             height: height * 0.02,
-            backgroundColor: AccentColor2,
+            backgroundColor: DarkAccent,
             position: "fixed",
             zIndex: 4,
           },
@@ -144,7 +154,6 @@ const Home = (props) => {
         style={[
           styles.header,
           {
-            flexDirection: "row",
             alignItems: "center",
             justifyContent: "center",
           },
@@ -159,15 +168,15 @@ const Home = (props) => {
         />
       </View>
       <View style={styles.body}>
-        <View style={styles.panel}>
+        {/* <View style={styles.panel}>
           <Image
             source={{
               uri:
                 "https://scontent.fcgk8-2.fna.fbcdn.net/v/t1.0-9/s1080x2048/118214863_10220242973257913_3054991116457242156_o.jpg?_nc_cat=106&_nc_sid=e3f864&_nc_eui2=AeF2yXoK0wpvMhsIWItTzIY_QsIfyZM6uFNCwh_Jkzq4U-hHxpYUZe45cAGNbLPEVZI&_nc_ohc=8ApR30iMHRoAX88_276&_nc_ht=scontent.fcgk8-2.fna&tp=7&oh=7e4a9a4264aaf7a2465575a9d3175570&oe=5F8906C0",
             }}
-            style={{ flex: 1, width: "100%", height: "100%" }}
+            style={{ resizeMode: "cover", width: "100%", height: "100%" }}
           ></Image>
-        </View>
+        </View> */}
         {visible ? (
           <CartPopUp
             isTotal={total > 0}
@@ -178,9 +187,27 @@ const Home = (props) => {
           />
         ) : null}
         <View style={styles.headerFlatlist}>
-          <Text style={styles.headerFlatlistText}>Produk</Text>
+          <Text style={styles.headerFlatlistText}>Kategori</Text>
         </View>
-        <View
+        <View>
+          <FlatList
+            numColumns={4}
+            contentContainerStyle={{
+              flex: 1,
+              flexWrap: "wrap",
+              justifyContent: "center",
+              alignItems: "center",
+              paddingVertical: 50,
+            }}
+            data={category}
+            keyExtractor={(item, index) => item.id}
+            renderItem={({ item }) => (
+              <CategoryList title={item.title} image={item.image_link} />
+            )}
+          />
+        </View>
+        <Text style={{fontSize: _adjustSizes(40), color: LittleDarkAccent, alignSelf:'center', }}>Produk Terbaru</Text>
+        {/* <View
           style={{
             width: isMobile ? width * 0.9 : width * 0.5,
             flexDirection: "row",
@@ -206,10 +233,23 @@ const Home = (props) => {
             onValueChange={filteredReady}
             title={"In Stock"}
           />
-        </View>
+        </View> */}
         <FlatList
-          numColumns={isMobile ? 2 : 4}
-          data={products}
+          contentContainerStyle={{
+            flex: 1,
+            flexWrap: "wrap",
+            justifyContent: "center",
+            alignItems: "center",
+            width: "50%",
+            height: "100%",
+            marginHorizontal: isMobile ? null : 100,
+            paddingBottom: "25%",
+          }}
+          sscrollEnabled
+          showsVerticalScrollIndicator={false}
+          // numColumns={isMobile ? 2 : 4}
+          horizontal
+          data={products.reverse().slice(0,4)}
           keyExtractor={(item, index) => item}
           renderItem={({ item }) => (
             <ProductList
@@ -221,21 +261,21 @@ const Home = (props) => {
           )}
         />
       </View>
-      <LinearGradient
-        colors={["white", AccentColor]}
-        style={styles.header}
-        style={[styles.footer, styles.absoluteBottom]}
-      >
+      <View style={[styles.footer, styles.absoluteBottom]}>
         <View style={{ flexWrap: "wrap", alignItems: "center" }}>
           <Image
             style={styles.footerLogo}
             source={require("../assets/Logo.png")}
           />
-          <Text style={styles.footerText}>COPYRIGHT 2020</Text>
-          <Text style={styles.footerText}>ALL RIGHTS RESERVED</Text>
+          <Text adjustsFontSizeToFit={true} style={styles.footerText}>
+            COPYRIGHT 2020
+          </Text>
+          <Text adjustsFontSizeToFit={true} style={styles.footerText}>
+            ALL RIGHTS RESERVED
+          </Text>
         </View>
         <FooterGroupText />
-      </LinearGradient>
+      </View>
       {/* <View style={{...styles.absoluteBottom, flex: 0.1, backgroundColor: AccentColor}}></View> */}
     </View>
   );
@@ -251,10 +291,11 @@ const styles = StyleSheet.create({
     position: "fixed",
     zIndex: 1,
     height: HEADER_HEIGHT,
-    width: width,
+    width: "100%",
     justifyContent: "center",
     alignItems: "center",
     boxShadow: "2px 2px 5px rgb(0,0,0,0.1)",
+
     backgroundColor: "white",
   },
   headerText: {
@@ -267,19 +308,21 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     position: "relative",
+    marginTop: HEADER_HEIGHT,
   },
   panel: {
     marginTop: HEADER_HEIGHT + 20,
     marginBottom: 20,
-    flex: 1,
-    width: width * 0.9,
-    height: height * 0.8,
+    // flex: 1,
+    width: "90%",
+    height: isMobile ? "5%" : "10%",
     boxShadow: "2px 2px 5px rgb(0,0,0,0.5)",
     borderRadius: 20,
     overflow: "hidden",
   },
   headerFlatlist: {
-    width: isMobile ? width * 0.5 : width * 0.1,
+    flex: 1,
+    width: isMobile ? '30%' : '10%',
     height: HEADER_HEIGHT + 10,
 
     justifyContent: "center",
@@ -293,16 +336,17 @@ const styles = StyleSheet.create({
   },
   headerFlatlistText: {
     color: DarkAccent,
-    fontSize: _adjustSizes(30),
+    fontSize: _adjustSizes(20),
   },
   footer: {
     flexDirection: "row",
-    height: height * 0.25,
-    backgroundColor: PrimaryColor,
+    height: height * 0.2,
+    backgroundColor: DarkAccent,
     alignItems: "center",
     justifyContent: "space-evenly",
     // boxShadow: "-2px -2px 10px rgb(0,0,0,0.5)",
     flexWrap: "wrap",
+    marginTop: 100,
   },
   footerLogo: {
     width: _adjustSizes(100),
@@ -313,11 +357,5 @@ const styles = StyleSheet.create({
     color: "white",
     marginTop: 10,
     fontSize: isMobile ? 10 : 20,
-  },
-  absoluteBottom: {
-    position: "absolute",
-    bottom: 0,
-    left: 0,
-    right: 0,
   },
 });

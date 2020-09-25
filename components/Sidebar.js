@@ -28,7 +28,7 @@ const SideBar = (props) => {
         <Ionicons
           style={{ marginBottom: isMobile ? null : 10 }}
           name="logo-facebook"
-          size={!isMobile ? 50 : 35}
+          size={!isMobile ? '300%' : 35}
           color={AccentColor2}
         />
       </TouchableOpacity>
@@ -36,7 +36,7 @@ const SideBar = (props) => {
         <Ionicons
           style={{ marginBottom: isMobile ? null : 10 }}
           name="logo-instagram"
-          size={!isMobile ? 50 : 35}
+          size={!isMobile ? '300%' : 35}
           color={AccentColor2}
         />
       </TouchableOpacity>
@@ -44,7 +44,7 @@ const SideBar = (props) => {
         <Ionicons
           style={{ marginBottom: isMobile ? null : 10 }}
           name="logo-whatsapp"
-          size={!isMobile ? 50 : 35}
+          size={!isMobile ? '300%' : 35}
           color={AccentColor2}
         />
       </TouchableOpacity>
@@ -52,7 +52,7 @@ const SideBar = (props) => {
         <Ionicons
           style={{ marginBottom: isMobile ? null : 10 }}
           name="md-cart"
-          size={!isMobile ? 50 : 35}
+          size={!isMobile ? '300%' : 35}
           color={AccentColor2}
         />
         {props.badgeData > 0 && (
@@ -84,12 +84,13 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     flex: 1,
     position: "fixed",
-    top: !isMobile ? 500 : null,
+    top: !isMobile ? '50%' : null,
     bottom: !isMobile ? null : 20,
     flexDirection: !isMobile ? null : "row",
     justifyContent: !isMobile ? null : "space-evenly",
+    alignItems: 'center',
     alignSelf: !isMobile ? null : "center",
-    width: !isMobile ? null : width * 0.6,
+    width: !isMobile ? null : '60%',
     marginLeft: 20,
     boxShadow: "2px 2px 10px rgba(0,0,0,0.2)",
     backgroundColor: "white",

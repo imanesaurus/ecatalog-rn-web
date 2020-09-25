@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View, Dimensions, Platform } from "react-native";
 import { isMobile } from "../constant/isMobile";
+import { AccentColor2, DarkAccent } from "../constant/ColorsConst";
 
 const { width, height } = Dimensions.get("window");
 
@@ -39,7 +40,7 @@ const styles = StyleSheet.create({
     marginRight: width * 0.05,
   },
   subtext: {
-    color: "white",
+    color: 'white',
     fontSize: isMobile ? 10 : 20,
     marginBottom: 5,
   },

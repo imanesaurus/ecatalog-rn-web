@@ -53,7 +53,7 @@ const ProductList = (props) => {
           paddingHorizontal: 5,
         }}
       >
-        <Text style={[styles.text, styles.title]}>{props.title}</Text>
+        <Text numberOfLines={1} adjustsFontSizeToFit style={[styles.text, styles.title]}>{props.title}</Text>
       </View>
       <View
         style={{
