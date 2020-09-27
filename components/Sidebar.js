@@ -23,36 +23,36 @@ const SideBar = (props) => {
   // };
 
   return (
-    <View style={styles.sidebar}>
+    <View style={[styles.sidebar, props.style]}>
       <TouchableOpacity onPress={() => Linking.openURL(FB_LINK)}>
         <Ionicons
-          style={{ marginBottom: isMobile ? null : 10 }}
+          style={{ marginVertical: isMobile ? null : 5 }}
           name="logo-facebook"
-          size={!isMobile ? '300%' : 35}
+          size={props.size}
           color={AccentColor2}
         />
       </TouchableOpacity>
       <TouchableOpacity onPress={() => Linking.openURL(FB_LINK)}>
         <Ionicons
-          style={{ marginBottom: isMobile ? null : 10 }}
+          style={{ marginVertical: isMobile ? null : 5 }}
           name="logo-instagram"
-          size={!isMobile ? '300%' : 35}
+          size={props.size}
           color={AccentColor2}
         />
       </TouchableOpacity>
       <TouchableOpacity onPress={() => Linking.openURL(WA_LINK)}>
         <Ionicons
-          style={{ marginBottom: isMobile ? null : 10 }}
+          style={{ marginVertical: isMobile ? null : 5 }}
           name="logo-whatsapp"
-          size={!isMobile ? '300%' : 35}
+          size={props.size}
           color={AccentColor2}
         />
       </TouchableOpacity>
       <TouchableOpacity onPress={props.cartHandler}>
         <Ionicons
-          style={{ marginBottom: isMobile ? null : 10 }}
+          style={{ marginVertical: isMobile ? null : 5, }}
           name="md-cart"
-          size={!isMobile ? '300%' : 35}
+          size={props.size}
           color={AccentColor2}
         />
         {props.badgeData > 0 && (
@@ -79,19 +79,10 @@ export default SideBar;
 
 const styles = StyleSheet.create({
   sidebar: {
-    padding: !isMobile ? 20 : 10,
-    paddingVertical: !isMobile ? null : 5,
     borderRadius: 20,
     flex: 1,
     position: "fixed",
-    top: !isMobile ? '50%' : null,
-    bottom: !isMobile ? null : 20,
-    flexDirection: !isMobile ? null : "row",
-    justifyContent: !isMobile ? null : "space-evenly",
     alignItems: 'center',
-    alignSelf: !isMobile ? null : "center",
-    width: !isMobile ? null : '60%',
-    marginLeft: 20,
     boxShadow: "2px 2px 10px rgba(0,0,0,0.2)",
     backgroundColor: "white",
   },

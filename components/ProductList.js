@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import _rem from "../constant/adjustedWindow";
 import {
   AccentColor2,
   DarkAccent,
@@ -19,21 +20,20 @@ const ProductList = (props) => {
   return (
     <View
       style={{
+        ...props.style,
         flex: 1,
         justifyContent: "center",
         marginHorizontal: 10,
         boxShadow: "0px 0px 5px rgba(0,0,0,.4)",
         marginVertical: 20,
         borderRadius: 10,
-        maxWidth: isMobile ? 150 : 300,
-        maxHeight: isMobile ? 350 / 2 : 350,
         overflow: "hidden",
       }}
     >
       <View
         style={{
           flex: 1,
-          width: 300,
+          width: '100%',
           height: 250,
           overflow: "hidden",
           justifyContent: "flex-start",
@@ -41,7 +41,7 @@ const ProductList = (props) => {
         }}
       >
         <Image
-          style={{ width: 300, height: 250 }}
+          style={{ width: '100%', height: '100%', resizeMode: 'cover' }}
           source={{ uri: props.image }}
         />
       </View>
@@ -49,11 +49,21 @@ const ProductList = (props) => {
         style={{
           justifyContent: "center",
           alignItems: "center",
-          paddingVertical: 10,
+          paddingVertical: 5,
           paddingHorizontal: 5,
         }}
       >
-        <Text numberOfLines={1} adjustsFontSizeToFit style={[styles.text, styles.title]}>{props.title}</Text>
+        <Text
+          numberOfLines={1}
+          adjustsFontSizeToFit
+          style={[
+            styles.text,
+            styles.title,
+            { fontSize: isMobile ? _rem(5) : _rem(8) },
+          ]}
+        >
+          {props.title}
+        </Text>
       </View>
       <View
         style={{
@@ -70,7 +80,7 @@ const ProductList = (props) => {
               style={{
                 ...styles.text,
                 fontWeight: "bold",
-                fontSize: isMobile ? 10 : 20,
+                fontSize: isMobile ? _rem(5) : _rem(8),
                 color: DarkAccent,
               }}
             >
@@ -80,7 +90,15 @@ const ProductList = (props) => {
         </View>
         <View style={{ flex: 1 }}>
           <TouchableOpacity onPress={props.onPress}>
-            <Text style={[styles.text, styles.touchable]}>Add To Cart</Text>
+            <Text
+              style={[
+                styles.text,
+                styles.touchable,
+                { fontSize: isMobile ? _rem(4) : _rem(6.5) },
+              ]}
+            >
+              Add To Cart
+            </Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -97,10 +115,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: isMobile ? 5 : 10,
     paddingVertical: isMobile ? 3 : 5,
     backgroundColor: AccentColor2,
-    fontSize: isMobile ? 9 : 18,
-    hove: {
-      fontSize: 30,
-    },
   },
   title: {
     fontSize: isMobile ? 9 : 18,

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -11,12 +11,19 @@ import { _adjustSizes } from "../constant/adjustedSizes";
 import { LittleDarkAccent } from "../constant/ColorsConst";
 import { isMobile } from "../constant/isMobile";
 
-const { width } = Dimensions.get("window");
-
 const CategoryList = (props) => {
   return (
     <TouchableOpacity onPress={props.onPress}>
-      <View onMouseEnter={() => {}} style={styles.container}>
+      <View
+        onMouseEnter={() => {}}
+        style={[
+          styles.container,
+          {
+            width: props.width,
+            height: props.height,
+          },
+        ]}
+      >
         <Image
           source={{ uri: props.image }}
           style={{
@@ -26,7 +33,16 @@ const CategoryList = (props) => {
             boxShadow: "2px 2px 5px rgb(0,0,0,0.5)",
           }}
         />
-        <Text style={styles.text}>{props.title}</Text>
+        <Text
+          style={[
+            styles.text,
+            {
+              fontSize: props.fontSize,
+            },
+          ]}
+        >
+          {props.title}
+        </Text>
       </View>
     </TouchableOpacity>
   );
@@ -36,8 +52,12 @@ export default CategoryList;
 
 const styles = StyleSheet.create({
   container: {
-    width: !isMobile ? width / 6 - 20 : width / 4 - 20,
-    height: !isMobile ? width / 6 - 20 : width / 4 - 20,
+    // width: !isMobile
+    // ? window.width / 6 - 20
+    // : window.width / 4 - 20,
+    // height: !isMobile
+    // ? window.width / 6 - 20
+    // : window.width / 4 - 20,
     marginHorizontal: _adjustSizes(20),
     marginVertical: _adjustSizes(20),
     marginBottom: _adjustSizes(40),
@@ -47,12 +67,7 @@ const styles = StyleSheet.create({
   text: {
     marginBottom: 40,
     marginTop: 10,
-    fontSize: _adjustSizes(20),
     fontWeight: "600",
     color: LittleDarkAccent,
-  },
-  resize: {
-    scaleX: 20,
-    scaleY: 20,
   },
 });

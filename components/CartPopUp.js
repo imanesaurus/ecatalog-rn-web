@@ -9,6 +9,7 @@ import {
   View,
 } from "react-native";
 import { _adjustSizes } from "../constant/adjustedSizes";
+import _rem from "../constant/adjustedWindow";
 import { AccentColor, AccentColor2 } from "../constant/ColorsConst";
 import { isMobile } from "../constant/isMobile";
 import CustomButton from "./CustomButton";
@@ -35,14 +36,14 @@ const CartPopUp = (props) => {
           <Image
             source={{ uri: item.image_link }}
             style={{
-              width: _adjustSizes(60),
-              height: _adjustSizes(60),
+              width: _adjustSizes(40),
+              height: _adjustSizes(40),
               marginRight: 10,
             }}
           />
         </View>
         <View style={{ flex: 1, width: "90%", marginRight: 10 }}>
-          <Text style={{ fontSize: _adjustSizes(20) }}>{item.title}</Text>
+          <Text style={{ fontSize: _adjustSizes(10) }}>{item.title}</Text>
           <View
             style={{
               flexDirection: "row",
@@ -50,17 +51,13 @@ const CartPopUp = (props) => {
               marginTop: 5,
             }}
           >
-            {item.color === "" ? null : (
-              <Text style={styles.subText}>{item.color}</Text>
-            )}
-            <Text style={styles.subText}>{item.age_group}</Text>
+            <Text style={{ fontSize: _adjustSizes(15) }}>
+            {item.count} x {item.price}
+          </Text>
           </View>
         </View>
         <View style={{ justifyContent: "center", alignItems: "center" }}>
-          <Text style={{ fontSize: _adjustSizes(20) }}>
-            {item.count} x {item.price}
-          </Text>
-          <CustomButton style={{backgroundColor: AccentColor2, color: 'white'}} title="Remove" onPress={() => props.removeCart(item)} />
+          <CustomButton style={{backgroundColor: AccentColor2, color: 'white', fontSize: 15,}} title="Remove" onPress={() => props.removeCart(item)} />
         </View>
       </View>
     );
@@ -73,10 +70,14 @@ const CartPopUp = (props) => {
           boxShadow: "1px 1px 2px rgb(0,0,0,0.5)",
           marginBottom: 20,
           borderRadius: 10,
-          alignSelf: "center",
+          justifyContent: 'center',
+          alignItems: "center",
         }}
       >
-        <Text style={{ fontSize: _adjustSizes(20) }}>
+        <Text style={{ fontSize: _rem(_adjustSizes(10)), fontWeight: '600' }}>
+          Keranjang Anda{" "}
+        </Text>
+        <Text style={{ fontSize: _rem(_adjustSizes(8)) }}>
           Kamu memiliki {data.length} item di keranjang{" "}
         </Text>
       </View>
@@ -102,7 +103,7 @@ const CartPopUp = (props) => {
       >
         {props.isTotal ? (
           <View>
-            <Text style={{ fontSize: _adjustSizes(30), fontWeight: "600" }}>
+            <Text style={{ fontSize: _rem(_adjustSizes(10)), fontWeight: "600" }}>
               Total: Rp.{props.cartTotal}
             </Text>
           </View>
@@ -119,7 +120,7 @@ const CartPopUp = (props) => {
             <CustomButton
               style={{
                 flex: 1,
-                fontSize: isMobile ? 15 : 20,
+                fontSize: isMobile ? 10 : 15,
                 paddingHorizontal: _adjustSizes(20),
               }}
               title={"Checkout"}
@@ -131,7 +132,7 @@ const CartPopUp = (props) => {
           <View>
             <CustomButton
               style={{
-                fontSize: isMobile ? 15 : 20,
+                fontSize: isMobile ? 10 : 15,
                 paddingHorizontal: _adjustSizes(20),
               }}
               backgroundColor={"white"}
@@ -155,8 +156,8 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     position: "fixed",
     width: isMobile ? width * 0.8 : width / 2,
-    height: height / 2,
-    top: height * 0.06,
+    height: height / 1.5,
+    top: height * 0.14,
     backgroundColor: "white",
     paddingHorizontal: 10,
     paddingTop: 10,
