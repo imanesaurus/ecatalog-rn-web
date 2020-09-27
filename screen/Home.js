@@ -4,6 +4,7 @@ import {
   Dimensions,
   FlatList,
   Image,
+  Platform,
   StyleSheet,
   Text,
   View,
@@ -24,9 +25,10 @@ import {
 import { isMobile } from "../constant/isMobile";
 import data from "../data/data.json";
 import CategoryList from "../components/CategoryList";
+import { window, screen } from "../constant/adjustedWindow";
 
 const { width, height } = Dimensions.get("window");
-const HEADER_HEIGHT = height * 0.06;
+const HEADER_HEIGHT = height * 0.09;
 
 const Home = (props) => {
   const { navigation } = props;
@@ -40,14 +42,31 @@ const Home = (props) => {
   const [ageFilter, setAgeFilter] = useState("Semua");
   const [color, setColor] = useState("Semua");
   const [inStock, setInstock] = useState("In Stock");
-  // const { addTocart } = props;
+  const [_dimensions, setDimensions] = useState({ window, screen });
+  const _width = _dimensions.window.width;
+  const _height = _dimensions.window.height;
+
+  const isWeb = _width > 500;
+
+  const onChangeDimens = ({ window, screen }) => {
+    setDimensions({ window, screen });
+  };
 
   useEffect(() => {
-    console.log(availableCategory);
+    Dimensions.addEventListener("change", onChangeDimens);
     return () => {
-      //
+      Dimensions.removeEventListener("change", onChangeDimens);
     };
-  }, []);
+  });
+
+  const _rem = (size) => {
+    if (_height > _width) {
+      return (size * _width) / 380 * 2;
+    } else {
+      return (size * _height) / 380;
+    }
+  };
+
   const addTocart = (item) => {
     let currentCart = cartItems;
     let upCart;
@@ -154,15 +173,42 @@ const Home = (props) => {
         style={[
           styles.header,
           {
+            marginTop: height * 0.02,
             alignItems: "center",
-            justifyContent: "center",
+            flexDirection: "row",
+            paddingHorizontal: 20,
+            paddingVertical: 10,
           },
         ]}
       >
-        <Text style={styles.headerText}>Baju Bayi Luwuk</Text>
+        <View>
+          <Image
+            source={require("../assets/Logo.png")}
+            style={{
+              width: _height * 0.09,
+              height: _height * 0.09,
+              marginRight: 10,
+            }}
+          />
+        </View>
+
+        <Text
+          style={[styles.headerText, { fontSize: isWeb ? _rem(12) : _rem(10) }]}
+        >
+          Baju Bayi Luwuk
+        </Text>
       </View>
-      <View style={{ zIndex: 3, position: "relative" }}>
+      <View
+        style={{
+          zIndex: 3,
+          position: "relative",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
         <SideBar
+          style={Bar(isWeb).bar}
+          size={isWeb ? _width * 0.03 : _width * 0.06}
           cartHandler={() => setVisible(!visible)}
           badgeData={cartItems.length}
         />
@@ -187,26 +233,48 @@ const Home = (props) => {
           />
         ) : null}
         <View style={styles.headerFlatlist}>
-          <Text style={styles.headerFlatlistText}>Kategori</Text>
+          <Text
+            style={[
+              styles.headerFlatlistText,
+              {
+                fontSize: isWeb ? _rem(8) : _rem(8),
+                paddingVertical: 10,
+              },
+            ]}
+          >
+            Kategori
+          </Text>
         </View>
-        <View>
-          <FlatList
-            numColumns={4}
-            contentContainerStyle={{
-              flex: 1,
-              flexWrap: "wrap",
-              justifyContent: "center",
-              alignItems: "center",
-              paddingVertical: 50,
-            }}
-            data={category}
-            keyExtractor={(item, index) => item.id}
-            renderItem={({ item }) => (
-              <CategoryList title={item.title} image={item.image_link} />
-            )}
-          />
-        </View>
-        <Text style={{fontSize: _adjustSizes(40), color: LittleDarkAccent, alignSelf:'center', }}>Produk Terbaru</Text>
+        <FlatList
+          numColumns={4}
+          contentContainerStyle={{
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+            paddingTop: 20,
+            marginTop: 20,
+          }}
+          data={category}
+          keyExtractor={(item, index) => item.id}
+          renderItem={({ item }) => (
+            <CategoryList
+            fontSize={_rem(8)}
+              title={item.title}
+              image={item.image_link}
+              width={!isMobile ? _width / 8 - 20 : _width / 4 - 20}
+              height={!isMobile ? _width / 8 - 20 : _width / 4 - 20}
+            />
+          )}
+        />
+        <Text
+          style={{
+            fontSize: _rem(10),
+            color: LittleDarkAccent,
+            alignSelf: "center",
+          }}
+        >
+          Produk Terbaru
+        </Text>
         {/* <View
           style={{
             width: isMobile ? width * 0.9 : width * 0.5,
@@ -237,22 +305,25 @@ const Home = (props) => {
         <FlatList
           contentContainerStyle={{
             flex: 1,
-            flexWrap: "wrap",
             justifyContent: "center",
+            flexWrap: "wrap",
             alignItems: "center",
-            width: "50%",
-            height: "100%",
-            marginHorizontal: isMobile ? null : 100,
-            paddingBottom: "25%",
+            marginHorizontal: !isWeb ? null : 100,
+            // paddingBottom: "25%",
           }}
           sscrollEnabled
           showsVerticalScrollIndicator={false}
           // numColumns={isMobile ? 2 : 4}
           horizontal
-          data={products.reverse().slice(0,4)}
+          data={products.reverse().slice(0, 8)}
           keyExtractor={(item, index) => item}
           renderItem={({ item }) => (
             <ProductList
+              style={{
+                width: !isWeb ? 150 : _width / 6,
+                height: !isWeb ? 350 / 2 : _width / 5 - 20,
+              }}
+              fontSize={isWeb ? _height * 0.016 : _height * 0.014}
               title={item.title}
               image={item.image_link}
               price={item.price}
@@ -264,17 +335,24 @@ const Home = (props) => {
       <View style={[styles.footer, styles.absoluteBottom]}>
         <View style={{ flexWrap: "wrap", alignItems: "center" }}>
           <Image
-            style={styles.footerLogo}
+            style={{ width: _height * 0.09, height: _height * 0.09 }}
             source={require("../assets/Logo.png")}
           />
-          <Text adjustsFontSizeToFit={true} style={styles.footerText}>
-            COPYRIGHT 2020
-          </Text>
-          <Text adjustsFontSizeToFit={true} style={styles.footerText}>
-            ALL RIGHTS RESERVED
-          </Text>
+          <View style={styles.footerText}>
+            <Text
+              adjustsFontSizeToFit={true}
+              style={{ fontSize: isWeb ? _rem(8) : _rem(5), color: "white" }}
+            >
+              COPYRIGHT 2020
+            </Text>
+            <Text
+              adjustsFontSizeToFit={true}
+              style={{ fontSize: isWeb ? _rem(8) : _rem(5), color: "white" }}
+            >
+              ALL RIGHTS RESERVED
+            </Text>
+          </View>
         </View>
-        <FooterGroupText />
       </View>
       {/* <View style={{...styles.absoluteBottom, flex: 0.1, backgroundColor: AccentColor}}></View> */}
     </View>
@@ -285,30 +363,25 @@ export default Home;
 
 const styles = StyleSheet.create({
   header: {
-    display: "flex",
-    paddingTop: height * 0.02,
     flex: 1,
     position: "fixed",
     zIndex: 1,
-    height: HEADER_HEIGHT,
     width: "100%",
-    justifyContent: "center",
-    alignItems: "center",
     boxShadow: "2px 2px 5px rgb(0,0,0,0.1)",
-
     backgroundColor: "white",
   },
   headerText: {
     color: LittleDarkAccent,
     fontFamily: "Helvetica",
     fontSize: 20,
+    fontWeight: "600",
   },
   body: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
     position: "relative",
-    marginTop: HEADER_HEIGHT,
+    marginTop: HEADER_HEIGHT + HEADER_HEIGHT * 0.02 + 20,
   },
   panel: {
     marginTop: HEADER_HEIGHT + 20,
@@ -322,21 +395,18 @@ const styles = StyleSheet.create({
   },
   headerFlatlist: {
     flex: 1,
-    width: isMobile ? '30%' : '10%',
-    height: HEADER_HEIGHT + 10,
-
+    // width: isMobile ? "30%" : "10%",
+    // height: HEADER_HEIGHT + 10,
     justifyContent: "center",
     alignItems: "center",
     boxShadow: "2px 2px 5px rgb(0,0,0,0.5)",
     paddingHorizontal: 20,
     paddingVertical: 10,
     borderRadius: 20,
-    marginTop: 20,
-    marginBottom: 10,
+    marginTop: 40,
   },
   headerFlatlistText: {
     color: DarkAccent,
-    fontSize: _adjustSizes(20),
   },
   footer: {
     flexDirection: "row",
@@ -346,16 +416,27 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
     // boxShadow: "-2px -2px 10px rgb(0,0,0,0.5)",
     flexWrap: "wrap",
-    marginTop: 100,
-  },
-  footerLogo: {
-    width: _adjustSizes(100),
-    height: _adjustSizes(100),
+    marginTop: 20,
   },
   footerText: {
-    fontFamily: "Helvetica",
-    color: "white",
+    justifyContent: 'center',
+    alignItems: 'center',
     marginTop: 10,
-    fontSize: isMobile ? 10 : 20,
   },
 });
+
+const Bar = (isWeb) =>
+  StyleSheet.create({
+    bar: {
+      padding: isWeb ? 20 : 0,
+      paddingVertical: isWeb ? null : 10,
+      top: isWeb ? "50%" : null,
+      left: isWeb ? 20 : null,
+      right: isWeb ? null : null,
+      bottom: isWeb ? null : 20,
+      flexDirection: isWeb ? null : "row",
+      justifyContent: isWeb ? null : "space-evenly",
+      alignSelf: isWeb ? null : "center",
+      width: isWeb ? null : "60%",
+    },
+  });
