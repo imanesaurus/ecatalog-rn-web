@@ -9,15 +9,17 @@ import {
   View,
 } from "react-native";
 import { _adjustSizes } from "../constant/adjustedSizes";
-import _rem from "../constant/adjustedWindow";
 import { AccentColor, AccentColor2 } from "../constant/ColorsConst";
 import { isMobile } from "../constant/isMobile";
 import CustomButton from "./CustomButton";
+import useDimens from "../constant/adjustedWindow";
 
 const { width, height } = Dimensions.get("window");
 
-const CartPopUp = (props) => {
-  const { data } = props;
+const CartPopUp = ({isTotal, data, close, removeCart, cartTotal}) => {
+  
+  // const { data } = props;
+  const [_dimensions, _width, _height, isWeb, _rem] = useDimens();
 
   const renderItem = ({ item, index }) => {
     return (
@@ -63,7 +65,7 @@ const CartPopUp = (props) => {
     );
   };
   return (
-    <View style={[styles.modalcontent, { zIndex: 5 }]}>
+    <View style={[styles.modalcontent(_width), { zIndex: 5 }]}>
       <View
         style={{
           padding: 10,
@@ -155,7 +157,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     alignSelf: "center",
     position: "fixed",
-    width: isMobile ? width * 0.8 : width / 2,
+    width: isMobile ? width * 0.8 : height / 2,
     height: height / 1.5,
     top: height * 0.14,
     backgroundColor: "white",

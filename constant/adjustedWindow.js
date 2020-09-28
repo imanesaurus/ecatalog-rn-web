@@ -4,28 +4,34 @@ import { Dimensions } from "react-native";
 export const window = Dimensions.get("window");
 export const screen = Dimensions.get("screen");
 
-const _dimens = () => {
+const useDimens = () => {
   const [_dimensions, setDimensions] = useState({ window, screen });
+  const _width = _dimensions.window.width;
+  const _height = _dimensions.window.height;
+
+  const isWeb = _width > 500;
+
   const onChangeDimens = ({ window, screen }) => {
     setDimensions({ window, screen });
   };
 
   useEffect(() => {
+    console.log("Hooks");
     Dimensions.addEventListener("change", onChangeDimens);
     return () => {
       Dimensions.removeEventListener("change", onChangeDimens);
     };
-  });
+  }, [_dimensions]);
 
-  return _dimensions;
+  return [_dimensions, _width, _height, isWeb, _rem]
 };
 
-const _rem = (size) => {
-  if (_dimens().window.height > _dimens().window.height) {
-    return (size * _dimens().window.width) / 380;
+export const _rem = (size) => {
+  if (_height > _width) {
+    return ((size * _width) / 380) * 2;
   } else {
-    return (size * _dimens().window.height) / 380;
+    return (size * _height) / 380;
   }
 };
 
-export default _rem;
+export default useDimens;
