@@ -16,11 +16,11 @@ import {
 import { isMobile } from "../constant/isMobile";
 
 const { width, height } = Dimensions.get("window");
-const ProductList = (props) => {
+const ProductList = ({style, fontSize, title, image,price,onPress }) => {
   return (
     <View
       style={{
-        ...props.style,
+        ...style,
         flex: 1,
         justifyContent: "center",
         marginHorizontal: 10,
@@ -42,7 +42,7 @@ const ProductList = (props) => {
       >
         <Image
           style={{ width: '100%', height: '100%', resizeMode: 'cover' }}
-          source={{ uri: props.image }}
+          source={{ uri: image }}
         />
       </View>
       <View
@@ -59,10 +59,10 @@ const ProductList = (props) => {
           style={[
             styles.text,
             styles.title,
-            { fontSize: isMobile ? _rem(5) : _rem(8) },
+            { fontSize },
           ]}
         >
-          {props.title}
+          {title}
         </Text>
       </View>
       <View
@@ -80,17 +80,19 @@ const ProductList = (props) => {
               style={{
                 ...styles.text,
                 fontWeight: "bold",
-                fontSize: isMobile ? _rem(5) : _rem(8),
+                fontSize,
                 color: DarkAccent,
               }}
             >
-              Rp.{props.price}
+              Rp.{price}
             </Text>
           </TouchableOpacity>
         </View>
         <View style={{ flex: 1 }}>
-          <TouchableOpacity onPress={props.onPress}>
+          <TouchableOpacity onPress={onPress}>
             <Text
+            numberOfLines={1}
+            adjustsFontSizeToFit={true}
               style={[
                 styles.text,
                 styles.touchable,
@@ -112,7 +114,7 @@ const styles = StyleSheet.create({
   },
   touchable: {
     color: "white",
-    paddingHorizontal: isMobile ? 5 : 10,
+    paddingHorizontal: isMobile ? 5 : 5,
     paddingVertical: isMobile ? 3 : 5,
     backgroundColor: AccentColor2,
   },

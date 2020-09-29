@@ -25,12 +25,13 @@ import {
 import { isMobile } from "../constant/isMobile";
 import data from "../data/data.json";
 import CategoryList from "../components/CategoryList";
-import { window, screen } from "../constant/adjustedWindow";
+import useDimens from "../constant/useDimens";
 
 const { width, height } = Dimensions.get("window");
 const HEADER_HEIGHT = height * 0.09;
 
 const Home = (props) => {
+  const [_width, _height, isWeb] = useDimens();
   const { navigation } = props;
   const availableProducts = data.products;
   const availableCategory = data.categories;
@@ -42,26 +43,10 @@ const Home = (props) => {
   const [ageFilter, setAgeFilter] = useState("Semua");
   const [color, setColor] = useState("Semua");
   const [inStock, setInstock] = useState("In Stock");
-  const [_dimensions, setDimensions] = useState({ window, screen });
-  const _width = _dimensions.window.width;
-  const _height = _dimensions.window.height;
-
-  const isWeb = _width > 500;
-
-  const onChangeDimens = ({ window, screen }) => {
-    setDimensions({ window, screen });
-  };
-
-  useEffect(() => {
-    Dimensions.addEventListener("change", onChangeDimens);
-    return () => {
-      Dimensions.removeEventListener("change", onChangeDimens);
-    };
-  });
 
   const _rem = (size) => {
     if (_height > _width) {
-      return (size * _width) / 380 * 2;
+      return ((size * _width) / 380) * 2;
     } else {
       return (size * _height) / 380;
     }
@@ -193,7 +178,7 @@ const Home = (props) => {
         </View>
 
         <Text
-          style={[styles.headerText, { fontSize: isWeb ? _rem(12) : _rem(10) }]}
+          style={[styles.headerText, { fontSize: isWeb ? _rem(12) : _rem(8) }]}
         >
           Baju Bayi Luwuk
         </Text>
@@ -258,11 +243,15 @@ const Home = (props) => {
           keyExtractor={(item, index) => item.id}
           renderItem={({ item }) => (
             <CategoryList
-            fontSize={_rem(8)}
+              fontSize={isWeb ? _rem(8) : _rem(5)}
               title={item.title}
               image={item.image_link}
-              width={!isMobile ? _width / 8 - 20 : _width / 4 - 20}
-              height={!isMobile ? _width / 8 - 20 : _width / 4 - 20}
+              style={{
+                width: !isMobile ? _width / 8 - 20 : _width / 4 - 20,
+                height: !isMobile ? _width / 8 - 20 : _width / 4 - 20,
+                minWidth: 60,
+                minHeight: 60,
+              }}
             />
           )}
         />
@@ -323,7 +312,7 @@ const Home = (props) => {
                 width: !isWeb ? 150 : _width / 6,
                 height: !isWeb ? 350 / 2 : _width / 5 - 20,
               }}
-              fontSize={isWeb ? _height * 0.016 : _height * 0.014}
+              fontSize={!isWeb ? _rem(5) : _rem(8)}
               title={item.title}
               image={item.image_link}
               price={item.price}
@@ -419,8 +408,8 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   footerText: {
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     marginTop: 10,
   },
 });
