@@ -25,16 +25,15 @@ import {
 import { isMobile } from "../constant/isMobile";
 import data from "../data/data.json";
 import CategoryList from "../components/CategoryList";
-import useDimens, { window, screen } from "../constant/adjustedWindow";
-import _rem from "../constant/adjustedWindow";
+import { window, screen } from "../constant/adjustedWindow";
 
 const { width, height } = Dimensions.get("window");
 const HEADER_HEIGHT = height * 0.09;
 
-const Home = ({navigation}) => {
+const Home = (props) => {
+  const { navigation } = props;
   const availableProducts = data.products;
   const availableCategory = data.categories;
-  const [_width, _height, isWeb, ] = useDimens();
   const [products, setProducts] = useState(availableProducts);
   const [category, setCategory] = useState(availableCategory);
   const [visible, setVisible] = useState(false);
@@ -43,6 +42,30 @@ const Home = ({navigation}) => {
   const [ageFilter, setAgeFilter] = useState("Semua");
   const [color, setColor] = useState("Semua");
   const [inStock, setInstock] = useState("In Stock");
+  const [_dimensions, setDimensions] = useState({ window, screen });
+  const _width = _dimensions.window.width;
+  const _height = _dimensions.window.height;
+
+  const isWeb = _width > 500;
+
+  const onChangeDimens = ({ window, screen }) => {
+    setDimensions({ window, screen });
+  };
+
+  useEffect(() => {
+    Dimensions.addEventListener("change", onChangeDimens);
+    return () => {
+      Dimensions.removeEventListener("change", onChangeDimens);
+    };
+  });
+
+  const _rem = (size) => {
+    if (_height > _width) {
+      return (size * _width) / 380 * 2;
+    } else {
+      return (size * _height) / 380;
+    }
+  };
 
   const addTocart = (item) => {
     let currentCart = cartItems;
@@ -84,6 +107,7 @@ const Home = ({navigation}) => {
     var join = tiga.join(".").split("").reverse().join("");
     return join;
   };
+
   // Todo : optimize logic filter
   const filteredProducts = async (itemValue) => {
     await setAgeFilter(itemValue);
@@ -167,6 +191,7 @@ const Home = ({navigation}) => {
             }}
           />
         </View>
+
         <Text
           style={[styles.headerText, { fontSize: isWeb ? _rem(12) : _rem(10) }]}
         >
@@ -233,15 +258,11 @@ const Home = ({navigation}) => {
           keyExtractor={(item, index) => item.id}
           renderItem={({ item }) => (
             <CategoryList
-              fontSize={_rem(8)}
+            fontSize={_rem(8)}
               title={item.title}
               image={item.image_link}
-              style={{
-                width: !isMobile ? _width / 8 - 20 : _width / 4 - 20,
-                height: !isMobile ? _width / 8 - 20 : _width / 4 - 20,
-                // minWidth: !isMobile ? 100 : 15,
-                // minHeight: !isMobile ? 100 : 15,
-              }}
+              width={!isMobile ? _width / 8 - 20 : _width / 4 - 20}
+              height={!isMobile ? _width / 8 - 20 : _width / 4 - 20}
             />
           )}
         />
@@ -398,8 +419,8 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   footerText: {
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     marginTop: 10,
   },
 });

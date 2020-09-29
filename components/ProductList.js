@@ -7,16 +7,16 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import _rem from "../constant/adjustedWindow";
 import {
   AccentColor2,
   DarkAccent,
   LittleDarkAccent,
 } from "../constant/ColorsConst";
 import { isMobile } from "../constant/isMobile";
-import useDimens from "../constant/adjustedWindow";
 
+const { width, height } = Dimensions.get("window");
 const ProductList = (props) => {
-  const [_dimensions, _width, _height, isWeb, _rem] = useDimens();
   return (
     <View
       style={{
@@ -33,7 +33,7 @@ const ProductList = (props) => {
       <View
         style={{
           flex: 1,
-          width: "100%",
+          width: '100%',
           height: 250,
           overflow: "hidden",
           justifyContent: "flex-start",
@@ -41,7 +41,7 @@ const ProductList = (props) => {
         }}
       >
         <Image
-          style={{ width: "100%", height: "100%", resizeMode: "cover" }}
+          style={{ width: '100%', height: '100%', resizeMode: 'cover' }}
           source={{ uri: props.image }}
         />
       </View>

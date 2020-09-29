@@ -11,20 +11,21 @@ import { _adjustSizes } from "../constant/adjustedSizes";
 import { LittleDarkAccent } from "../constant/ColorsConst";
 import { isMobile } from "../constant/isMobile";
 
-const CategoryList = ({title, image, style, fontSize, onPress}) => {
+const CategoryList = (props) => {
   return (
-    <TouchableOpacity onPress={onPress}>
+    <TouchableOpacity onPress={props.onPress}>
       <View
         onMouseEnter={() => {}}
         style={[
           styles.container,
           {
-            ...style
+            width: props.width,
+            height: props.height,
           },
         ]}
       >
         <Image
-          source={{ uri: image }}
+          source={{ uri: props.image }}
           style={{
             width: "100%",
             height: "100%",
@@ -36,11 +37,11 @@ const CategoryList = ({title, image, style, fontSize, onPress}) => {
           style={[
             styles.text,
             {
-              fontSize: fontSize,
+              fontSize: props.fontSize,
             },
           ]}
         >
-          {title}
+          {props.title}
         </Text>
       </View>
     </TouchableOpacity>

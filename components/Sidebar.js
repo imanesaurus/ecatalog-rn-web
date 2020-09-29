@@ -14,18 +14,21 @@ import { isMobile } from "../constant/isMobile";
 
 const { width } = Dimensions.get("window");
 
-const SideBar = ({styles, size, cartHandler, badgeData}) => {
+const SideBar = (props) => {
   const FB_LINK = "https://web.facebook.com/bajubayiluwuk/shop/";
   const WA_LINK =
     "https://wa.me/+6285343638747?text=Kak+Kiki+saya+mau+ecer+baju+nih..";
+  // const onPress = (url) => {
+  //     Linking.openURL(props.link)
+  // };
 
   return (
-    <View style={[styles.sidebar, style]}>
+    <View style={[styles.sidebar, props.style]}>
       <TouchableOpacity onPress={() => Linking.openURL(FB_LINK)}>
         <Ionicons
           style={{ marginVertical: isMobile ? null : 5 }}
           name="logo-facebook"
-          size={size}
+          size={props.size}
           color={AccentColor2}
         />
       </TouchableOpacity>
@@ -33,7 +36,7 @@ const SideBar = ({styles, size, cartHandler, badgeData}) => {
         <Ionicons
           style={{ marginVertical: isMobile ? null : 5 }}
           name="logo-instagram"
-          size={size}
+          size={props.size}
           color={AccentColor2}
         />
       </TouchableOpacity>
@@ -41,18 +44,18 @@ const SideBar = ({styles, size, cartHandler, badgeData}) => {
         <Ionicons
           style={{ marginVertical: isMobile ? null : 5 }}
           name="logo-whatsapp"
-          size={size}
+          size={props.size}
           color={AccentColor2}
         />
       </TouchableOpacity>
-      <TouchableOpacity onPress={cartHandler}>
+      <TouchableOpacity onPress={props.cartHandler}>
         <Ionicons
           style={{ marginVertical: isMobile ? null : 5, }}
           name="md-cart"
-          size={size}
+          size={props.size}
           color={AccentColor2}
         />
-        {badgeData > 0 && (
+        {props.badgeData > 0 && (
           <Text
             style={{
               position: "absolute",
@@ -64,7 +67,7 @@ const SideBar = ({styles, size, cartHandler, badgeData}) => {
               fontSize: isMobile ? 12 : 15,
             }}
           >
-            {badgeData}
+            {props.badgeData}
           </Text>
         )}
       </TouchableOpacity>
