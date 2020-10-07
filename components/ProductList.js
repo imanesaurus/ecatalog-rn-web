@@ -7,6 +7,11 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { Link } from "react-router-dom";
+import {
+  useHistory,
+  useLocation,
+} from "react-router-dom/cjs/react-router-dom.min";
 import _rem from "../constant/adjustedWindow";
 import {
   AccentColor2,
@@ -16,7 +21,18 @@ import {
 import { isMobile } from "../constant/isMobile";
 
 const { width, height } = Dimensions.get("window");
-const ProductList = ({style, fontSize, title, image,price,onPress }) => {
+const ProductList = ({
+  style,
+  fontSize,
+  title,
+  image,
+  price,
+  onPress,
+  id,
+  onClick,
+  item,
+}) => {
+  const history = useHistory();
   return (
     <View
       style={{
@@ -30,21 +46,26 @@ const ProductList = ({style, fontSize, title, image,price,onPress }) => {
         overflow: "hidden",
       }}
     >
-      <View
-        style={{
-          flex: 1,
-          width: '100%',
-          height: 250,
-          overflow: "hidden",
-          justifyContent: "flex-start",
-          alignItems: "flex-start",
-        }}
-      >
-        <Image
-          style={{ width: '100%', height: '100%', resizeMode: 'cover' }}
-          source={{ uri: image }}
-        />
-      </View>
+      
+        {/* <Link to={"/product/" + item.id} style={{textDecoration:"none", flex: 1,}}> */}
+        <Link
+          to={"/product/" + item.id}
+          style={{
+            flex: 1,
+            width: "100%",
+            height: 250,
+            overflow: "hidden",
+            justifyContent: "flex-start",
+            alignItems: "flex-start",
+          }}
+        >
+          <Image
+            style={{ width: "100%", height: "100%", resizeMode: "cover" }}
+            source={{ uri: image }}
+          />
+        </Link>
+      
+      {/* </Link> */}
       <View
         style={{
           justifyContent: "center",
@@ -56,11 +77,7 @@ const ProductList = ({style, fontSize, title, image,price,onPress }) => {
         <Text
           numberOfLines={1}
           adjustsFontSizeToFit
-          style={[
-            styles.text,
-            styles.title,
-            { fontSize },
-          ]}
+          style={[styles.text, styles.title, { fontSize }]}
         >
           {title}
         </Text>
@@ -91,8 +108,8 @@ const ProductList = ({style, fontSize, title, image,price,onPress }) => {
         <View style={{ flex: 1 }}>
           <TouchableOpacity onPress={onPress}>
             <Text
-            numberOfLines={1}
-            adjustsFontSizeToFit={true}
+              numberOfLines={1}
+              adjustsFontSizeToFit={true}
               style={[
                 styles.text,
                 styles.touchable,

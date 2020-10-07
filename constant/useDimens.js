@@ -9,7 +9,8 @@ export default () => {
     const _width = _dimensions.window.width;
     const _height = _dimensions.window.height;
   
-    const isWeb = _width > 540;
+    const isWeb = _width > _height;
+    console.log(_dimensions.window)
   
     const onChangeDimens = ({ window, screen }) => {
       setDimensions({ window, screen });

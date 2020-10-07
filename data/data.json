@@ -1,7 +1,8 @@
 {
     "products": [
       {
-        "id": "NB/C1M1",
+        "id": "C001",
+        "pid": "NB/C1M1",
         "title": "Celana Pendek Newborn Nature Wanderlust�",
         "description": "Bahan halus dan lembut // Bebas dan aman dari bahan kimia berbahaya untuk kesehatan si kecil // Sudah tersertifikasi Standar Internasional Oeko tex dari Swiss dan SNI // Terbuat dari bahan special cotton yang lembut",
         "availability": "in stock",
@@ -26,7 +27,8 @@
         "shipping_weight": ""
       },
       {
-        "id": "NB/C1M2",
+        "id": "C002",
+        "pid": "NB/C1M2",
         "title": "Celana Pendek Newborn Nature Wanderlust�",
         "description": "Bahan halus dan lembut // Bebas dan aman dari bahan kimia berbahaya untuk kesehatan si kecil // Sudah tersertifikasi Standar Internasional Oeko tex dari Swiss dan SNI // Terbuat dari bahan special cotton yang lembut",
         "availability": "in stock",
@@ -51,7 +53,8 @@
         "shipping_weight": ""
       },
       {
-        "id": "NB/C1M3",
+        "id": "C003",
+        "pid": "NB/C1M3",
         "title": "Celana Pendek Newborn Nature Wanderlust�",
         "description": "Bahan halus dan lembut // Bebas dan aman dari bahan kimia berbahaya untuk kesehatan si kecil // Sudah tersertifikasi Standar Internasional Oeko tex dari Swiss dan SNI // Terbuat dari bahan special cotton yang lembut",
         "availability": "in stock",
@@ -76,7 +79,8 @@
         "shipping_weight": ""
       },
       {
-        "id": "NB/C2",
+        "id": "C004",
+        "pid": "NB/C2",
         "title": "Celana Panjang Pampers Buka Kaki Newborn Nature Wanderlust�",
         "description": "Bahan halus dan lembut // Bebas dan aman dari bahan kimia berbahaya untuk kesehatan si kecil // Sudah tersertifikasi Standar Internasional Oeko tex dari Swiss dan SNI // Terbuat dari bahan special cotton yang lembut",
         "availability": "in stock",
@@ -101,7 +105,8 @@
         "shipping_weight": ""
       },
       {
-        "id": "NB/C3M1",
+        "id": "C005",
+        "pid": "NB/C3M1",
         "title": "Celana Pop Newborn Nature Wanderlust",
         "description": "Bahan halus dan lembut // Bebas dan aman dari bahan kimia berbahaya untuk kesehatan si kecil // Sudah tersertifikasi Standar Internasional Oeko tex dari Swiss dan SNI // Terbuat dari bahan special cotton yang lembut",
         "availability": "in stock",
@@ -126,7 +131,8 @@
         "shipping_weight": ""
       },
       {
-        "id": "NB/C3M2",
+        "id": "C006",
+        "pid": "NB/C3M2",
         "title": "Celana Pop Newborn Nature Wanderlust",
         "description": "Bahan halus dan lembut // Bebas dan aman dari bahan kimia berbahaya untuk kesehatan si kecil // Sudah tersertifikasi Standar Internasional Oeko tex dari Swiss dan SNI // Terbuat dari bahan special cotton yang lembut",
         "availability": "in stock",
@@ -151,7 +157,8 @@
         "shipping_weight": ""
       },
       {
-        "id": "NB/C3M3",
+        "id": "C007",
+        "pid": "NB/C3M3",
         "title": "Celana Pop Newborn Nature Wanderlust",
         "description": "Bahan halus dan lembut // Bebas dan aman dari bahan kimia berbahaya untuk kesehatan si kecil // Sudah tersertifikasi Standar Internasional Oeko tex dari Swiss dan SNI // Terbuat dari bahan special cotton yang lembut",
         "availability": "in stock",
@@ -176,7 +183,8 @@
         "shipping_weight": ""
       },
       {
-        "id": "NB/C4B",
+        "id": "C008",
+        "pid": "NB/C4B",
         "title": "Celana Panjang Tutup Kaki Newborn, Polos Warna",
         "description": "Bahan halus dan lembut // Bebas dan aman dari bahan kimia berbahaya untuk kesehatan si kecil // Sudah tersertifikasi Standar Internasional Oeko tex dari Swiss dan SNI // Terbuat dari bahan special cotton yang lembut",
         "availability": "in stock",
@@ -201,7 +209,8 @@
         "shipping_weight": ""
       },
       {
-        "id": "NB/C4K",
+        "id": "C009",
+        "pid": "NB/C4K",
         "title": "Celana Panjang Tutup Kaki Newborn, Polos Warna",
         "description": "Bahan halus dan lembut // Bebas dan aman dari bahan kimia berbahaya untuk kesehatan si kecil // Sudah tersertifikasi Standar Internasional Oeko tex dari Swiss dan SNI // Terbuat dari bahan special cotton yang lembut",
         "availability": "in stock",
@@ -226,7 +235,8 @@
         "shipping_weight": ""
       },
       {
-        "id": "NB/C4H",
+        "id": "C010",
+        "pid": "NB/C4H",
         "title": "Celana Panjang Tutup Kaki Newborn, Polos Warna",
         "description": "Bahan halus dan lembut // Bebas dan aman dari bahan kimia berbahaya untuk kesehatan si kecil // Sudah tersertifikasi Standar Internasional Oeko tex dari Swiss dan SNI // Terbuat dari bahan special cotton yang lembut",
         "availability": "in stock",
@@ -251,7 +261,8 @@
         "shipping_weight": ""
       },
       {
-        "id": "NB/C5B",
+        "id": "C011",
+        "pid": "NB/C5B",
         "title": "Celana Panjang Pampers Buka Kaki Newborn, Polos Warna",
         "description": "Bahan halus dan lembut // Bebas dan aman dari bahan kimia berbahaya untuk kesehatan si kecil // Sudah tersertifikasi Standar Internasional Oeko tex dari Swiss dan SNI // Terbuat dari bahan special cotton yang lembut",
         "availability": "in stock",
@@ -276,7 +287,8 @@
         "shipping_weight": ""
       },
       {
-        "id": "NB/C5K",
+        "id": "C012",
+        "pid": "NB/C5K",
         "title": "Celana Panjang Pampers Buka Kaki Newborn, Polos Warna",
         "description": "Bahan halus dan lembut // Bebas dan aman dari bahan kimia berbahaya untuk kesehatan si kecil // Sudah tersertifikasi Standar Internasional Oeko tex dari Swiss dan SNI // Terbuat dari bahan special cotton yang lembut",
         "availability": "in stock",
@@ -301,7 +313,8 @@
         "shipping_weight": ""
       },
       {
-        "id": "NB/C5H",
+        "id": "C013",
+        "pid": "NB/C5H",
         "title": "Celana Panjang Pampers Buka Kaki Newborn, Polos Warna",
         "description": "Bahan halus dan lembut // Bebas dan aman dari bahan kimia berbahaya untuk kesehatan si kecil // Sudah tersertifikasi Standar Internasional Oeko tex dari Swiss dan SNI // Terbuat dari bahan special cotton yang lembut",
         "availability": "in stock",
@@ -326,7 +339,8 @@
         "shipping_weight": ""
       },
       {
-        "id": "NB/C6B",
+        "id": "C014",
+        "pid": "NB/C6B",
         "title": "Celana Pop Newborn, Polos",
         "description": "Bahan halus dan lembut // Bebas dan aman dari bahan kimia berbahaya untuk kesehatan si kecil // Sudah tersertifikasi Standar Internasional Oeko tex dari Swiss dan SNI // Terbuat dari bahan special cotton yang lembut",
         "availability": "in stock",
@@ -351,7 +365,8 @@
         "shipping_weight": ""
       },
       {
-        "id": "NB/C6K",
+        "id": "C015",
+        "pid": "NB/C6K",
         "title": "Celana Pop Newborn, Polos",
         "description": "Bahan halus dan lembut // Bebas dan aman dari bahan kimia berbahaya untuk kesehatan si kecil // Sudah tersertifikasi Standar Internasional Oeko tex dari Swiss dan SNI // Terbuat dari bahan special cotton yang lembut",
         "availability": "in stock",
@@ -376,7 +391,8 @@
         "shipping_weight": ""
       },
       {
-        "id": "NB/C6H",
+        "id": "C016",
+        "pid": "NB/C6H",
         "title": "Celana Pop Newborn, Polos",
         "description": "Bahan halus dan lembut // Bebas dan aman dari bahan kimia berbahaya untuk kesehatan si kecil // Sudah tersertifikasi Standar Internasional Oeko tex dari Swiss dan SNI // Terbuat dari bahan special cotton yang lembut",
         "availability": "in stock",
@@ -401,7 +417,8 @@
         "shipping_weight": ""
       },
       {
-        "id": "NB/C6P",
+        "id": "C017",
+        "pid": "NB/C6P",
         "title": "Celana Pop Newborn, Polos",
         "description": "Bahan halus dan lembut // Bebas dan aman dari bahan kimia berbahaya untuk kesehatan si kecil // Sudah tersertifikasi Standar Internasional Oeko tex dari Swiss dan SNI // Terbuat dari bahan special cotton yang lembut",
         "availability": "in stock",
@@ -428,42 +445,42 @@
     ],
     "categories": [
       {
-        "id": 1,
+        "cid": 1,
         "title": "Jumpsuit",
         "image_link": "https://picsum.photos/id/131/200/300"
       },
       {
-        "id": 2,
+        "cid": 2,
         "title": "Atasan",
         "image_link": "https://picsum.photos/id/132/200/300"
       },
       {
-        "id": 3,
+        "cid": 3,
         "title": "Bawahan",
         "image_link": "https://picsum.photos/id/133/200/300"
       },
       {
-        "id": 4,
+        "cid": 4,
         "title": "Setelan",
         "image_link": "https://picsum.photos/id/134/200/300"
       },
       {
-        "id": 5,
+        "cid": 5,
         "title": "Dress",
         "image_link": "https://picsum.photos/id/135/200/300"
       },
       {
-        "id": 6,
+        "cid": 6,
         "title": "Sepatu",
         "image_link": "https://picsum.photos/id/136/200/300"
       },
       {
-        "id": 7,
+        "cid": 7,
         "title": "Fullset",
         "image_link": "https://picsum.photos/id/137/200/300"
       },
       {
-        "id": 8,
+        "cid": 8,
         "title": "Faceshield",
         "image_link": "https://picsum.photos/id/139/200/300"
       }
