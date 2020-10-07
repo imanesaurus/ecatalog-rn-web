@@ -10,22 +10,22 @@ import {
 import { _adjustSizes } from "../constant/adjustedSizes";
 import { LittleDarkAccent } from "../constant/ColorsConst";
 import { isMobile } from "../constant/isMobile";
+import useDimens from "../constant/useDimens";
 
-const CategoryList = (props) => {
+const CategoryList = ({ style, onPress, image, title, fontSize }) => {
   return (
-    <TouchableOpacity onPress={props.onPress}>
+    <TouchableOpacity onPress={onPress}>
       <View
         onMouseEnter={() => {}}
         style={[
           styles.container,
           {
-            width: props.width,
-            height: props.height,
+            ...style
           },
         ]}
       >
         <Image
-          source={{ uri: props.image }}
+          source={{ uri: image }}
           style={{
             width: "100%",
             height: "100%",
@@ -37,11 +37,11 @@ const CategoryList = (props) => {
           style={[
             styles.text,
             {
-              fontSize: props.fontSize,
+              fontSize
             },
           ]}
         >
-          {props.title}
+          {title}
         </Text>
       </View>
     </TouchableOpacity>
@@ -52,12 +52,6 @@ export default CategoryList;
 
 const styles = StyleSheet.create({
   container: {
-    // width: !isMobile
-    // ? window.width / 6 - 20
-    // : window.width / 4 - 20,
-    // height: !isMobile
-    // ? window.width / 6 - 20
-    // : window.width / 4 - 20,
     marginHorizontal: _adjustSizes(20),
     marginVertical: _adjustSizes(20),
     marginBottom: _adjustSizes(40),

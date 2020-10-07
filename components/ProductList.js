@@ -7,6 +7,11 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { Link } from "react-router-dom";
+import {
+  useHistory,
+  useLocation,
+} from "react-router-dom/cjs/react-router-dom.min";
 import _rem from "../constant/adjustedWindow";
 import {
   AccentColor2,
@@ -16,11 +21,22 @@ import {
 import { isMobile } from "../constant/isMobile";
 
 const { width, height } = Dimensions.get("window");
-const ProductList = (props) => {
+const ProductList = ({
+  style,
+  fontSize,
+  title,
+  image,
+  price,
+  onPress,
+  id,
+  onClick,
+  item,
+}) => {
+  const history = useHistory();
   return (
     <View
       style={{
-        ...props.style,
+        ...style,
         flex: 1,
         justifyContent: "center",
         marginHorizontal: 10,
@@ -30,21 +46,26 @@ const ProductList = (props) => {
         overflow: "hidden",
       }}
     >
-      <View
-        style={{
-          flex: 1,
-          width: '100%',
-          height: 250,
-          overflow: "hidden",
-          justifyContent: "flex-start",
-          alignItems: "flex-start",
-        }}
-      >
-        <Image
-          style={{ width: '100%', height: '100%', resizeMode: 'cover' }}
-          source={{ uri: props.image }}
-        />
-      </View>
+      
+        {/* <Link to={"/product/" + item.id} style={{textDecoration:"none", flex: 1,}}> */}
+        <Link
+          to={"/product/" + item.id}
+          style={{
+            flex: 1,
+            width: "100%",
+            height: 250,
+            overflow: "hidden",
+            justifyContent: "flex-start",
+            alignItems: "flex-start",
+          }}
+        >
+          <Image
+            style={{ width: "100%", height: "100%", resizeMode: "cover" }}
+            source={{ uri: image }}
+          />
+        </Link>
+      
+      {/* </Link> */}
       <View
         style={{
           justifyContent: "center",
@@ -56,13 +77,9 @@ const ProductList = (props) => {
         <Text
           numberOfLines={1}
           adjustsFontSizeToFit
-          style={[
-            styles.text,
-            styles.title,
-            { fontSize: isMobile ? _rem(5) : _rem(8) },
-          ]}
+          style={[styles.text, styles.title, { fontSize }]}
         >
-          {props.title}
+          {title}
         </Text>
       </View>
       <View
@@ -80,17 +97,19 @@ const ProductList = (props) => {
               style={{
                 ...styles.text,
                 fontWeight: "bold",
-                fontSize: isMobile ? _rem(5) : _rem(8),
+                fontSize,
                 color: DarkAccent,
               }}
             >
-              Rp.{props.price}
+              Rp.{price}
             </Text>
           </TouchableOpacity>
         </View>
         <View style={{ flex: 1 }}>
-          <TouchableOpacity onPress={props.onPress}>
+          <TouchableOpacity onPress={onPress}>
             <Text
+              numberOfLines={1}
+              adjustsFontSizeToFit={true}
               style={[
                 styles.text,
                 styles.touchable,
@@ -112,7 +131,7 @@ const styles = StyleSheet.create({
   },
   touchable: {
     color: "white",
-    paddingHorizontal: isMobile ? 5 : 10,
+    paddingHorizontal: isMobile ? 5 : 5,
     paddingVertical: isMobile ? 3 : 5,
     backgroundColor: AccentColor2,
   },

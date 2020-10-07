@@ -16,8 +16,7 @@ import CustomButton from "./CustomButton";
 
 const { width, height } = Dimensions.get("window");
 
-const CartPopUp = (props) => {
-  const { data } = props;
+const CartPopUp = ({data, cartTotal, isTotal, onPress, close, removeCart}) => {
 
   const renderItem = ({ item, index }) => {
     return (
@@ -57,7 +56,7 @@ const CartPopUp = (props) => {
           </View>
         </View>
         <View style={{ justifyContent: "center", alignItems: "center" }}>
-          <CustomButton style={{backgroundColor: AccentColor2, color: 'white', fontSize: 15,}} title="Remove" onPress={() => props.removeCart(item)} />
+          <CustomButton style={{backgroundColor: AccentColor2, color: 'white', fontSize: 15,}} title="Remove" onPress={() => removeCart(item)} />
         </View>
       </View>
     );
@@ -78,7 +77,7 @@ const CartPopUp = (props) => {
           Keranjang Anda{" "}
         </Text>
         <Text style={{ fontSize: _rem(_adjustSizes(8)) }}>
-          Kamu memiliki {data.length} item di keranjang{" "}
+         {data.length > 0 ? `Kamu memiliki ${data.length} item di keranjang `: "Keranjang anda masih kosong, silahkan liat barangnya dulu ya"}
         </Text>
       </View>
       <ScrollView
@@ -86,7 +85,7 @@ const CartPopUp = (props) => {
         style={{ marginTop: 10 }}
       >
         <FlatList
-          data={props.data}
+          data={data}
           keyExtractor={(item, index) => item.id}
           renderItem={renderItem}
         />
@@ -101,10 +100,10 @@ const CartPopUp = (props) => {
           borderColor: "rgba(0, 0, 0, 0.1)",
         }}
       >
-        {props.isTotal ? (
+        {isTotal ? (
           <View>
             <Text style={{ fontSize: _rem(_adjustSizes(10)), fontWeight: "600" }}>
-              Total: Rp.{props.cartTotal}
+              Total: Rp.{cartTotal}
             </Text>
           </View>
         ) : null}
@@ -124,7 +123,7 @@ const CartPopUp = (props) => {
                 paddingHorizontal: _adjustSizes(20),
               }}
               title={"Checkout"}
-              onPress={props.onPress}
+              onPress={onPress}
               bgcolor={AccentColor2}
               textColor={"white"}
             />
@@ -138,7 +137,7 @@ const CartPopUp = (props) => {
               backgroundColor={"white"}
               textColor={AccentColor2}
               title={"Close"}
-              onPress={props.close}
+              onPress={close}
             />
           </View>
         </View>

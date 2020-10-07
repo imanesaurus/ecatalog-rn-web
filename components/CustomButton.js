@@ -3,21 +3,21 @@ import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import { _adjustSizes } from "../constant/adjustedSizes";
 import { AccentColor2 } from "../constant/ColorsConst";
 
-const CustomButton = (props) => {
+const CustomButton = ({onPress, bgcolor, textColor,style, title}) => {
   return (
-    <TouchableOpacity onPress={props.onPress}>
+    <TouchableOpacity onPress={onPress}>
       <Text
         style={[
           styles.text,
           styles.touchable,
           {
-            backgroundColor: props.bgcolor,
-            color: props.textColor,
-            ...props.style,
+            backgroundColor: bgcolor,
+            color: textColor,
+            ...style,
           },
         ]}
       >
-        {props.title}
+        {title}
       </Text>
     </TouchableOpacity>
   );
