@@ -131,7 +131,7 @@ const Dashboard = () => {
             marginTop: 20,
           }}
           data={category}
-          keyExtractor={(item, index) => item.id}
+          keyExtractor={(item, index) => item.cid}
           renderItem={({ item }) => (
             <CategoryList
               fontSize={isWeb ? _rem(8) : _rem(5)}
@@ -144,6 +144,7 @@ const Dashboard = () => {
                 minHeight: 60,
               }}
               onPress={modalHandler}
+              cid={item.cid}
             />
           )}
         />

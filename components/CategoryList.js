@@ -7,43 +7,46 @@ import {
   Dimensions,
   TouchableOpacity,
 } from "react-native";
+import { Link } from "react-router-dom";
 import { _adjustSizes } from "../constant/adjustedSizes";
 import { LittleDarkAccent } from "../constant/ColorsConst";
 import { isMobile } from "../constant/isMobile";
 import useDimens from "../constant/useDimens";
 
-const CategoryList = ({ style, onPress, image, title, fontSize }) => {
+const CategoryList = ({ cid, style, onPress, image, title, fontSize }) => {
   return (
     <TouchableOpacity onPress={onPress}>
-      <View
-        onMouseEnter={() => {}}
-        style={[
-          styles.container,
-          {
-            ...style
-          },
-        ]}
-      >
-        <Image
-          source={{ uri: image }}
-          style={{
-            width: "100%",
-            height: "100%",
-            resizeMode: "cover",
-            boxShadow: "2px 2px 5px rgb(0,0,0,0.5)",
-          }}
-        />
-        <Text
+      <Link to={"/category/" + cid} style={{textDecoration: 'none', flex: 1,}}>
+        <View
+          onMouseEnter={() => {}}
           style={[
-            styles.text,
+            styles.container,
             {
-              fontSize
+              ...style,
             },
           ]}
         >
-          {title}
-        </Text>
-      </View>
+          <Image
+            source={{ uri: image }}
+            style={{
+              width: "100%",
+              height: "100%",
+              resizeMode: "cover",
+              boxShadow: "2px 2px 5px rgb(0,0,0,0.5)",
+            }}
+          />
+          <Text
+            style={[
+              styles.text,
+              {
+                fontSize,
+              },
+            ]}
+          >
+            {title}
+          </Text>
+        </View>
+      </Link>
     </TouchableOpacity>
   );
 };

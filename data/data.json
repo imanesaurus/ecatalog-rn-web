@@ -24,7 +24,8 @@
         "pattern": "singa",
         "product_type": "",
         "shipping": "",
-        "shipping_weight": ""
+        "shipping_weight": "",
+        "category": "Bawahan"
       },
       {
         "id": "C002",
@@ -50,7 +51,8 @@
         "pattern": "paus",
         "product_type": "",
         "shipping": "",
-        "shipping_weight": ""
+        "shipping_weight": "",
+        "category": "Bawahan"
       },
       {
         "id": "C003",
@@ -76,7 +78,8 @@
         "pattern": "dino",
         "product_type": "",
         "shipping": "",
-        "shipping_weight": ""
+        "shipping_weight": "",
+        "category": "Bawahan"
       },
       {
         "id": "C004",
@@ -102,7 +105,8 @@
         "pattern": "",
         "product_type": "",
         "shipping": "",
-        "shipping_weight": ""
+        "shipping_weight": "",
+        "category": "Bawahan"
       },
       {
         "id": "C005",
@@ -128,7 +132,8 @@
         "pattern": "singa",
         "product_type": "",
         "shipping": "",
-        "shipping_weight": ""
+        "shipping_weight": "",
+        "category": "Bawahan"
       },
       {
         "id": "C006",
@@ -154,7 +159,8 @@
         "pattern": "paus",
         "product_type": "",
         "shipping": "",
-        "shipping_weight": ""
+        "shipping_weight": "",
+        "category": "Bawahan"
       },
       {
         "id": "C007",
@@ -180,7 +186,8 @@
         "pattern": "dino",
         "product_type": "",
         "shipping": "",
-        "shipping_weight": ""
+        "shipping_weight": "",
+        "category": "Bawahan"
       },
       {
         "id": "C008",
@@ -206,7 +213,8 @@
         "pattern": "",
         "product_type": "",
         "shipping": "",
-        "shipping_weight": ""
+        "shipping_weight": "",
+        "category": "Bawahan"
       },
       {
         "id": "C009",
@@ -232,7 +240,8 @@
         "pattern": "",
         "product_type": "",
         "shipping": "",
-        "shipping_weight": ""
+        "shipping_weight": "",
+        "category": "Bawahan"
       },
       {
         "id": "C010",
@@ -258,7 +267,8 @@
         "pattern": "",
         "product_type": "",
         "shipping": "",
-        "shipping_weight": ""
+        "shipping_weight": "",
+        "category": "Bawahan"
       },
       {
         "id": "C011",
@@ -284,7 +294,8 @@
         "pattern": "",
         "product_type": "",
         "shipping": "",
-        "shipping_weight": ""
+        "shipping_weight": "",
+        "category": "Bawahan"
       },
       {
         "id": "C012",
@@ -310,7 +321,8 @@
         "pattern": "",
         "product_type": "",
         "shipping": "",
-        "shipping_weight": ""
+        "shipping_weight": "",
+        "category": "Bawahan"
       },
       {
         "id": "C013",
@@ -336,7 +348,8 @@
         "pattern": "",
         "product_type": "",
         "shipping": "",
-        "shipping_weight": ""
+        "shipping_weight": "",
+        "category": "Bawahan"
       },
       {
         "id": "C014",
@@ -362,7 +375,8 @@
         "pattern": "",
         "product_type": "",
         "shipping": "",
-        "shipping_weight": ""
+        "shipping_weight": "",
+        "category": "Bawahan"
       },
       {
         "id": "C015",
@@ -388,7 +402,8 @@
         "pattern": "",
         "product_type": "",
         "shipping": "",
-        "shipping_weight": ""
+        "shipping_weight": "",
+        "category": "Bawahan"
       },
       {
         "id": "C016",
@@ -414,7 +429,8 @@
         "pattern": "",
         "product_type": "",
         "shipping": "",
-        "shipping_weight": ""
+        "shipping_weight": "",
+        "category": "Bawahan"
       },
       {
         "id": "C017",
@@ -440,47 +456,48 @@
         "pattern": "",
         "product_type": "",
         "shipping": "",
-        "shipping_weight": ""
+        "shipping_weight": "",
+        "category": "Bawahan"
       }
     ],
     "categories": [
       {
-        "cid": 1,
+        "cid": "1",
         "title": "Jumpsuit",
         "image_link": "https://picsum.photos/id/131/200/300"
       },
       {
-        "cid": 2,
+        "cid": "2",
         "title": "Atasan",
         "image_link": "https://picsum.photos/id/132/200/300"
       },
       {
-        "cid": 3,
+        "cid": "3",
         "title": "Bawahan",
         "image_link": "https://picsum.photos/id/133/200/300"
       },
       {
-        "cid": 4,
+        "cid": "4",
         "title": "Setelan",
         "image_link": "https://picsum.photos/id/134/200/300"
       },
       {
-        "cid": 5,
+        "cid": "5",
         "title": "Dress",
         "image_link": "https://picsum.photos/id/135/200/300"
       },
       {
-        "cid": 6,
+        "cid": "6",
         "title": "Sepatu",
         "image_link": "https://picsum.photos/id/136/200/300"
       },
       {
-        "cid": 7,
+        "cid": "7",
         "title": "Fullset",
         "image_link": "https://picsum.photos/id/137/200/300"
       },
       {
-        "cid": 8,
+        "cid": "8",
         "title": "Faceshield",
         "image_link": "https://picsum.photos/id/139/200/300"
       }

@@ -20,6 +20,7 @@ import useDimens from "../constant/useDimens";
 import About from "./About";
 import Dashboard from "./Dashboard";
 import Product from "./Product";
+import Category from "./Category";
 
 const { width, height } = Dimensions.get("window");
 const HEADER_HEIGHT = height * 0.09;
@@ -126,7 +127,9 @@ const Home = (props) => {
             />
           </View>
           <View>
-            <Text style={{fontStyle: 'italic', color: 'gold'}}>e-Catalogue</Text>
+            <Text style={{ fontStyle: "italic", color: "gold" }}>
+              e-Catalogue
+            </Text>
             <Link
               to="/"
               style={{
@@ -151,6 +154,12 @@ const Home = (props) => {
           path="/product/:id"
           component={({ match }) => (
             <Product rem={(x) => _rem(x)} match={match} />
+          )}
+        />
+        <Route
+          path="/category/:cid"
+          component={({ match }) => (
+            <Category rem={(x) => _rem(x)} match={match} />
           )}
         />
 
