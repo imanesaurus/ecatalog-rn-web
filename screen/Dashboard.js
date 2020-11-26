@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, FlatList, Alert } from "react-native";
+import { StyleSheet, Text, View, FlatList, Alert, Linking } from "react-native";
 import Modal from "react-modal";
 import CartPopUp from "../components/CartPopUp";
 import CategoryList from "../components/CategoryList";
@@ -79,7 +79,7 @@ const Dashboard = () => {
           zIndex: 3,
           position: "relative",
           alignItems: "center",
-          justifyContent: "center",
+          justifyContent: "center"
         }}
       >
         <SideBar
@@ -135,7 +135,7 @@ const Dashboard = () => {
           renderItem={({ item }) => (
             <CategoryList
               fontSize={isWeb ? _rem(8) : _rem(5)}
-              title={item.title}
+              title={item.title.toUpperCase()}
               image={item.image_link}
               style={{
                 width: !isMobile ? _width / 8 - 20 : _width / 4 - 20,
@@ -227,6 +227,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     position: "relative",
     marginTop: HEADER_MARGIN + 20,
+    backgroundColor: '#fafcfb'
   },
   headerFlatlist: {
     flex: 1,
@@ -239,6 +240,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderRadius: 20,
     marginTop: 40,
+    backgroundColor: 'white'
   },
   headerFlatlistText: {
     color: DarkAccent,

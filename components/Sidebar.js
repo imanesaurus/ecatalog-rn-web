@@ -46,7 +46,7 @@ const SideBar = ({style, size, cartHandler, badgeData}) => {
           color={AccentColor2}
         />
       </TouchableOpacity>
-      <TouchableOpacity onPress={cartHandler}>
+      {/* <TouchableOpacity onPress={cartHandler}>
         <Ionicons
           style={{ marginVertical: isMobile ? null : 5, }}
           name="md-cart"
@@ -68,7 +68,7 @@ const SideBar = ({style, size, cartHandler, badgeData}) => {
             {badgeData}
           </Text>
         )}
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </View>
   );
 };

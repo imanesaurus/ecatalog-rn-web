@@ -44,6 +44,7 @@ const ProductList = ({
         marginVertical: 20,
         borderRadius: 10,
         overflow: "hidden",
+        backgroundColor: 'white'
       }}
     >
       
@@ -105,7 +106,7 @@ const ProductList = ({
             </Text>
           </TouchableOpacity>
         </View>
-        <View style={{ flex: 1 }}>
+        {/* <View style={{ flex: 1 }}>
           <TouchableOpacity onPress={onPress}>
             <Text
               numberOfLines={1}
@@ -119,7 +120,7 @@ const ProductList = ({
               Add To Cart
             </Text>
           </TouchableOpacity>
-        </View>
+        </View> */}
       </View>
     </View>
   );

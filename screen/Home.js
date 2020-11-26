@@ -125,21 +125,34 @@ const Home = (props) => {
               }}
             />
           </View>
-
-          <Link to="/" style={{textDecoration: 'none', hover: {backgroundColor: 'red'}}}>
-            <Text
-              style={[
-                styles.headerText,
-                { fontSize: isWeb ? _rem(12) : _rem(8) },
-              ]}
+          <View>
+            <Text style={{fontStyle: 'italic', color: 'gold'}}>e-Catalogue</Text>
+            <Link
+              to="/"
+              style={{
+                textDecoration: "none",
+                hover: { backgroundColor: "red" },
+              }}
             >
-              Baju Bayi Luwuk
-            </Text>
-          </Link>
+              <Text
+                style={[
+                  styles.headerText,
+                  { fontSize: isWeb ? _rem(12) : _rem(8) },
+                ]}
+              >
+                Baju Bayi Luwuk
+              </Text>
+            </Link>
+          </View>
         </View>
         <Route exact path="/" component={Dashboard} />
         <Route path="/about" component={About} />
-        <Route path="/product/:id" component={({match}) => <Product rem={(x) => _rem(x)} match={match}/>} />
+        <Route
+          path="/product/:id"
+          component={({ match }) => (
+            <Product rem={(x) => _rem(x)} match={match} />
+          )}
+        />
 
         <View style={[styles.footer, styles.absoluteBottom]}>
           <View style={{ flexWrap: "wrap", alignItems: "center" }}>
@@ -186,7 +199,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "600",
   },
-  
+
   panel: {
     marginTop: HEADER_HEIGHT + 20,
     marginBottom: 20,
@@ -197,7 +210,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     overflow: "hidden",
   },
-  
+
   footer: {
     flexDirection: "row",
     height: height * 0.2,

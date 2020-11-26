@@ -6,6 +6,7 @@ import {
   ScrollView,
   StyleSheet,
   Text,
+  Linking,
   View,
 } from "react-native";
 import { _adjustSizes } from "../constant/adjustedSizes";
@@ -16,8 +17,14 @@ import CustomButton from "./CustomButton";
 
 const { width, height } = Dimensions.get("window");
 
-const CartPopUp = ({data, cartTotal, isTotal, onPress, close, removeCart}) => {
-
+const CartPopUp = ({
+  data,
+  cartTotal,
+  isTotal,
+  onPress,
+  close,
+  removeCart,
+}) => {
   const renderItem = ({ item, index }) => {
     return (
       <View
@@ -51,12 +58,20 @@ const CartPopUp = ({data, cartTotal, isTotal, onPress, close, removeCart}) => {
             }}
           >
             <Text style={{ fontSize: _adjustSizes(15) }}>
-            {item.count} x {item.price}
-          </Text>
+              {item.count} x {item.price}
+            </Text>
           </View>
         </View>
         <View style={{ justifyContent: "center", alignItems: "center" }}>
-          <CustomButton style={{backgroundColor: AccentColor2, color: 'white', fontSize: 15,}} title="Remove" onPress={() => removeCart(item)} />
+          <CustomButton
+            style={{
+              backgroundColor: AccentColor2,
+              color: "white",
+              fontSize: 15,
+            }}
+            title="Remove"
+            onPress={() => removeCart(item)}
+          />
         </View>
       </View>
     );
@@ -69,15 +84,17 @@ const CartPopUp = ({data, cartTotal, isTotal, onPress, close, removeCart}) => {
           boxShadow: "1px 1px 2px rgb(0,0,0,0.5)",
           marginBottom: 20,
           borderRadius: 10,
-          justifyContent: 'center',
+          justifyContent: "center",
           alignItems: "center",
         }}
       >
-        <Text style={{ fontSize: _rem(_adjustSizes(10)), fontWeight: '600' }}>
+        <Text style={{ fontSize: _rem(_adjustSizes(10)), fontWeight: "600" }}>
           Keranjang Anda{" "}
         </Text>
         <Text style={{ fontSize: _rem(_adjustSizes(8)) }}>
-         {data.length > 0 ? `Kamu memiliki ${data.length} item di keranjang `: "Keranjang anda masih kosong, silahkan liat barangnya dulu ya"}
+          {data.length > 0
+            ? `Kamu memiliki ${data.length} item di keranjang `
+            : "Keranjang anda masih kosong, silahkan liat barangnya dulu ya"}
         </Text>
       </View>
       <ScrollView
@@ -102,7 +119,9 @@ const CartPopUp = ({data, cartTotal, isTotal, onPress, close, removeCart}) => {
       >
         {isTotal ? (
           <View>
-            <Text style={{ fontSize: _rem(_adjustSizes(10)), fontWeight: "600" }}>
+            <Text
+              style={{ fontSize: _rem(_adjustSizes(10)), fontWeight: "600" }}
+            >
               Total: Rp.{cartTotal}
             </Text>
           </View>
