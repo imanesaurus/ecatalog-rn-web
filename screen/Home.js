@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import {
+  Button,
   Dimensions,
+  Modal,
   FlatList,
   Image,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View,
 } from "react-native";
 import { Link } from "react-router-dom";
@@ -13,14 +16,24 @@ import CartPopUp from "../components/CartPopUp";
 import CategoryList from "../components/CategoryList";
 import ProductList from "../components/ProductList";
 import SideBar from "../components/SideBar";
-import { DarkAccent, LittleDarkAccent } from "../constant/ColorsConst";
+import {
+  AccentColor,
+  AccentColor2,
+  DarkAccent,
+  LittleDarkAccent,
+} from "../constant/ColorsConst";
 import { isMobile } from "../constant/isMobile";
 import useDimens from "../constant/useDimens";
+import Fade from "react-reveal/Fade";
+import { Ionicons } from "@expo/vector-icons";
 
 import About from "./About";
 import Dashboard from "./Dashboard";
 import Product from "./Product";
 import Category from "./Category";
+import { ContactModal, CustomModal } from "../components/CustomModal";
+import Drawer from "./Drawer";
+import MenuBar from "../components/MenuBar";
 
 const { width, height } = Dimensions.get("window");
 const HEADER_HEIGHT = height * 0.09;
@@ -29,10 +42,16 @@ const Home = (props) => {
   const match = props;
   const [_width, _height, isWeb] = useDimens();
   const { navigation } = props;
-
+  const [modalVisible, setModalVisible] = useState(false);
+  const [drawerVisible, setDrawerVisible] = useState(false);
+  const [buttonModal, setButtonModal] = useState(0);
   const [ageFilter, setAgeFilter] = useState("Semua");
   const [color, setColor] = useState("Semua");
   const [inStock, setInstock] = useState("In Stock");
+
+  const modalHandler = () => {
+    setModalVisible(!modalVisible);
+  };
 
   const _rem = (size) => {
     if (!isWeb) {
@@ -113,10 +132,17 @@ const Home = (props) => {
               flexDirection: "row",
               paddingHorizontal: 20,
               paddingVertical: 10,
+              justifyContent: "space-between",
             },
           ]}
         >
-          <View>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
             <Image
               source={require("../assets/Logo.png")}
               style={{
@@ -125,29 +151,141 @@ const Home = (props) => {
                 marginRight: 10,
               }}
             />
+            <View>
+              <Text style={{ fontStyle: "italic", color: "gold" }}>
+                e-Catalogue
+              </Text>
+              <Link
+                to="/"
+                style={{
+                  textDecoration: "none",
+                  hover: { backgroundColor: "red" },
+                }}
+              >
+                <Text
+                  style={[
+                    styles.headerText,
+                    { fontSize: isWeb ? _rem(12) : _rem(8) },
+                  ]}
+                >
+                  Baju Bayi Luwuk
+                </Text>
+              </Link>
+            </View>
           </View>
-          <View>
-            <Text style={{ fontStyle: "italic", color: "gold" }}>
-              e-Catalogue
-            </Text>
-            <Link
-              to="/"
+          {isWeb ? (
+            <View
               style={{
-                textDecoration: "none",
-                hover: { backgroundColor: "red" },
+                marginRight: isWeb ? 100 : 5,
+                alignItems: "center",
+                flexDirection: "row",
               }}
             >
-              <Text
-                style={[
-                  styles.headerText,
-                  { fontSize: isWeb ? _rem(12) : _rem(8) },
-                ]}
-              >
-                Baju Bayi Luwuk
-              </Text>
-            </Link>
-          </View>
+              <MenuBar
+                title="Tentang Kami"
+                menuHandler={() => {
+                  setButtonModal(1);
+                  modalHandler();
+                }}
+                isWeb
+                _rem={_rem}
+              />
+              <MenuBar
+                title="Kontak"
+                menuHandler={() => {
+                  setButtonModal(2);
+                  modalHandler();
+                }}
+                isWeb={isWeb}
+                _rem={_rem}
+              />
+            </View>
+          ) : (
+            <TouchableOpacity onPress={() => setDrawerVisible(!drawerVisible)}>
+              <Ionicons
+                style={{ marginVertical: isMobile ? null : 5 }}
+                name="md-menu"
+                size={30}
+                color={DarkAccent}
+              />
+            </TouchableOpacity>
+          )}
         </View>
+        <CustomModal
+          modalHandler={modalHandler}
+          modalVisible={modalVisible}
+          bgColor={"white"}
+          width={isWeb ? _width / 2 : _width * 0.9}
+          body={
+            buttonModal === 1 ? (
+              <View style={{ alignItems: "center", justifyContent: "center" }}>
+                <Text
+                  style={{
+                    color: LittleDarkAccent,
+                    fontSize: isWeb ? _rem(16) : _rem(10),
+                  }}
+                >
+                  Baju Bayi Luwuk
+                </Text>
+                <View
+                  style={{
+                    width: '80%',
+                    height: 10,
+                    borderBottomWidth: isWeb ? 1 : 0.7,
+                    borderBottomColor: LittleDarkAccent,
+                  }}
+                />
+                <Text
+                  style={{
+                    paddingTop: 10,
+                    textAlign: "left",
+                    marginBottom: 30,
+                  }}
+                >
+                  Baju Bayi Luwuk adalah Online Shop di khususkan untuk Pakaian,
+                  dan Peralatan Bayi. Beroperasi di wilayah Luwuk Banggai
+                  Sulawesi Tengah. Didirikan pada tahun 2020, oleh Riskyanti
+                  Lanyumba.{" "}
+                </Text>
+                <Text style={{fontSize: 14, fontStyle: "italic"}}>
+                Manusia boleh berencana, tapi saldo juga yang menentukan"
+                </Text>
+                <Text style={{marginBottom: 20, fontSize: 15, fontWeight: 700}}>
+                - Riskyanti Lanyumba -
+                </Text>
+                
+                <Button
+                
+                  color={AccentColor}
+                  title="Tutup"
+                  onPress={() => {
+                    modalHandler();
+                    setButtonModal(0);
+                  }}
+                />
+              </View>
+            ) : (
+              buttonModal === 2 && (
+                <ContactModal _rem={_rem} isWeb={isWeb} fontSize={_rem(10)} />
+              )
+            )
+          }
+        />
+        <Drawer
+          drawerHandler={() => setDrawerVisible(!drawerVisible)}
+          visible={drawerVisible}
+          width={_width / 2}
+          height={_height}
+          modalHandler={(x) => {
+            setButtonModal(x);
+            modalHandler();
+            setDrawerVisible(!drawerVisible);
+          }}
+          isWeb={isWeb}
+          _rem={_rem}
+          fontSize={_rem(2)}
+        />
+
         <Route exact path="/" component={Dashboard} />
         <Route path="/about" component={About} />
         <Route

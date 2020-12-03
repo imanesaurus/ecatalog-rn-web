@@ -13,6 +13,7 @@ import {
 } from "../constant/ColorsConst";
 import CustomButton from "../components/CustomButton";
 import { Ionicons } from "@expo/vector-icons";
+import Fade from 'react-reveal/Fade'
 
 const Product = ({ match, rem }) => {
   const [_width, _height, isWeb] = useDimens();
@@ -21,100 +22,102 @@ const Product = ({ match, rem }) => {
   const item = data.products.find((x) => x.id === id);
 
   return (
-    <View style={[styles.container]}>
-      <Link
-        to="/"
-        style={{
-          marginLeft: HEADER_MARGIN,
-          textDecoration: "none",
-          marginTop: HEADER_MARGIN / 4,
-          marginBottom: 10,
-        }}
-      >
-        <View
+    <Fade bottom>
+      <View style={[styles.container]}>
+        <Link
+          to="/"
           style={{
-            backgroundColor: AccentColor,
-            width: isWeb ? _width* 0.06 : _width* 0.15,
-            flexDirection: 'row',
-            alignItems: "center",
-            justifyContent: "center",
-            boxShadow: shadow(2, 0.2),
-            borderRadius: 10,
-            paddingVertical: 5,
+            marginLeft: HEADER_MARGIN,
+            textDecoration: "none",
+            marginTop: HEADER_MARGIN / 4,
+            marginBottom: 10,
           }}
         >
-          <Ionicons
-            name="ios-arrow-round-back"
-            size={15}
-            color="white"
-            style={{ marginRight: 5 }}
-          />
-          <Text style={{color: 'white'}}>Kembali</Text>
-        </View>
-      </Link>
-      <View style={[styles.box]}>
-        <View
-          style={[
-            styles.imageContainer,
-            {
-              width: _height / 2,
-              height: _height / 2,
-            },
-          ]}
-        >
-          <Image source={{ uri: item.image_link }} style={styles.image} />
-        </View>
-        <View
-          style={{
-            flex: 1,
-            paddingHorizontal: HEADER_MARGIN,
-            alignItems: isWeb ? "flex-start" : "center",
-            justifyContent: "center",
-            width: "50%",
-          }}
-        >
-          <Text
+          <View
+            style={{
+              backgroundColor: AccentColor,
+              width: isWeb ? _width * 0.06 : _width * 0.15,
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "center",
+              boxShadow: shadow(2, 0.2),
+              borderRadius: 10,
+              paddingVertical: 5,
+            }}
+          >
+            <Ionicons
+              name="ios-arrow-round-back"
+              size={15}
+              color="white"
+              style={{ marginRight: 5 }}
+            />
+            <Text style={{ color: "white" }}>Kembali</Text>
+          </View>
+        </Link>
+        <View style={[styles.box]}>
+          <View
             style={[
-              styles.title,
+              styles.imageContainer,
               {
-                marginTop: isWeb? null : 10,
-                textAlign: isWeb?  "left" : 'center',
-                fontSize: isWeb ? rem(12) : rem(10),
+                width: _height / 2,
+                height: _height / 2,
               },
             ]}
           >
-            {item.title}
-          </Text>
-          <View style={{ height: "50%" }}>
-            <Text style={{ color: "gray" }}>Description:</Text>
-            <Text
-              style={{
-                flex: 1,
-                marginVertical: 5,
-                boxShadow: shadow(5, 0.2),
-                borderRadius: 10,
-                fontSize: isWeb ? 14 : rem(4),
-                textAlign: "justify",
-                paddingVertical: 5,
-                paddingHorizontal: 10,
-              }}
-            >
-              {item.description}
-            </Text>
+            <Image source={{ uri: item.image_link }} style={styles.image} />
           </View>
-          <CustomButton
-            title="Add to Cart"
-            bgcolor={AccentColor2}
-            textColor="white"
+          <View
             style={{
-              marginTop: 20,
+              flex: 1,
+              paddingHorizontal: HEADER_MARGIN,
+              alignItems: isWeb ? "flex-start" : "center",
               justifyContent: "center",
-              alignItems: "center",
+              width: "50%",
             }}
-          />
+          >
+            <Text
+              style={[
+                styles.title,
+                {
+                  marginTop: isWeb ? null : 10,
+                  textAlign: isWeb ? "left" : "center",
+                  fontSize: isWeb ? rem(12) : rem(10),
+                },
+              ]}
+            >
+              {item.title}
+            </Text>
+            <View style={{ height: "50%" }}>
+              <Text style={{ color: "gray" }}>Description:</Text>
+              <Text
+                style={{
+                  flex: 1,
+                  marginVertical: 5,
+                  boxShadow: shadow(5, 0.2),
+                  borderRadius: 10,
+                  fontSize: isWeb ? 14 : rem(4),
+                  textAlign: "justify",
+                  paddingVertical: 5,
+                  paddingHorizontal: 10,
+                }}
+              >
+                {item.description}
+              </Text>
+            </View>
+            {/* <CustomButton
+              title="Add to Cart"
+              bgcolor={AccentColor2}
+              textColor="white"
+              style={{
+                marginTop: 20,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            /> */}
+          </View>
         </View>
       </View>
-    </View>
+    </Fade>
   );
 };
 

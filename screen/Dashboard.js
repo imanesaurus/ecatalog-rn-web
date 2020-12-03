@@ -1,6 +1,14 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, FlatList, Alert, Linking } from "react-native";
-import Modal from "react-modal";
+import {
+  StyleSheet,
+  Text,
+  View,
+  FlatList,
+  Alert,
+  Linking,
+  Button,
+  Modal,
+} from "react-native";
 import CartPopUp from "../components/CartPopUp";
 import CategoryList from "../components/CategoryList";
 import ProductList from "../components/ProductList";
@@ -9,6 +17,8 @@ import useDimens from "../constant/useDimens";
 import data from "../data/data.json";
 import { DarkAccent, LittleDarkAccent } from "../constant/ColorsConst";
 import { isMobile, HEADER_MARGIN, HEADER_HEIGHT } from "../constant/isMobile";
+import Slide from "react-reveal/Slide";
+import Fade from "react-reveal/Fade";
 
 const Dashboard = () => {
   const availableProducts = data.products;
@@ -30,7 +40,7 @@ const Dashboard = () => {
 
   const modalHandler = () => {
     setModalVisible(!modalVisible);
-  }
+  };
   const addTocart = (item) => {
     let currentCart = cartItems;
     let upCart;
@@ -79,7 +89,7 @@ const Dashboard = () => {
           zIndex: 3,
           position: "relative",
           alignItems: "center",
-          justifyContent: "center"
+          justifyContent: "center",
         }}
       >
         <SideBar
@@ -89,6 +99,7 @@ const Dashboard = () => {
           badgeData={cartItems.length}
         />
       </View>
+
       <View style={styles.body}>
         {/* <View style={styles.panel}>
           <Image
@@ -108,55 +119,61 @@ const Dashboard = () => {
             cartTotal={cartTotal(total)}
           />
         ) : null}
+
         <View style={styles.headerFlatlist}>
-          <Text
-            style={[
-              styles.headerFlatlistText,
-              {
-                fontSize: isWeb ? _rem(8) : _rem(8),
-                paddingVertical: 10,
-              },
-            ]}
-          >
-            Kategori
-          </Text>
+          <Fade left>
+            <Text
+              style={[
+                styles.headerFlatlistText,
+                {
+                  fontSize: isWeb ? _rem(22) : _rem(12),
+                  paddingVertical: 10,
+                },
+              ]}
+            >
+              Pilih kategori favoritmu!
+            </Text>
+          </Fade>
         </View>
-        <FlatList
-          numColumns={4}
-          contentContainerStyle={{
-            flex: 1,
-            justifyContent: "center",
-            alignItems: "center",
-            paddingTop: 20,
-            marginTop: 20,
-          }}
-          data={category}
-          keyExtractor={(item, index) => item.cid}
-          renderItem={({ item }) => (
-            <CategoryList
-              fontSize={isWeb ? _rem(8) : _rem(5)}
-              title={item.title.toUpperCase()}
-              image={item.image_link}
-              style={{
-                width: !isMobile ? _width / 8 - 20 : _width / 4 - 20,
-                height: !isMobile ? _width / 8 - 20 : _width / 4 - 20,
-                minWidth: 60,
-                minHeight: 60,
-              }}
-              onPress={modalHandler}
-              cid={item.cid}
-            />
-          )}
-        />
-        <Text
-          style={{
-            fontSize: _rem(10),
-            color: LittleDarkAccent,
-            alignSelf: "center",
-          }}
-        >
-          Produk Terbaru
-        </Text>
+        <Slide bottom cascade>
+          <FlatList
+            numColumns={4}
+            contentContainerStyle={{
+              flex: 1,
+              justifyContent: "center",
+              alignItems: "center",
+              paddingTop: 20,
+              marginTop: 20,
+            }}
+            data={category}
+            keyExtractor={(item, index) => item.cid}
+            renderItem={({ item }) => (
+              <CategoryList
+                fontSize={isWeb ? _rem(8) : _rem(5)}
+                title={item.title.toUpperCase()}
+                image={item.image_link}
+                style={{
+                  width: !isMobile ? _width / 8 - 20 : _width / 4 - 20,
+                  height: !isMobile ? _width / 8 - 20 : _width / 4 - 20,
+                  minWidth: 60,
+                  minHeight: 60,
+                }}
+                cid={item.cid}
+              />
+            )}
+          />
+        </Slide>
+        <Fade left>
+          <Text
+            style={{
+              fontSize: isWeb ? _rem(22) : _rem(15),
+              color: LittleDarkAccent,
+              alignSelf: "center",
+            }}
+          >
+            Produk Terbaru
+          </Text>
+        </Fade>
         {/* <View
           style={{
             width: isMobile ? width * 0.9 : width * 0.5,
@@ -184,6 +201,7 @@ const Dashboard = () => {
             title={"In Stock"}
           />
         </View> */}
+
         <FlatList
           contentContainerStyle={{
             flex: 1,
@@ -200,18 +218,20 @@ const Dashboard = () => {
           data={products.reverse().slice(0, 8)}
           keyExtractor={(item, index) => item}
           renderItem={({ item }) => (
-            <ProductList
-              style={{
-                width: !isWeb ? 150 : _width / 6,
-                height: !isWeb ? 350 / 2 : _width / 5 - 20,
-              }}
-              fontSize={!isWeb ? _rem(5) : _rem(8)}
-              title={item.title}
-              image={item.image_link}
-              price={item.price}
-              onPress={() => addTocart(item)}
-              item={item}
-            />
+            <Slide bottom cascade>
+              <ProductList
+                style={{
+                  width: !isWeb ? 150 : _width / 6,
+                  height: !isWeb ? 350 / 2 : _width / 5 - 20,
+                }}
+                fontSize={!isWeb ? _rem(5) : _rem(8)}
+                title={item.title}
+                image={item.image_link}
+                price={item.price}
+                onPress={() => addTocart(item)}
+                item={item}
+              />
+            </Slide>
           )}
         />
       </View>
@@ -228,20 +248,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
     position: "relative",
     marginTop: HEADER_MARGIN + 20,
-    backgroundColor: '#fafcfb'
+    backgroundColor: "#fafcfb",
   },
   headerFlatlist: {
     flex: 1,
     // width: isMobile ? "30%" : "10%",
     // height: HEADER_HEIGHT + 10,
-    justifyContent: "center",
-    alignItems: "center",
-    boxShadow: "2px 2px 5px rgb(0,0,0,0.5)",
     paddingHorizontal: 20,
     paddingVertical: 10,
     borderRadius: 20,
     marginTop: 40,
-    backgroundColor: 'white'
   },
   headerFlatlistText: {
     color: DarkAccent,
