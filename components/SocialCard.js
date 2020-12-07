@@ -28,14 +28,14 @@ const SocialCard = ({ isWeb, _rem, icon, title, color, link, bgcolor }) => {
           <Ionicons
             style={{ marginVertical: !isWeb ? null : 5 }}
             name={icon}
-            size={38}
+            size={35}
             color={color}
           />
           <Text
             style={{
               marginLeft: 10,
               color: "white",
-              fontSize: isWeb ? _rem(16) : _rem(9),
+              fontSize: isWeb ? _rem(14) : _rem(9),
             }}
           >
             {title}
@@ -50,7 +50,7 @@ export default SocialCard;
 
 const styles = StyleSheet.create({
   socialCard: {
-    width: "70%",
+    width: "60%",
     height: 40,
     marginTop: 20,
     justifyContent: "center",

@@ -36,7 +36,7 @@ const Product = ({ match, rem }) => {
           <View
             style={{
               backgroundColor: AccentColor,
-              width: isWeb ? _width * 0.06 : _width * 0.15,
+              width: isWeb ? _width * 0.06 : _width * 0.18,
               flexDirection: "row",
               alignItems: "center",
               justifyContent: "center",
