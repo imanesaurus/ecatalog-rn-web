@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import {
   Button,
   Dimensions,
-  Modal,
-  FlatList,
   Image,
   StyleSheet,
   Text,

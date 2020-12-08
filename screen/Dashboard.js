@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -101,15 +101,6 @@ const Dashboard = () => {
       </View>
 
       <View style={styles.body}>
-        {/* <View style={styles.panel}>
-          <Image
-            source={{
-              uri:
-                "https://scontent.fcgk8-2.fna.fbcdn.net/v/t1.0-9/s1080x2048/118214863_10220242973257913_3054991116457242156_o.jpg?_nc_cat=106&_nc_sid=e3f864&_nc_eui2=AeF2yXoK0wpvMhsIWItTzIY_QsIfyZM6uFNCwh_Jkzq4U-hHxpYUZe45cAGNbLPEVZI&_nc_ohc=8ApR30iMHRoAX88_276&_nc_ht=scontent.fcgk8-2.fna&tp=7&oh=7e4a9a4264aaf7a2465575a9d3175570&oe=5F8906C0",
-            }}
-            style={{ resizeMode: "cover", width: "100%", height: "100%" }}
-          ></Image>
-        </View> */}
         {visible ? (
           <CartPopUp
             isTotal={total > 0}
@@ -206,17 +197,18 @@ const Dashboard = () => {
           contentContainerStyle={{
             flex: 1,
             justifyContent: "center",
-            flexWrap: "wrap",
+            // flexWrap: "wrap",
             alignItems: "center",
             marginHorizontal: !isWeb ? null : 100,
             // paddingBottom: "25%",
           }}
           sscrollEnabled
           showsVerticalScrollIndicator={false}
-          // numColumns={isMobile ? 2 : 4}
-          horizontal
+          numColumns={isMobile ? 2 : 4}
+          // horizontal
           data={products.reverse().slice(0, 8)}
-          keyExtractor={(item, index) => item}
+          // data={products}
+          keyExtractor={(item, index) => item.id}
           renderItem={({ item }) => (
             <Slide bottom cascade>
               <ProductList
