@@ -7,6 +7,8 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Animated,
+  Easing,
 } from "react-native";
 import { Link } from "react-router-dom";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
@@ -46,6 +48,33 @@ const Home = (props) => {
   const [ageFilter, setAgeFilter] = useState("Semua");
   const [color, setColor] = useState("Semua");
   const [inStock, setInstock] = useState("In Stock");
+  const slide = new Animated.Value(drawerVisible ? -(_width / 2) : -10);
+
+  const slideAnim = () => {
+    Animated.spring(slide, {
+      toValue: -10,
+      // tension: 2,
+      duration: 5000,
+      useNativeDriver: true,
+      easing: Easing.back,
+    }).start();
+  };
+
+  const slideAnimOut = () => {
+    Animated.spring(slide, {
+      toValue: -250,
+      duration: 200,
+      useNativeDriver: true,
+      easing: Easing.linear,
+    }).start();
+  };
+
+  const dismissModal = async () => {
+    await slideAnimOut();
+    setTimeout(() => {
+      setDrawerVisible(!drawerVisible);
+    }, 180);
+  };
 
   const modalHandler = () => {
     setModalVisible(!modalVisible);
@@ -199,7 +228,12 @@ const Home = (props) => {
               />
             </View>
           ) : (
-            <TouchableOpacity onPress={() => setDrawerVisible(!drawerVisible)}>
+            <TouchableOpacity
+              onPress={() => {
+                setDrawerVisible(!drawerVisible);
+                slideAnim();
+              }}
+            >
               <Ionicons
                 style={{ marginVertical: isMobile ? null : 5 }}
                 name="md-menu"
@@ -227,7 +261,7 @@ const Home = (props) => {
                 </Text>
                 <View
                   style={{
-                    width: '80%',
+                    width: "80%",
                     height: 10,
                     borderBottomWidth: isWeb ? 1 : 0.7,
                     borderBottomColor: LittleDarkAccent,
@@ -245,15 +279,16 @@ const Home = (props) => {
                   Sulawesi Tengah. Didirikan pada tahun 2020, oleh Riskyanti
                   Lanyumba.{" "}
                 </Text>
-                <Text style={{fontSize: 14, fontStyle: "italic"}}>
-                Manusia boleh berencana, tapi saldo juga yang menentukan"
+                <Text style={{ fontSize: 14, fontStyle: "italic" }}>
+                  Manusia boleh berencana, tapi saldo juga yang menentukan"
                 </Text>
-                <Text style={{marginBottom: 20, fontSize: 15, fontWeight: 700}}>
-                - Riskyanti Lanyumba -
+                <Text
+                  style={{ marginBottom: 20, fontSize: 15, fontWeight: 700 }}
+                >
+                  - Riskyanti Lanyumba -
                 </Text>
-                
+
                 <Button
-                
                   color={AccentColor}
                   title="Tutup"
                   onPress={() => {
@@ -270,10 +305,12 @@ const Home = (props) => {
           }
         />
         <Drawer
-          drawerHandler={() => setDrawerVisible(!drawerVisible)}
+          slide={slide}
+          drawerHandler={dismissModal}
+          slideAnim={slideAnim}
           visible={drawerVisible}
-          width={_width / 2}
-          height={_height}
+          _width={_width}
+          _height={_height}
           modalHandler={(x) => {
             setButtonModal(x);
             modalHandler();
@@ -298,7 +335,6 @@ const Home = (props) => {
             <Category rem={(x) => _rem(x)} match={match} />
           )}
         />
-
         <View style={[styles.footer, styles.absoluteBottom]}>
           <View style={{ flexWrap: "wrap", alignItems: "center" }}>
             <Image
