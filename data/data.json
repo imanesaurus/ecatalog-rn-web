@@ -501,5 +501,25 @@
         "title": "Faceshield",
         "image_link": "https://picsum.photos/id/139/200/300"
       }
+    ],
+    "Promo": [
+      {
+        "pid": "1",
+        "title": "Promo Desember 2020",
+        "description": "Gratis Botol Minuman Setiap Pembelian di atas Rp. 100.000",
+        "image_link": "https://picsum.photos/200/300"
+      },
+      {
+        "pid": "2",
+        "title": "Diskon 20%",
+        "description": "Diskon 20% Setiap Pembelian 1 Set Baju",
+        "image_link": "https://picsum.photos/200/300"
+      },
+      {
+        "pid": "3",
+        "title": "Promo Reseller",
+        "description": "Dapatkan Potongan harga yang banyak banget, jika join reseller di Bulan Desember 2020. Ayo Buruan!",
+        "image_link": "https://picsum.photos/200/300"
+      }
     ]
 }

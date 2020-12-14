@@ -10,7 +10,6 @@ export default () => {
     const _height = _dimensions.window.height;
   
     const isWeb = _width > _height;
-    console.log(_dimensions.window)
   
     const onChangeDimens = ({ window, screen }) => {
       setDimensions({ window, screen });
@@ -21,7 +20,7 @@ export default () => {
       return () => {
         Dimensions.removeEventListener("change", onChangeDimens);
       };
-    });
+    }, [_width, _height]);
 
     return [_width, _height, isWeb, _dimensions]
 }

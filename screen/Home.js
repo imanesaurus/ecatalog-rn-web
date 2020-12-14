@@ -1,39 +1,31 @@
+import { Ionicons } from "@expo/vector-icons";
 import React, { useState } from "react";
 import {
+  Animated,
   Button,
   Dimensions,
+  Easing,
   Image,
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
-  Animated,
-  Easing,
+  View
 } from "react-native";
-import { Link } from "react-router-dom";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
-import CartPopUp from "../components/CartPopUp";
-import CategoryList from "../components/CategoryList";
-import ProductList from "../components/ProductList";
-import SideBar from "../components/SideBar";
+import { BrowserRouter, Link, Route } from "react-router-dom";
+import { ContactModal, CustomModal } from "../components/CustomModal";
+import MenuBar from "../components/MenuBar";
 import {
   AccentColor,
-  AccentColor2,
   DarkAccent,
-  LittleDarkAccent,
+  LittleDarkAccent
 } from "../constant/ColorsConst";
 import { isMobile } from "../constant/isMobile";
 import useDimens from "../constant/useDimens";
-import Fade from "react-reveal/Fade";
-import { Ionicons } from "@expo/vector-icons";
-
 import About from "./About";
-import Dashboard from "./Dashboard";
-import Product from "./Product";
 import Category from "./Category";
-import { ContactModal, CustomModal } from "../components/CustomModal";
+import Dashboard from "./Dashboard";
 import Drawer from "./Drawer";
-import MenuBar from "../components/MenuBar";
+import Product from "./Product";
 
 const { width, height } = Dimensions.get("window");
 const HEADER_HEIGHT = height * 0.09;
@@ -145,7 +137,7 @@ const Home = (props) => {
               flex: 1,
               height: height * 0.02,
               backgroundColor: DarkAccent,
-              position: "fixed",
+              // position: "fixed",
               zIndex: 4,
             },
           ]}
@@ -261,6 +253,7 @@ const Home = (props) => {
                 </Text>
                 <View
                   style={{
+                    position: 'absolute',
                     width: "80%",
                     height: 10,
                     borderBottomWidth: isWeb ? 1 : 0.7,

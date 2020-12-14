@@ -11,15 +11,6 @@ import {
 import Slide from "react-reveal/Slide";
 import MenuBar from "../components/MenuBar";
 
-// const opacity = new Animated.Value(0);
-
-// const fadeIn = () => {
-//   Animated.timing(opacity, {
-//     toValue: 1,
-//     duration: 200
-//   });
-// };
-
 const Drawer = ({
   visible,
   _width,
@@ -30,7 +21,6 @@ const Drawer = ({
   isWeb,
   _rem,
   slideAnim,
-  style,
 }) => {
   return (
     <Modal onShow={slideAnim} onRequestClose={modalHandler} visible={visible} transparent={true}>
@@ -80,8 +70,5 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     position: "absolute",
     top: 0,
-    // zIndex: 100
-    // top: 0,
-    // right: 0,
   },
 });

@@ -19,12 +19,16 @@ import { DarkAccent, LittleDarkAccent } from "../constant/ColorsConst";
 import { isMobile, HEADER_MARGIN, HEADER_HEIGHT } from "../constant/isMobile";
 import Slide from "react-reveal/Slide";
 import Fade from "react-reveal/Fade";
+import CarouselItem from "../components/Carousel-item";
+import CarouselMenu from "../components/CarouselMenu";
 
 const Dashboard = () => {
   const availableProducts = data.products;
   const availableCategory = data.categories;
+  const availablePromo = data.Promo;
   const [products, setProducts] = useState(availableProducts);
   const [category, setCategory] = useState(availableCategory);
+  const [promo, setPromo] = useState(availablePromo);
   const [_width, _height, isWeb] = useDimens();
   const [visible, setVisible] = useState(false);
   const [cartItems, setCartItems] = useState([]);
@@ -99,7 +103,6 @@ const Dashboard = () => {
           badgeData={cartItems.length}
         />
       </View>
-
       <View style={styles.body}>
         {visible ? (
           <CartPopUp
@@ -110,7 +113,25 @@ const Dashboard = () => {
             cartTotal={cartTotal(total)}
           />
         ) : null}
+        <View
+          style={{
+            // flex: 1,
+            // height: _height / 1.8,
+            // width: _width * 0.8,
+            alignItems: "center",
+            justifyContent: "center",
+            // flexGrow: 1,
+            width: _width * 0.5,
 
+          }}
+        >
+          <CarouselMenu
+            item={promo}
+            _width={_width}
+            _height={_height}
+            isWeb={isWeb}
+          />
+        </View>
         <View style={styles.headerFlatlist}>
           <Fade left>
             <Text
@@ -195,7 +216,7 @@ const Dashboard = () => {
 
         <FlatList
           contentContainerStyle={{
-            flex: 1,
+            // flex: 1,
             justifyContent: "center",
             // flexWrap: "wrap",
             alignItems: "center",
@@ -243,7 +264,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fafcfb",
   },
   headerFlatlist: {
-    flex: 1,
+    // flexGrow: 1,
     // width: isMobile ? "30%" : "10%",
     // height: HEADER_HEIGHT + 10,
     paddingHorizontal: 20,
