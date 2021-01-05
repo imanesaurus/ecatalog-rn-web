@@ -50,7 +50,7 @@ const ProductList = ({
       
         {/* <Link to={"/product/" + item.id} style={{textDecoration:"none", flex: 1,}}> */}
         <Link
-          to={"/product/" + item.id}
+          to={"/product/" + item.idMeal}
           style={{
             flex: 1,
             width: "100%",

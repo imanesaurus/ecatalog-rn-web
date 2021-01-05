@@ -1,5 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FlatList, StyleSheet, Text, View } from "react-native";
 import { Link } from "react-router-dom";
 import ProductList from "../components/ProductList";
@@ -8,11 +8,23 @@ import useDimens from "../constant/useDimens";
 import data from "../data/data.json";
 import Slide from "react-reveal/Slide";
 import Fade from "react-reveal/Fade";
+import priceInt from "../constant/function";
 
 const Category = ({ match, rem }) => {
   const [_width, _height, isWeb] = useDimens();
+  const [meals, setNewMeals] = useState([])
   const cid = match.params.cid;
-  const items = data.categories.find((x) => x.cid === cid);
+  // const items = data.categories.find((x) => x.cid === cid);
+
+  const fetchMeals = async () => {
+    const mealsData = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${cid}`);
+    const _meals = await mealsData.json();
+    setNewMeals(_meals);
+  }
+
+  useEffect(() => {
+    fetchMeals();
+  }, [])
 
   return (
     <View style={styles.MainWrapper}>
@@ -25,7 +37,7 @@ const Category = ({ match, rem }) => {
             },
           ]}
         >
-          {items.title}
+          {cid.charAt(0).toUpperCase() + cid.slice(1)}
         </Text>
       </Fade>
       {/* <Text>{item.title}</Text> */}
@@ -63,9 +75,7 @@ const Category = ({ match, rem }) => {
           }}
           numColumns={isWeb ? 4 : 2}
           // horizontal
-          data={data.products.filter(
-            (p) => p.category.toLowerCase() === items.title.toLowerCase()
-          )}
+          data={meals.meals}
           keyExtractor={(item, index) => item.cid}
           renderItem={({ item }) => (
             <ProductList
@@ -76,9 +86,9 @@ const Category = ({ match, rem }) => {
                 height: !isWeb ? 350 / 2 : _width / 5 - 20,
               }}
               fontSize={!isWeb ? rem(5) : rem(8)}
-              title={item.title}
-              image={item.image_link}
-              price={item.price}
+              title={item.strMeal}
+              image={item.strMealThumb}
+              price={priceInt(10000, 50000)}
               item={item}
             />
           )}

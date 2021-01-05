@@ -21,13 +21,16 @@ import Slide from "react-reveal/Slide";
 import Fade from "react-reveal/Fade";
 import CarouselItem from "../components/Carousel-item";
 import CarouselMenu from "../components/CarouselMenu";
+import priceInt from "../constant/function";
 
 const Dashboard = () => {
   const availableProducts = data.products;
   const availableCategory = data.categories;
   const availablePromo = data.Promo;
   const [products, setProducts] = useState(availableProducts);
+  const [meals, setMeals] = useState([]);
   const [category, setCategory] = useState(availableCategory);
+  const [newCategory, setNewCategory] = useState([]);
   const [promo, setPromo] = useState(availablePromo);
   const [_width, _height, isWeb] = useDimens();
   const [visible, setVisible] = useState(false);
@@ -42,6 +45,22 @@ const Dashboard = () => {
     }
   };
 
+  const fetchData = async () => {
+    const categoryData = await fetch('https://www.themealdb.com/api/json/v1/1/categories.php');
+    const fCategory = await categoryData.json();
+    setNewCategory(fCategory);
+  }
+
+  const fetchNewMeals = async () => {
+    const newMealsData = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?f=d');
+    const _newMeals = await newMealsData.json();
+    setMeals(_newMeals);
+  }
+  useEffect(() => {
+    fetchData();
+    fetchNewMeals();
+  }, [])
+  
   const modalHandler = () => {
     setModalVisible(!modalVisible);
   };
@@ -121,7 +140,7 @@ const Dashboard = () => {
             alignItems: "center",
             justifyContent: "center",
             // flexGrow: 1,
-            width: _width * 0.5,
+            width: isWeb ? _width * 0.5 : _width,
 
           }}
         >
@@ -157,20 +176,20 @@ const Dashboard = () => {
               paddingTop: 20,
               marginTop: 20,
             }}
-            data={category}
-            keyExtractor={(item, index) => item.cid}
+            data={newCategory.categories}
+            keyExtractor={(item) => item.id}
             renderItem={({ item }) => (
               <CategoryList
                 fontSize={isWeb ? _rem(8) : _rem(5)}
-                title={item.title.toUpperCase()}
-                image={item.image_link}
+                title={item.strCategory.toUpperCase()}
+                image={item.strCategoryThumb}
                 style={{
                   width: !isMobile ? _width / 8 - 20 : _width / 4 - 20,
                   height: !isMobile ? _width / 8 - 20 : _width / 4 - 20,
                   minWidth: 60,
                   minHeight: 60,
                 }}
-                cid={item.cid}
+                cid={item.strCategory.toLowerCase()}
               />
             )}
           />
@@ -183,7 +202,7 @@ const Dashboard = () => {
               alignSelf: "center",
             }}
           >
-            Produk Terbaru
+            Menu Terbaru
           </Text>
         </Fade>
         {/* <View
@@ -227,7 +246,8 @@ const Dashboard = () => {
           showsVerticalScrollIndicator={false}
           numColumns={isMobile ? 2 : 4}
           // horizontal
-          data={products.reverse().slice(0, 8)}
+          // data={products.reverse().slice(0, 8)}
+          data={meals.meals}
           // data={products}
           keyExtractor={(item, index) => item.id}
           renderItem={({ item }) => (
@@ -238,9 +258,9 @@ const Dashboard = () => {
                   height: !isWeb ? 350 / 2 : _width / 5 - 20,
                 }}
                 fontSize={!isWeb ? _rem(5) : _rem(8)}
-                title={item.title}
-                image={item.image_link}
-                price={item.price}
+                title={item.strMeal}
+                image={item.strMealThumb}
+                price={priceInt(10000, 20000)}
                 onPress={() => addTocart(item)}
                 item={item}
               />
