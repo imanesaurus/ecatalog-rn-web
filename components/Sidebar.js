@@ -7,6 +7,7 @@ import {
   Linking,
   Platform,
   Dimensions,
+  Alert,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { AccentColor2, AccentColor } from "../constant/ColorsConst";
@@ -19,10 +20,14 @@ const SideBar = ({style, size, cartHandler, badgeData}) => {
   // const onPress = (url) => {
   //     Linking.openURL(link)
   // };
+  const alertBox = (x) => {
+    alert(`Hello you clicked ${x} Sidebar Menu`)
+  };
 
   return (
     <View style={[styles.sidebar, style]}>
-      <TouchableOpacity onPress={() => Linking.openURL(FB_LINK)}>
+      {/* <TouchableOpacity onPress={() => Linking.openURL(FB_LINK)}> */}
+      <TouchableOpacity onPress={() => alertBox('Facebook')}>
         <Ionicons
           style={{ marginVertical: isMobile ? null : 5 }}
           name="logo-facebook"
@@ -30,7 +35,8 @@ const SideBar = ({style, size, cartHandler, badgeData}) => {
           color={AccentColor2}
         />
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => Linking.openURL(FB_LINK)}>
+      {/* <TouchableOpacity onPress={() => Linking.openURL(FB_LINK)}> */}
+      <TouchableOpacity onPress={() => alertBox('Instagram')}>
         <Ionicons
           style={{ marginVertical: isMobile ? null : 5 }}
           name="logo-instagram"
@@ -38,7 +44,8 @@ const SideBar = ({style, size, cartHandler, badgeData}) => {
           color={AccentColor2}
         />
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => Linking.openURL(WA_LINK)}>
+      {/* <TouchableOpacity onPress={() => Linking.openURL(WA_LINK)}> */}
+      <TouchableOpacity onPress={() => alertBox('Whatsapp')}>
         <Ionicons
           style={{ marginVertical: isMobile ? null : 5 }}
           name="logo-whatsapp"

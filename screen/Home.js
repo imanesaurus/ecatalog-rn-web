@@ -268,8 +268,7 @@ const Home = (props) => {
                 >
                   Snow Motion Cafe adalah Cafe yang dengan vibe modern,
                   dan design interior yang kece banget. Beroperasi di wilayah Luwuk Banggai
-                  Sulawesi Tengah. Didirikan pada tahun 2020, oleh Riskyanti
-                  Lanyumba.{" "}
+                  Sulawesi Tengah. Didirikan pada tahun 2020.{" "}
                 </Text>
                 <Text style={{ fontSize: 14, fontStyle: "italic" }}>
                   Manusia boleh berencana, tapi saldo juga yang menentukan"
@@ -277,7 +276,7 @@ const Home = (props) => {
                 <Text
                   style={{ marginBottom: 20, fontSize: 15, fontWeight: 700 }}
                 >
-                  - Riskyanti Lanyumba -
+                  - Seseorang -
                 </Text>
 
                 <Button
