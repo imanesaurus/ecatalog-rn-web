@@ -162,7 +162,7 @@ const Home = (props) => {
             }}
           >
             <Image
-              source={require("../assets/Logo.png")}
+              source={require("../assets/cafe.png")}
               style={{
                 width: _height * 0.09,
                 height: _height * 0.09,
@@ -186,7 +186,7 @@ const Home = (props) => {
                     { fontSize: isWeb ? _rem(12) : _rem(8) },
                   ]}
                 >
-                  Baju Bayi Luwuk
+                  Snow Motion Cafe
                 </Text>
               </Link>
             </View>
@@ -266,8 +266,8 @@ const Home = (props) => {
                     marginBottom: 30,
                   }}
                 >
-                  Baju Bayi Luwuk adalah Online Shop di khususkan untuk Pakaian,
-                  dan Peralatan Bayi. Beroperasi di wilayah Luwuk Banggai
+                  Snow Motion Cafe adalah Cafe yang dengan vibe modern,
+                  dan design interior yang kece banget. Beroperasi di wilayah Luwuk Banggai
                   Sulawesi Tengah. Didirikan pada tahun 2020, oleh Riskyanti
                   Lanyumba.{" "}
                 </Text>
@@ -331,7 +331,7 @@ const Home = (props) => {
           <View style={{ flexWrap: "wrap", alignItems: "center" }}>
             <Image
               style={{ width: _height * 0.09, height: _height * 0.09 }}
-              source={require("../assets/Logo.png")}
+              source={require("../assets/cafe.png")}
             />
             <View style={styles.footerText}>
               <Text

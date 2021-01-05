@@ -10,7 +10,7 @@ const FooterGroupText = () => {
     <View style={styles.containter}>
       <View style={styles.subContainter}>
         <Text style={{ color: "white", fontSize: isMobile ? 12 : 25, marginBottom: 10 }}>
-          Tentang Baju Bayi Luwuk
+          Tentang Snow Motion Cafe
         </Text>
         <Text style={styles.subtext}>Tentang Kami</Text>
         <Text style={styles.subtext}>Toko Kami</Text>
