@@ -1,27 +1,18 @@
 import React, { useEffect, useState } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  FlatList,
-  Alert,
-  Linking,
-  Button,
-  Modal,
-} from "react-native";
+import { FlatList, StyleSheet, Text, View } from "react-native";
+import Fade from "react-reveal/Fade";
+import Slide from "react-reveal/Slide";
+import CarouselMenu from "../components/CarouselMenu";
 import CartPopUp from "../components/CartPopUp";
 import CategoryList from "../components/CategoryList";
+import Loading from "../components/Loading";
 import ProductList from "../components/ProductList";
 import SideBar from "../components/SideBar";
+import { DarkAccent, LittleDarkAccent } from "../constant/ColorsConst";
+import priceInt from "../constant/function";
+import { HEADER_MARGIN, isMobile } from "../constant/isMobile";
 import useDimens from "../constant/useDimens";
 import data from "../data/data.json";
-import { DarkAccent, LittleDarkAccent } from "../constant/ColorsConst";
-import { isMobile, HEADER_MARGIN, HEADER_HEIGHT } from "../constant/isMobile";
-import Slide from "react-reveal/Slide";
-import Fade from "react-reveal/Fade";
-import CarouselItem from "../components/Carousel-item";
-import CarouselMenu from "../components/CarouselMenu";
-import priceInt from "../constant/function";
 
 const Dashboard = () => {
   const availableProducts = data.products;
@@ -36,6 +27,7 @@ const Dashboard = () => {
   const [visible, setVisible] = useState(false);
   const [cartItems, setCartItems] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const _rem = (size) => {
     if (_height > _width) {
@@ -46,21 +38,27 @@ const Dashboard = () => {
   };
 
   const fetchData = async () => {
-    const categoryData = await fetch('https://www.themealdb.com/api/json/v1/1/categories.php');
+    const categoryData = await fetch(
+      "https://www.themealdb.com/api/json/v1/1/categories.php"
+    );
     const fCategory = await categoryData.json();
     setNewCategory(fCategory);
-  }
+  };
 
   const fetchNewMeals = async () => {
-    const newMealsData = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?f=d');
+    const newMealsData = await fetch(
+      "https://www.themealdb.com/api/json/v1/1/search.php?f=d"
+    );
     const _newMeals = await newMealsData.json();
     setMeals(_newMeals);
-  }
-  useEffect(() => {
-    fetchData();
-    fetchNewMeals();
-  }, [])
-  
+  };
+  useEffect(async () => {
+    await setIsLoading(true);
+    await fetchData();
+    await fetchNewMeals();
+    await setIsLoading(false);
+  }, []);
+
   const modalHandler = () => {
     setModalVisible(!modalVisible);
   };
@@ -107,167 +105,172 @@ const Dashboard = () => {
 
   return (
     <View style={{ flex: 1 }}>
-      <View
-        style={{
-          zIndex: 3,
-          position: "relative",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <SideBar
-          style={Bar(isWeb).bar}
-          size={isWeb ? _width * 0.03 : _width * 0.06}
-          cartHandler={() => setVisible(!visible)}
-          badgeData={cartItems.length}
-        />
-      </View>
-      <View style={styles.body}>
-        {visible ? (
-          <CartPopUp
-            isTotal={total > 0}
-            data={cartItems}
-            close={() => setVisible(false)}
-            removeCart={removeFromCart}
-            cartTotal={cartTotal(total)}
-          />
-        ) : null}
-        <View
-          style={{
-            // flex: 1,
-            // height: _height / 1.8,
-            // width: _width * 0.8,
-            alignItems: "center",
-            justifyContent: "center",
-            // flexGrow: 1,
-            width: isWeb ? _width * 0.5 : _width,
-
-          }}
-        >
-          <CarouselMenu
-            item={promo}
-            _width={_width}
-            _height={_height}
-            isWeb={isWeb}
-          />
-        </View>
-        <View style={styles.headerFlatlist}>
-          <Fade left>
-            <Text
-              style={[
-                styles.headerFlatlistText,
-                {
-                  fontSize: isWeb ? _rem(22) : _rem(12),
-                  paddingVertical: 10,
-                },
-              ]}
-            >
-              Pilih kategori favoritmu!
-            </Text>
-          </Fade>
-        </View>
-        <Slide bottom cascade>
-          <FlatList
-            numColumns={4}
-            contentContainerStyle={{
-              flex: 1,
-              justifyContent: "center",
-              alignItems: "center",
-              paddingTop: 20,
-              marginTop: 20,
-            }}
-            data={newCategory.categories}
-            keyExtractor={(item) => item.id}
-            renderItem={({ item }) => (
-              <CategoryList
-                fontSize={isWeb ? _rem(8) : _rem(5)}
-                title={item.strCategory.toUpperCase()}
-                image={item.strCategoryThumb}
-                style={{
-                  width: !isMobile ? _width / 8 - 20 : _width / 4 - 20,
-                  height: !isMobile ? _width / 8 - 20 : _width / 4 - 20,
-                  minWidth: 60,
-                  minHeight: 60,
-                }}
-                cid={item.strCategory.toLowerCase()}
-              />
-            )}
-          />
-        </Slide>
-        <Fade left>
-          <Text
+      {!isLoading ? (
+        <View>
+          <View
             style={{
-              fontSize: isWeb ? _rem(22) : _rem(15),
-              color: LittleDarkAccent,
-              alignSelf: "center",
+              zIndex: 3,
+              position: "relative",
+              alignItems: "center",
+              justifyContent: "center",
             }}
           >
-            Menu Terbaru
-          </Text>
-        </Fade>
-        {/* <View
-          style={{
-            width: isMobile ? width * 0.9 : width * 0.5,
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: isMobile ? "center" : "space-evenly",
-          }}
-        >
-          <FilterPicker
-            selectedValue={ageFilter}
-            onValueChange={filteredProducts}
-            title={"Usia"}
-            age={true}
-          />
-          <FilterPicker
-            _color={true}
-            selectedValue={color}
-            onValueChange={filteredColors}
-            title={"Warna"}
-          />
-          <FilterPicker
-            ready={true}
-            selectedValue={inStock}
-            onValueChange={filteredReady}
-            title={"In Stock"}
-          />
-        </View> */}
-
-        <FlatList
-          contentContainerStyle={{
-            // flex: 1,
-            justifyContent: "center",
-            // flexWrap: "wrap",
-            alignItems: "center",
-            marginHorizontal: !isWeb ? null : 100,
-            // paddingBottom: "25%",
-          }}
-          sscrollEnabled
-          showsVerticalScrollIndicator={false}
-          numColumns={isMobile ? 2 : 4}
-          // horizontal
-          // data={products.reverse().slice(0, 8)}
-          data={meals.meals}
-          // data={products}
-          keyExtractor={(item, index) => item.id}
-          renderItem={({ item }) => (
+            <SideBar
+              style={Bar(isWeb).bar}
+              size={isWeb ? _width * 0.03 : _width * 0.06}
+              cartHandler={() => setVisible(!visible)}
+              badgeData={cartItems.length}
+            />
+          </View>
+          <View style={styles.body}>
+            {visible ? (
+              <CartPopUp
+                isTotal={total > 0}
+                data={cartItems}
+                close={() => setVisible(false)}
+                removeCart={removeFromCart}
+                cartTotal={cartTotal(total)}
+              />
+            ) : null}
+            <View
+              style={{
+                // flex: 1,
+                // height: _height / 1.8,
+                // width: _width * 0.8,
+                alignItems: "center",
+                justifyContent: "center",
+                // flexGrow: 1,
+                width: isWeb ? _width * 0.5 : _width,
+              }}
+            >
+              <CarouselMenu
+                item={promo}
+                _width={_width}
+                _height={_height}
+                isWeb={isWeb}
+              />
+            </View>
+            <View style={styles.headerFlatlist}>
+              <Fade left>
+                <Text
+                  style={[
+                    styles.headerFlatlistText,
+                    {
+                      fontSize: isWeb ? _rem(22) : _rem(12),
+                      paddingVertical: 10,
+                    },
+                  ]}
+                >
+                  Pilih kategori favoritmu!
+                </Text>
+              </Fade>
+            </View>
             <Slide bottom cascade>
-              <ProductList
-                style={{
-                  width: !isWeb ? 150 : _width / 6,
-                  height: !isWeb ? 350 / 2 : _width / 5 - 20,
+              <FlatList
+                numColumns={4}
+                contentContainerStyle={{
+                  flex: 1,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  paddingTop: 20,
+                  marginTop: 20,
                 }}
-                fontSize={!isWeb ? _rem(5) : _rem(8)}
-                title={item.strMeal}
-                image={item.strMealThumb}
-                price={priceInt(10000, 20000)}
-                onPress={() => addTocart(item)}
-                item={item}
+                data={newCategory.categories}
+                keyExtractor={(item) => item.id}
+                renderItem={({ item }) => (
+                  <CategoryList
+                    fontSize={isWeb ? _rem(8) : _rem(5)}
+                    title={item.strCategory.toUpperCase()}
+                    image={item.strCategoryThumb}
+                    style={{
+                      width: !isMobile ? _width / 8 - 20 : _width / 4 - 20,
+                      height: !isMobile ? _width / 8 - 20 : _width / 4 - 20,
+                      minWidth: 60,
+                      minHeight: 60,
+                    }}
+                    cid={item.strCategory.toLowerCase()}
+                  />
+                )}
               />
             </Slide>
-          )}
-        />
-      </View>
+            <Fade left>
+              <Text
+                style={{
+                  fontSize: isWeb ? _rem(22) : _rem(15),
+                  color: LittleDarkAccent,
+                  alignSelf: "center",
+                }}
+              >
+                Menu Terbaru
+              </Text>
+            </Fade>
+            {/* <View
+                style={{
+                  width: isMobile ? width * 0.9 : width * 0.5,
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: isMobile ? "center" : "space-evenly",
+                }}
+              >
+                <FilterPicker
+                  selectedValue={ageFilter}
+                  onValueChange={filteredProducts}
+                  title={"Usia"}
+                  age={true}
+                />
+                <FilterPicker
+                  _color={true}
+                  selectedValue={color}
+                  onValueChange={filteredColors}
+                  title={"Warna"}
+                />
+                <FilterPicker
+                  ready={true}
+                  selectedValue={inStock}
+                  onValueChange={filteredReady}
+                  title={"In Stock"}
+                />
+              </View> */}
+
+            <FlatList
+              contentContainerStyle={{
+                // flex: 1,
+                justifyContent: "center",
+                // flexWrap: "wrap",
+                alignItems: "center",
+                marginHorizontal: !isWeb ? null : 100,
+                // paddingBottom: "25%",
+              }}
+              sscrollEnabled
+              showsVerticalScrollIndicator={false}
+              numColumns={isMobile ? 2 : 4}
+              // horizontal
+              // data={products.reverse().slice(0, 8)}
+              data={meals.meals}
+              // data={products}
+              keyExtractor={(item, index) => item.id}
+              renderItem={({ item }) => (
+                <Slide bottom cascade>
+                  <ProductList
+                    style={{
+                      width: !isWeb ? 150 : _width / 6,
+                      height: !isWeb ? 350 / 2 : _width / 5 - 20,
+                    }}
+                    fontSize={!isWeb ? _rem(5) : _rem(8)}
+                    title={item.strMeal}
+                    image={item.strMealThumb}
+                    price={priceInt(10000, 20000)}
+                    onPress={() => addTocart(item)}
+                    item={item}
+                  />
+                </Slide>
+              )}
+            />
+          </View>
+        </View>
+      ) : (
+        <Loading />
+      )}
     </View>
   );
 };
