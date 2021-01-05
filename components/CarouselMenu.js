@@ -6,12 +6,20 @@ import CarouselItem from "./Carousel-item";
 
 let flatlist;
 
-const CarouselMenu = ({ item, index, }) => {
+const CarouselMenu = ({ item, index }) => {
   const scrollX = new Animated.Value(0);
   const [_width, _height, isWeb] = useDimens();
-  let position = Animated.divide(scrollX, isWeb ? _width * 0.7 : _width * 0.7);
+  let position = Animated.divide(scrollX, isWeb ? _width * 0.7 : _width * 0.6);
   return (
-    <View style={styles(_width, _height).mainContainer}>
+    <View
+      style={[
+        styles(_width, _height).mainContainer,
+        {
+          width: isWeb ? _width / 2 -120: _width * 0.9,
+          height: isWeb ? '100%' : _height / 1.5,
+        },
+      ]}
+    >
       <FlatList
         data={item}
         snapToEnd
@@ -70,13 +78,12 @@ const CarouselMenu = ({ item, index, }) => {
 
 export default CarouselMenu;
 
-const styles = (_width, _height) =>
+const styles = (_width, _height, isWeb) =>
   StyleSheet.create({
     dotView: { flexDirection: "row", justifyContent: "center" },
     mainContainer: {
       // flex: 1,
-      width: _width,
-      paddingHorizontal: 100,
+      paddingHorizontal: isWeb ? 100 : null,
       paddingTop: 50,
       // height: _height/3
     },

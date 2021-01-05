@@ -107,7 +107,6 @@ const Home = (props) => {
     }
   };
   const filteredReady = (itemValue) => {
-    console.log(itemValue);
     setInstock(itemValue);
     if (itemValue === "Semua") {
       setProducts(availableProducts);

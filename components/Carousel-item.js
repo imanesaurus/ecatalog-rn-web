@@ -3,7 +3,6 @@ import { Image, StyleSheet, Text, View } from "react-native";
 import useDimens from "../constant/useDimens";
 
 const CarouselItem = ({ item, data, index }) => {
-  console.log("hey", isWeb);
   const [_width, _height, isWeb] = useDimens();
 
   return (
@@ -13,9 +12,10 @@ const CarouselItem = ({ item, data, index }) => {
         // margin: 10,
         borderRadius: 10,
         elevation: 5,
-        marginHorizontal: 10,
-        height: isWeb ? _height / 2 : _height / 4,
-        width: isWeb ? _width / 2 -120: _width / 2 -10,
+        marginRight: 10,
+        flex: 1,
+        height: isWeb ? _height / 2 : _height / 3,
+        width: isWeb ? _width / 2 -120 : _width * 0.9 -10,
         // overflow: 'hidden'
       }}
     >
