@@ -5,11 +5,11 @@ import { DarkAccent } from "../constant/ColorsConst";
 import useDimens from "../constant/useDimens";
 
 const Loading = () => {
-  const [_height, _width] = useDimens();
+  const [_height, _width, isWeb] = useDimens();
   return (
     <View style={styles.main}>
       <Image
-        style={[styles.image, { height: _height/3, width: _width }]}
+        style={[styles.image, { height: isWeb ? _height/3 : _height/2, width: isWeb ? _width : _width/2 }]}
         source={require("../assets/donut.png")}
       />
       <Text style={[styles.text, { fontSize: _rem(20) }]}>Please wait...</Text>
