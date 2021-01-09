@@ -1,5 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { FlatList, StyleSheet, Text, View } from "react-native";
 import { Link } from "react-router-dom";
 import ProductList from "../components/ProductList";
@@ -11,23 +11,25 @@ import Fade from "react-reveal/Fade";
 import priceInt from "../constant/function";
 import { set } from "react-native-reanimated";
 import Loading from "../components/Loading";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchMenu } from "../store/actions/menu";
 
 const Category = ({ match, rem }) => {
+  const availMenu = useSelector((state) => state.menu.availableMenu)
   const [_width, _height, isWeb] = useDimens();
-  const [meals, setNewMeals] = useState([])
   const [isLoading, setIsLoading] = useState(false);
   const cid = match.params.cid;
+  
+  const dispatch = useDispatch();
   // const items = data.categories.find((x) => x.cid === cid);
 
-  const fetchMeals = async () => {
-    const mealsData = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${cid}`);
-    const _meals = await mealsData.json();
-    setNewMeals(_meals);
-  }
+  const fetchNewMenu = useCallback(() => {
+    dispatch(fetchMenu(cid));
+  }, [dispatch])
 
   useEffect(async () => {
     await setIsLoading(true);
-    await fetchMeals();
+    await fetchNewMenu();
     await setIsLoading(false);
   }, [])
 
@@ -82,8 +84,8 @@ const Category = ({ match, rem }) => {
             }}
             numColumns={isWeb ? 4 : 2}
             // horizontal
-            data={meals.meals}
-            keyExtractor={(item, index) => item.cid}
+            data={availMenu.meals}
+            keyExtractor={(item, index) => item.idMeal}
             renderItem={({ item }) => (
               <ProductList
                 style={{

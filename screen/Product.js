@@ -1,30 +1,31 @@
 import { Ionicons } from "@expo/vector-icons";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
 import Fade from "react-reveal/Fade";
 import { Link } from "react-router-dom";
 import Loading from "../components/Loading";
 import { AccentColor, LittleDarkAccent, shadow } from "../constant/ColorsConst";
 import { HEADER_MARGIN } from "../constant/isMobile";
 import useDimens from "../constant/useDimens";
+import { fetchDetailMenu } from "../store/actions/menu";
+import { getDetailMenu } from "../store/reducers/Menu";
 
 const Product = ({ match, rem }) => {
+  const menuDetails = useSelector((state) => state.menu.detailMenu);
   const [_width, _height, isWeb] = useDimens();
-  const [mealsDetail, setMealsDetail] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const id = match.params.id;
+  console.log("menunew", getDetailMenu);
+  const dispatch = useDispatch();
 
-  const fetchMealsDetail = async () => {
-    const mealsDetailData = await fetch(
-      `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`
-    );
-    const _mealsDetail = await mealsDetailData.json();
-    setMealsDetail(_mealsDetail.meals[0]);
-  };
+  const fetchDetails = useCallback(() => {
+    dispatch(fetchDetailMenu(id));
+  });
 
   useEffect(async () => {
     await setIsLoading(true);
-    await fetchMealsDetail();
+    await fetchDetails();
     await setIsLoading(false);
   }, []);
 
@@ -74,7 +75,7 @@ const Product = ({ match, rem }) => {
                 ]}
               >
                 <Image
-                  source={{ uri: mealsDetail.strMealThumb }}
+                  source={{ uri: menuDetails.strMealThumb }}
                   style={styles.image}
                 />
               </View>
@@ -97,7 +98,7 @@ const Product = ({ match, rem }) => {
                     },
                   ]}
                 >
-                  {mealsDetail.strMeal}
+                  {menuDetails.strMeal}
                 </Text>
                 <View style={{ height: "50%" }}>
                   <Text style={{ color: "gray" }}>Description:</Text>
@@ -113,7 +114,7 @@ const Product = ({ match, rem }) => {
                       paddingHorizontal: 10,
                     }}
                   >
-                    {mealsDetail.strInstructions}
+                    {menuDetails.strInstructions}
                   </Text>
                 </View>
                 {/* <CustomButton

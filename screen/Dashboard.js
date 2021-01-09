@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { FlatList, StyleSheet, Text, View } from "react-native";
+import { connect, useDispatch, useSelector } from "react-redux";
 import Fade from "react-reveal/Fade";
 import Slide from "react-reveal/Slide";
 import CarouselMenu from "../components/CarouselMenu";
@@ -13,22 +14,23 @@ import priceInt from "../constant/function";
 import { HEADER_MARGIN, isMobile } from "../constant/isMobile";
 import useDimens from "../constant/useDimens";
 import data from "../data/data.json";
+// import * as _Action from "../store/actions/menu"
+import { fetchCategory, fetchLatestMenu, fetchMenu } from "../store/actions/menu";
+import { getCategories } from "../store/reducers/Menu";
 
 const Dashboard = () => {
-  const availableProducts = data.products;
-  const availableCategory = data.categories;
+  const availCat = useSelector((state) => state.menu.categoryList);
+  const availLatMenu = useSelector((state) => state.menu.latestMenu);
   const availablePromo = data.Promo;
-  const [products, setProducts] = useState(availableProducts);
-  const [meals, setMeals] = useState([]);
-  const [category, setCategory] = useState(availableCategory);
-  const [newCategory, setNewCategory] = useState([]);
   const [promo, setPromo] = useState(availablePromo);
   const [_width, _height, isWeb] = useDimens();
   const [visible, setVisible] = useState(false);
   const [cartItems, setCartItems] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  console.log('latest', availLatMenu)
 
+  const dispatch = useDispatch();
   const _rem = (size) => {
     if (_height > _width) {
       return ((size * _width) / 380) * 2;
@@ -37,27 +39,16 @@ const Dashboard = () => {
     }
   };
 
-  const fetchData = async () => {
-    const categoryData = await fetch(
-      "https://www.themealdb.com/api/json/v1/1/categories.php"
-    );
-    const fCategory = await categoryData.json();
-    setNewCategory(fCategory);
-  };
+  const fetchNewManu = useCallback(() => {
+    dispatch(fetchCategory());
+    dispatch(fetchLatestMenu());
+  }, [dispatch])
 
-  const fetchNewMeals = async () => {
-    const newMealsData = await fetch(
-      "https://www.themealdb.com/api/json/v1/1/search.php?f=d"
-    );
-    const _newMeals = await newMealsData.json();
-    setMeals(_newMeals);
-  };
   useEffect(async () => {
     await setIsLoading(true);
-    await fetchData();
-    await fetchNewMeals();
+    await fetchNewManu();
     await setIsLoading(false);
-  }, []);
+  }, []); 
 
   const modalHandler = () => {
     setModalVisible(!modalVisible);
@@ -175,8 +166,8 @@ const Dashboard = () => {
                   paddingTop: 20,
                   marginTop: 20,
                 }}
-                data={newCategory.categories}
-                keyExtractor={(item) => item.id}
+                data={availCat.categories}
+                keyExtractor={(item) => item.idCategory}
                 renderItem={({ item }) => (
                   <CategoryList
                     fontSize={isWeb ? _rem(8) : _rem(5)}
@@ -246,9 +237,9 @@ const Dashboard = () => {
               numColumns={isMobile ? 2 : 4}
               // horizontal
               // data={products.reverse().slice(0, 8)}
-              data={meals.meals}
+              data={availLatMenu.meals}
               // data={products}
-              keyExtractor={(item, index) => item.id}
+              keyExtractor={(item, index) => item.idMeal}
               renderItem={({ item }) => (
                 <Slide bottom cascade>
                   <ProductList
@@ -274,8 +265,6 @@ const Dashboard = () => {
     </View>
   );
 };
-
-export default Dashboard;
 
 const styles = StyleSheet.create({
   body: {
@@ -314,3 +303,5 @@ const Bar = (isWeb) =>
       width: isWeb ? null : "60%",
     },
   });
+
+export default Dashboard;
