@@ -15,20 +15,24 @@ import { HEADER_MARGIN, isMobile } from "../constant/isMobile";
 import useDimens from "../constant/useDimens";
 import data from "../data/data.json";
 // import * as _Action from "../store/actions/menu"
-import { fetchCategory, fetchLatestMenu, fetchMenu } from "../store/actions/menu";
-import { getCategories } from "../store/reducers/Menu";
+import {
+  fetchCategory,
+  fetchLatestMenu,
+  fetchMenu,
+  isLoadingHandler,
+} from "../store/actions/menu";
 
 const Dashboard = () => {
   const availCat = useSelector((state) => state.menu.categoryList);
   const availLatMenu = useSelector((state) => state.menu.latestMenu);
+  const loading = useSelector((state) => state.menu.isFetching);
   const availablePromo = data.Promo;
   const [promo, setPromo] = useState(availablePromo);
   const [_width, _height, isWeb] = useDimens();
   const [visible, setVisible] = useState(false);
   const [cartItems, setCartItems] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  console.log('latest', availLatMenu)
+  console.log("latest", availLatMenu);
 
   const dispatch = useDispatch();
   const _rem = (size) => {
@@ -39,16 +43,15 @@ const Dashboard = () => {
     }
   };
 
-  const fetchNewManu = useCallback(() => {
+  const fetchNewManu = useCallback(async () => {
+    await dispatch(isLoadingHandler());
     dispatch(fetchCategory());
     dispatch(fetchLatestMenu());
-  }, [dispatch])
+  }, [dispatch]);
 
-  useEffect(async () => {
-    await setIsLoading(true);
-    await fetchNewManu();
-    await setIsLoading(false);
-  }, []); 
+  useEffect(() => {
+    fetchNewManu();
+  }, []);
 
   const modalHandler = () => {
     setModalVisible(!modalVisible);
@@ -96,7 +99,7 @@ const Dashboard = () => {
 
   return (
     <View style={{ flex: 1 }}>
-      {!isLoading ? (
+      {!loading ? (
         <View>
           <View
             style={{

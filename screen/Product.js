@@ -8,30 +8,29 @@ import Loading from "../components/Loading";
 import { AccentColor, LittleDarkAccent, shadow } from "../constant/ColorsConst";
 import { HEADER_MARGIN } from "../constant/isMobile";
 import useDimens from "../constant/useDimens";
-import { fetchDetailMenu } from "../store/actions/menu";
-import { getDetailMenu } from "../store/reducers/Menu";
+import { fetchDetailMenu, isLoadingHandler, notLoadingHandler } from "../store/actions/menu";
 
 const Product = ({ match, rem }) => {
   const menuDetails = useSelector((state) => state.menu.detailMenu);
   const [_width, _height, isWeb] = useDimens();
   const [isLoading, setIsLoading] = useState(false);
+  const isLoadingStat = useSelector((state) => state.menu.isFetching)
   const id = match.params.id;
-  console.log("menunew", getDetailMenu);
+  console.log('ss', isLoadingStat)
   const dispatch = useDispatch();
 
-  const fetchDetails = useCallback(() => {
-    dispatch(fetchDetailMenu(id));
+  const fetchDetails = useCallback(async () => {
+    await dispatch(isLoadingHandler());
+    await dispatch(fetchDetailMenu(id));
   });
 
-  useEffect(async () => {
-    await setIsLoading(true);
-    await fetchDetails();
-    await setIsLoading(false);
-  }, []);
+  useEffect(() => {
+    fetchDetails();
+  }, [dispatch]);
 
   return (
     <View>
-      {!isLoading ? (
+      {!isLoadingStat ? (
         <Fade bottom>
           <View style={[styles.container]}>
             <Link

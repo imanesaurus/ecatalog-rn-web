@@ -12,30 +12,29 @@ import priceInt from "../constant/function";
 import { set } from "react-native-reanimated";
 import Loading from "../components/Loading";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchMenu } from "../store/actions/menu";
+import { fetchMenu, isLoadingHandler } from "../store/actions/menu";
 
 const Category = ({ match, rem }) => {
   const availMenu = useSelector((state) => state.menu.availableMenu)
+  const loading = useSelector((state) => state.menu.isFetching)
   const [_width, _height, isWeb] = useDimens();
-  const [isLoading, setIsLoading] = useState(false);
   const cid = match.params.cid;
   
   const dispatch = useDispatch();
   // const items = data.categories.find((x) => x.cid === cid);
 
-  const fetchNewMenu = useCallback(() => {
-    dispatch(fetchMenu(cid));
+  const fetchNewMenu = useCallback(async () => {
+    await dispatch(isLoadingHandler());
+    await dispatch(fetchMenu(cid));
   }, [dispatch])
 
-  useEffect(async () => {
-    await setIsLoading(true);
-    await fetchNewMenu();
-    await setIsLoading(false);
+  useEffect(() => {
+    fetchNewMenu();
   }, [])
 
   return (
     <View>
-      {!isLoading ? (
+      {!loading ? (
         <View style={styles.MainWrapper}>
         <Fade left>
           <Text
