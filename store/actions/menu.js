@@ -7,16 +7,9 @@ export const IS_LOADING = "IS_LOADING";
 export const fetchCategory = () => {
   return async (dispatch) => {
     try {
-      const response = await fetch(
-        "https://www.themealdb.com/api/json/v1/1/categories.php"
-      );
-      if (!response.ok) {
-        throw new Error("Something went wrong");
-      }
-
-      const resData = await response.json();
-      await console.log("test action", resData);
-      dispatch({ type: SET_CATEGORY, categoryList: resData });
+      fetch("https://www.themealdb.com/api/json/v1/1/categories.php")
+        .then((res) => res.json())
+        .then((json) => dispatch({ type: SET_CATEGORY, categoryList: json }));
     } catch (err) {
       throw err;
     }

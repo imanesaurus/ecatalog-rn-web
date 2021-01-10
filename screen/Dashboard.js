@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { FlatList, StyleSheet, Text, View } from "react-native";
-import { connect, useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Fade from "react-reveal/Fade";
 import Slide from "react-reveal/Slide";
 import CarouselMenu from "../components/CarouselMenu";
@@ -18,8 +18,8 @@ import data from "../data/data.json";
 import {
   fetchCategory,
   fetchLatestMenu,
-  fetchMenu,
-  isLoadingHandler,
+
+  isLoadingHandler
 } from "../store/actions/menu";
 
 const Dashboard = () => {
@@ -32,7 +32,6 @@ const Dashboard = () => {
   const [visible, setVisible] = useState(false);
   const [cartItems, setCartItems] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
-  console.log("latest", availLatMenu);
 
   const dispatch = useDispatch();
   const _rem = (size) => {

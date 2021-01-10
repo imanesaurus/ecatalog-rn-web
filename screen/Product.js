@@ -8,15 +8,17 @@ import Loading from "../components/Loading";
 import { AccentColor, LittleDarkAccent, shadow } from "../constant/ColorsConst";
 import { HEADER_MARGIN } from "../constant/isMobile";
 import useDimens from "../constant/useDimens";
-import { fetchDetailMenu, isLoadingHandler, notLoadingHandler } from "../store/actions/menu";
+import {
+  fetchDetailMenu,
+  isLoadingHandler
+} from "../store/actions/menu";
 
 const Product = ({ match, rem }) => {
   const menuDetails = useSelector((state) => state.menu.detailMenu);
   const [_width, _height, isWeb] = useDimens();
   const [isLoading, setIsLoading] = useState(false);
-  const isLoadingStat = useSelector((state) => state.menu.isFetching)
+  const isLoadingStat = useSelector((state) => state.menu.isFetching);
   const id = match.params.id;
-  console.log('ss', isLoadingStat)
   const dispatch = useDispatch();
 
   const fetchDetails = useCallback(async () => {

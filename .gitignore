@@ -123,3 +123,4 @@ android/app/src/main/res/values/styles.xml
 android/gradle/wrapper/gradle-wrapper.jar
 android/gradle/wrapper/gradle-wrapper.properties
 metro.config.js
+.netlify/state.json
