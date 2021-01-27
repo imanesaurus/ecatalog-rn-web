@@ -8,7 +8,7 @@ import useDimens from "../constant/useDimens";
 import data from "../data/data.json";
 import Slide from "react-reveal/Slide";
 import Fade from "react-reveal/Fade";
-import priceInt from "../constant/function";
+import priceInt, { cartTotal } from "../constant/function";
 import { set } from "react-native-reanimated";
 import Loading from "../components/Loading";
 import { useDispatch, useSelector } from "react-redux";
@@ -96,7 +96,7 @@ const Category = ({ match, rem }) => {
                 fontSize={!isWeb ? rem(5) : rem(8)}
                 title={item.strMeal}
                 image={item.strMealThumb}
-                price={priceInt(10000, 50000)}
+                price={cartTotal(priceInt(10000, 50000))}
                 item={item}
               />
             )}

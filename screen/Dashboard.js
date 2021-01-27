@@ -10,7 +10,7 @@ import Loading from "../components/Loading";
 import ProductList from "../components/ProductList";
 import SideBar from "../components/SideBar";
 import { DarkAccent, LittleDarkAccent } from "../constant/ColorsConst";
-import priceInt from "../constant/function";
+import priceInt, { cartTotal } from "../constant/function";
 import { HEADER_MARGIN, isMobile } from "../constant/isMobile";
 import useDimens from "../constant/useDimens";
 import data from "../data/data.json";
@@ -88,13 +88,6 @@ const Dashboard = () => {
     (prevValue, { price = 0, count = 0 }) => prevValue + price * count,
     0
   );
-
-  const cartTotal = (total) => {
-    var angka = total.toString().split("").reverse().join("");
-    var tiga = angka.match(/\d{1,3}/g);
-    var join = tiga.join(".").split("").reverse().join("");
-    return join;
-  };
 
   return (
     <View style={{ flex: 1 }}>
@@ -252,7 +245,7 @@ const Dashboard = () => {
                     fontSize={!isWeb ? _rem(5) : _rem(8)}
                     title={item.strMeal}
                     image={item.strMealThumb}
-                    price={priceInt(10000, 20000)}
+                    price={cartTotal(priceInt(10000, 20000))}
                     onPress={() => addTocart(item)}
                     item={item}
                   />
