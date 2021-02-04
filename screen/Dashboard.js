@@ -265,7 +265,6 @@ const styles = StyleSheet.create({
   body: {
     flex: 1,
     justifyContent: "center",
-    alignItems: "center",
     position: "relative",
     marginTop: HEADER_MARGIN + 20,
     backgroundColor: "#fafcfb",
