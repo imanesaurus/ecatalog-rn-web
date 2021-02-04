@@ -37,8 +37,7 @@ const ProductList = ({
     <View
       style={{
         ...style,
-        flex: 1,
-        justifyContent: "center",
+        // justifyContent: "center",
         marginHorizontal: 10,
         boxShadow: "0px 0px 5px rgba(0,0,0,.4)",
         marginVertical: 20,
@@ -70,7 +69,7 @@ const ProductList = ({
       <View
         style={{
           justifyContent: "center",
-          alignItems: "center",
+          // alignItems: "center",
           paddingVertical: 5,
           paddingHorizontal: 5,
         }}
@@ -87,12 +86,12 @@ const ProductList = ({
         style={{
           flexDirection: "row",
           justifyContent: "center",
-          alignItems: "center",
+          // alignItems: "center",
           paddingHorizontal: 10,
           paddingBottom: 10,
         }}
       >
-        <View style={{ flex: 1, alignItems: "center" }}>
+        <View style={{ flex: 1,  }}>
           <TouchableOpacity>
             <Text
               style={{

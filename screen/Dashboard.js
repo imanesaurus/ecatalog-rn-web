@@ -3,7 +3,6 @@ import { FlatList, StyleSheet, Text, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import Fade from "react-reveal/Fade";
 import Slide from "react-reveal/Slide";
-import CarouselMenu from "../components/CarouselMenu";
 import CartPopUp from "../components/CartPopUp";
 import CategoryList from "../components/CategoryList";
 import Loading from "../components/Loading";
@@ -18,7 +17,6 @@ import data from "../data/data.json";
 import {
   fetchCategory,
   fetchLatestMenu,
-
   isLoadingHandler
 } from "../store/actions/menu";
 
@@ -123,17 +121,48 @@ const Dashboard = () => {
                 // flex: 1,
                 // height: _height / 1.8,
                 // width: _width * 0.8,
-                alignItems: "center",
+                // alignItems: "center",
                 justifyContent: "center",
+                marginVertical: 10,
                 // flexGrow: 1,
-                width: isWeb ? _width * 0.5 : _width,
               }}
             >
-              <CarouselMenu
-                item={promo}
-                _width={_width}
-                _height={_height}
-                isWeb={isWeb}
+              <Fade left>
+                <View style={styles.headerFlatlist}>
+                  <Text
+                    style={{
+                      ...styles.headerFlatlist,
+                      fontSize: isWeb ? _rem(22) : _rem(12),
+                      color: LittleDarkAccent,
+                      marginTop: 10,
+                    }}
+                  >
+                    Promo Saat ini
+                  </Text>
+                </View>
+              </Fade>
+              <FlatList
+                data={promo}
+                showsHorizontalScrollIndicator={false}
+                horizontal
+                keyExtractor={(item) => item.pid}
+                renderItem={({ item }) => {
+                  return (
+                    <ProductList
+                      style={{
+                        flex: 1,
+                        width: !isWeb ? 150 : _width / 6,
+                        height: !isWeb ? 350 / 2 : _width / 5 - 20,
+                      }}
+                      fontSize={!isWeb ? _rem(5) : _rem(8)}
+                      title={item.title}
+                      image={item.image_link}
+                      price={cartTotal(priceInt(10000, 20000))}
+                      onPress={() => addTocart(item)}
+                      item={item}
+                    />
+                  );
+                }}
               />
             </View>
             <View style={styles.headerFlatlist}>
@@ -153,7 +182,8 @@ const Dashboard = () => {
             </View>
             <Slide bottom cascade>
               <FlatList
-                numColumns={4}
+                // numColumns={4}
+                horizontal
                 contentContainerStyle={{
                   flex: 1,
                   justifyContent: "center",
@@ -180,15 +210,17 @@ const Dashboard = () => {
               />
             </Slide>
             <Fade left>
-              <Text
-                style={{
-                  fontSize: isWeb ? _rem(22) : _rem(15),
-                  color: LittleDarkAccent,
-                  alignSelf: "center",
-                }}
-              >
-                Menu Terbaru
-              </Text>
+              <View style={styles.headerFlatlist}>
+                <Text
+                  style={{
+                    ...styles.headerFlatlist,
+                    fontSize: isWeb ? _rem(22) : _rem(12),
+                    color: LittleDarkAccent,
+                  }}
+                >
+                  Menu Terbaru
+                </Text>
+              </View>
             </Fade>
             {/* <View
                 style={{
@@ -274,9 +306,8 @@ const styles = StyleSheet.create({
     // width: isMobile ? "30%" : "10%",
     // height: HEADER_HEIGHT + 10,
     paddingHorizontal: 20,
-    paddingVertical: 10,
+    // paddingVertical: 10,
     borderRadius: 20,
-    marginTop: 40,
   },
   headerFlatlistText: {
     color: DarkAccent,
@@ -295,6 +326,7 @@ const Bar = (isWeb) =>
       justifyContent: isWeb ? null : "space-evenly",
       alignSelf: isWeb ? null : "center",
       width: isWeb ? null : "60%",
+      marginHorizontal: 10,
     },
   });
 

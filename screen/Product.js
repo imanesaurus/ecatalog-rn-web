@@ -8,10 +8,7 @@ import Loading from "../components/Loading";
 import { AccentColor, LittleDarkAccent, shadow } from "../constant/ColorsConst";
 import { HEADER_MARGIN } from "../constant/isMobile";
 import useDimens from "../constant/useDimens";
-import {
-  fetchDetailMenu,
-  isLoadingHandler
-} from "../store/actions/menu";
+import { fetchDetailMenu, isLoadingHandler } from "../store/actions/menu";
 
 const Product = ({ match, rem }) => {
   const menuDetails = useSelector((state) => state.menu.detailMenu);
@@ -86,7 +83,7 @@ const Product = ({ match, rem }) => {
                   paddingHorizontal: HEADER_MARGIN,
                   alignItems: isWeb ? "flex-start" : "center",
                   justifyContent: "center",
-                  width: "50%",
+                  width: isWeb ? "50%" : "80%",
                 }}
               >
                 <Text
@@ -95,28 +92,38 @@ const Product = ({ match, rem }) => {
                     {
                       marginTop: isWeb ? null : 10,
                       textAlign: isWeb ? "left" : "center",
-                      fontSize: isWeb ? rem(12) : rem(10),
+                      fontSize: rem(12),
                     },
                   ]}
                 >
                   {menuDetails.strMeal}
                 </Text>
-                <View style={{ height: "50%" }}>
+                <View
+                  style={{
+                    height: isWeb ? "50%" : null,
+                    width: isWeb ? null : "100%",
+                  }}
+                >
                   <Text style={{ color: "gray" }}>Description:</Text>
-                  <Text
+                  <View
                     style={{
                       flex: 1,
                       marginVertical: 5,
-                      boxShadow: shadow(5, 0.2),
-                      borderRadius: 10,
-                      fontSize: isWeb ? 14 : rem(4),
-                      textAlign: "justify",
                       paddingVertical: 5,
                       paddingHorizontal: 10,
+                      boxShadow: shadow(5, 0.2),
+                      borderRadius: 10,
                     }}
                   >
-                    {menuDetails.strInstructions}
-                  </Text>
+                    <Text
+                      style={{
+                        fontSize: isWeb ? 14 : rem(7),
+                        textAlign: "justify",
+                      }}
+                    >
+                      {menuDetails.strInstructions}
+                    </Text>
+                  </View>
                 </View>
                 {/* <CustomButton
               title="Add to Cart"
