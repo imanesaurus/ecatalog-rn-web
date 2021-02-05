@@ -96,7 +96,7 @@ const Category = ({ match, rem }) => {
                 fontSize={!isWeb ? rem(5) : rem(8)}
                 title={item.strMeal}
                 image={item.strMealThumb}
-                price={cartTotal(priceInt(10000, 50000))}
+                price={cartTotal(priceInt(100, 200) * 100)}
                 item={item}
               />
             )}

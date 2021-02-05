@@ -162,7 +162,7 @@ const Dashboard = () => {
                         title={item.title}
                         // image={item.image_link}
                         imagePath={require(`../assets/${item.image_link}`)}
-                        price={cartTotal(priceInt(10000, 20000))}
+                        price={cartTotal(priceInt(100, 200) * 100)}
                         onPress={() => addTocart(item)}
                         item={item}
                       />
@@ -283,7 +283,7 @@ const Dashboard = () => {
                     fontSize={!isWeb ? _rem(5) : _rem(8)}
                     title={item.strMeal}
                     image={item.strMealThumb}
-                    price={cartTotal(priceInt(10000, 20000))}
+                    price={cartTotal(priceInt(100, 200) * 100)}
                     onPress={() => addTocart(item)}
                     item={item}
                   />
