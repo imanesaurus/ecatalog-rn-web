@@ -1,12 +1,9 @@
 import React from "react";
-import Home from "./screen/Home";
-import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
-import { View, AppRegistry } from "react-native";
-import Product from "./screen/Product";
-import ReduxThunk from "redux-thunk"
 import { Provider } from "react-redux";
 import { applyMiddleware, combineReducers, createStore } from "redux";
-import {menuReducer} from "./store/reducers/Menu";
+import ReduxThunk from "redux-thunk";
+import Home from "./screen/Home";
+import { menuReducer } from "./store/reducers/Menu";
 
 // const linking = {
 //   config: {

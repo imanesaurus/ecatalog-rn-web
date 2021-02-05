@@ -1,14 +1,12 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
+  Animated,
+  Modal,
   StyleSheet,
   Text,
-  View,
-  Modal,
-  Button,
   TouchableWithoutFeedback,
-  Animated,
+  View,
 } from "react-native";
-import Slide from "react-reveal/Slide";
 import MenuBar from "../components/MenuBar";
 
 const Drawer = ({
@@ -23,7 +21,12 @@ const Drawer = ({
   slideAnim,
 }) => {
   return (
-    <Modal onShow={slideAnim} onRequestClose={modalHandler} visible={visible} transparent={true}>
+    <Modal
+      onShow={slideAnim}
+      onRequestClose={modalHandler}
+      visible={visible}
+      transparent={true}
+    >
       <TouchableWithoutFeedback onPress={drawerHandler}>
         <View style={[styles.container, { height: "100%", width: _width }]}>
           <Animated.View

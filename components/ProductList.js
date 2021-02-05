@@ -9,11 +9,6 @@ import {
 } from "react-native";
 import { Link } from "react-router-dom";
 import {
-  useHistory,
-  useLocation,
-} from "react-router-dom/cjs/react-router-dom.min";
-import _rem from "../constant/adjustedWindow";
-import {
   AccentColor2,
   DarkAccent,
   LittleDarkAccent,
@@ -33,7 +28,6 @@ const ProductList = ({
   onClick,
   item,
 }) => {
-  const history = useHistory();
   return (
     <View
       style={[

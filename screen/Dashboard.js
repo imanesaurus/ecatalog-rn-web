@@ -134,6 +134,7 @@ const Dashboard = () => {
                   <Text
                     style={{
                       ...styles.headerFlatlist,
+                      paddingLeft: isWeb ? PADDING_LEFT : null,
                       fontSize: isWeb ? _rem(22) : _rem(12),
                       color: LittleDarkAccent,
                       marginTop: 10,
@@ -148,7 +149,9 @@ const Dashboard = () => {
                   data={promo}
                   showsHorizontalScrollIndicator={false}
                   horizontal
-                  contentContainerStyle={{paddingLeft: isWeb ? PADDING_LEFT : null}}
+                  contentContainerStyle={{
+                    paddingLeft: isWeb ? PADDING_LEFT : null,
+                  }}
                   keyExtractor={(item) => item.pid}
                   renderItem={({ item }) => {
                     return (
@@ -226,6 +229,7 @@ const Dashboard = () => {
                     ...styles.headerFlatlist,
                     fontSize: isWeb ? _rem(22) : _rem(12),
                     color: LittleDarkAccent,
+                    paddingLeft: isWeb ? PADDING_LEFT : null,
                   }}
                 >
                   Menu Terbaru
@@ -264,9 +268,9 @@ const Dashboard = () => {
               contentContainerStyle={{
                 // marginHorizontal: !isWeb ? null : 100,
                 // paddingBottom: "25%",
-                justifyContent: isWeb? null : 'center',
-                alignItems: 'center',
-                paddingLeft: isWeb ? PADDING_LEFT : null
+                justifyContent: isWeb ? null : "center",
+                alignItems: "center",
+                paddingLeft: isWeb ? PADDING_LEFT : null,
               }}
               scrollEnabled
               showsVerticalScrollIndicator={false}

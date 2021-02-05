@@ -1,22 +1,13 @@
-import React, { useState, useEffect } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  Dimensions,
-  TouchableOpacity,
-} from "react-native";
+import React from "react";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Link } from "react-router-dom";
 import { _adjustSizes } from "../constant/adjustedSizes";
 import { LittleDarkAccent } from "../constant/ColorsConst";
-import { isMobile } from "../constant/isMobile";
-import useDimens from "../constant/useDimens";
 
 const CategoryList = ({ cid, style, onPress, image, title, fontSize }) => {
   return (
     <TouchableOpacity onPress={onPress}>
-      <Link to={"/category/" + cid} style={{textDecoration: 'none', flex: 1,}}>
+      <Link to={"/category/" + cid} style={{ textDecoration: "none", flex: 1 }}>
         <View
           onMouseEnter={() => {}}
           style={[
