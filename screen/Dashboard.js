@@ -148,7 +148,7 @@ const Dashboard = () => {
                   data={promo}
                   showsHorizontalScrollIndicator={false}
                   horizontal
-                  contentContainerStyle={{paddingLeft: PADDING_LEFT}}
+                  contentContainerStyle={{paddingLeft: isWeb ? PADDING_LEFT : null}}
                   keyExtractor={(item) => item.pid}
                   renderItem={({ item }) => {
                     return (
@@ -179,6 +179,7 @@ const Dashboard = () => {
                     {
                       fontSize: isWeb ? _rem(22) : _rem(12),
                       paddingVertical: 10,
+                      paddingLeft: isWeb ? PADDING_LEFT : null,
                       color: LittleDarkAccent,
                     },
                   ]}
@@ -196,7 +197,7 @@ const Dashboard = () => {
                   // justifyContent: "center",
                   // alignItems: "center",
                   paddingTop: 20,
-                  paddingLeft: PADDING_LEFT,
+                  paddingLeft: isWeb ? PADDING_LEFT : null,
                   marginTop: 20,
                 }}
                 data={availCat.categories}
@@ -263,7 +264,9 @@ const Dashboard = () => {
               contentContainerStyle={{
                 // marginHorizontal: !isWeb ? null : 100,
                 // paddingBottom: "25%",
-                paddingLeft: PADDING_LEFT
+                justifyContent: isWeb? null : 'center',
+                alignItems: 'center',
+                paddingLeft: isWeb ? PADDING_LEFT : null
               }}
               scrollEnabled
               showsVerticalScrollIndicator={false}
@@ -309,7 +312,6 @@ const styles = StyleSheet.create({
     overflow: "visible",
   },
   headerFlatlist: {
-    paddingLeft: PADDING_LEFT,
     paddingHorizontal: 20,
     borderRadius: 20,
   },
