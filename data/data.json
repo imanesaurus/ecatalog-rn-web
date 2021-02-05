@@ -507,19 +507,19 @@
         "pid": "1",
         "title": "Paket 2 Burger + 1 Chicken Soup",
         "description": "Gratis Botol Minuman Setiap Pembelian di atas Rp. 100.000",
-        "image_link": "https://picsum.photos/200/300"
+        "image_link": "paket_1.jpg"
       },
       {
         "pid": "2",
         "title": "Paket 5 Ayam Goreng",
         "description": "Diskon 20% Setiap Pembelian 1 Set Baju",
-        "image_link": "https://picsum.photos/200/300"
+        "image_link": "paket_2.png"
       },
       {
         "pid": "3",
         "title": "Paket Beef Stick Gratis Ice Lemon Tea",
         "description": "Dapatkan Potongan harga yang banyak banget, jika join reseller di Bulan Desember 2020. Ayo Buruan!",
-        "image_link": "https://picsum.photos/200/300"
+        "image_link": "paket_3.jpeg"
       }
     ]
 }

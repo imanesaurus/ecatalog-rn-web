@@ -17,8 +17,10 @@ import data from "../data/data.json";
 import {
   fetchCategory,
   fetchLatestMenu,
-  isLoadingHandler
+  isLoadingHandler,
 } from "../store/actions/menu";
+
+const PADDING_LEFT = "20%";
 
 const Dashboard = () => {
   const availCat = useSelector((state) => state.menu.categoryList);
@@ -106,7 +108,7 @@ const Dashboard = () => {
               badgeData={cartItems.length}
             />
           </View>
-          <View style={styles.body}>
+          <View style={[styles.body]}>
             {visible ? (
               <CartPopUp
                 isTotal={total > 0}
@@ -141,29 +143,33 @@ const Dashboard = () => {
                   </Text>
                 </View>
               </Fade>
-              <FlatList
-                data={promo}
-                showsHorizontalScrollIndicator={false}
-                horizontal
-                keyExtractor={(item) => item.pid}
-                renderItem={({ item }) => {
-                  return (
-                    <ProductList
-                      style={{
-                        flex: 1,
-                        width: !isWeb ? 150 : _width / 6,
-                        height: !isWeb ? 350 / 2 : _width / 5 - 20,
-                      }}
-                      fontSize={!isWeb ? _rem(5) : _rem(8)}
-                      title={item.title}
-                      image={item.image_link}
-                      price={cartTotal(priceInt(10000, 20000))}
-                      onPress={() => addTocart(item)}
-                      item={item}
-                    />
-                  );
-                }}
-              />
+              <Slide bottom cascade>
+                <FlatList
+                  data={promo}
+                  showsHorizontalScrollIndicator={false}
+                  horizontal
+                  contentContainerStyle={{paddingLeft: PADDING_LEFT}}
+                  keyExtractor={(item) => item.pid}
+                  renderItem={({ item }) => {
+                    return (
+                      <ProductList
+                        style={{
+                          flex: 1,
+                          width: !isWeb ? 150 : _width / 6,
+                          height: !isWeb ? 350 / 2 : _width / 5 - 20,
+                        }}
+                        fontSize={!isWeb ? _rem(5) : _rem(8)}
+                        title={item.title}
+                        // image={item.image_link}
+                        imagePath={require(`../assets/${item.image_link}`)}
+                        price={cartTotal(priceInt(10000, 20000))}
+                        onPress={() => addTocart(item)}
+                        item={item}
+                      />
+                    );
+                  }}
+                />
+              </Slide>
             </View>
             <View style={styles.headerFlatlist}>
               <Fade left>
@@ -173,6 +179,7 @@ const Dashboard = () => {
                     {
                       fontSize: isWeb ? _rem(22) : _rem(12),
                       paddingVertical: 10,
+                      color: LittleDarkAccent,
                     },
                   ]}
                 >
@@ -186,13 +193,15 @@ const Dashboard = () => {
                 horizontal
                 contentContainerStyle={{
                   flex: 1,
-                  justifyContent: "center",
-                  alignItems: "center",
+                  // justifyContent: "center",
+                  // alignItems: "center",
                   paddingTop: 20,
+                  paddingLeft: PADDING_LEFT,
                   marginTop: 20,
                 }}
                 data={availCat.categories}
                 keyExtractor={(item) => item.idCategory}
+                showsHorizontalScrollIndicator={isWeb && false}
                 renderItem={({ item }) => (
                   <CategoryList
                     fontSize={isWeb ? _rem(8) : _rem(5)}
@@ -252,14 +261,11 @@ const Dashboard = () => {
 
             <FlatList
               contentContainerStyle={{
-                // flex: 1,
-                justifyContent: "center",
-                // flexWrap: "wrap",
-                alignItems: "center",
-                marginHorizontal: !isWeb ? null : 100,
+                // marginHorizontal: !isWeb ? null : 100,
                 // paddingBottom: "25%",
+                paddingLeft: PADDING_LEFT
               }}
-              sscrollEnabled
+              scrollEnabled
               showsVerticalScrollIndicator={false}
               numColumns={isMobile ? 2 : 4}
               // horizontal
@@ -300,13 +306,11 @@ const styles = StyleSheet.create({
     position: "relative",
     marginTop: HEADER_MARGIN + 20,
     backgroundColor: "#fafcfb",
+    overflow: "visible",
   },
   headerFlatlist: {
-    // flexGrow: 1,
-    // width: isMobile ? "30%" : "10%",
-    // height: HEADER_HEIGHT + 10,
+    paddingLeft: PADDING_LEFT,
     paddingHorizontal: 20,
-    // paddingVertical: 10,
     borderRadius: 20,
   },
   headerFlatlistText: {

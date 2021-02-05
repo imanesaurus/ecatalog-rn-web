@@ -26,6 +26,7 @@ const ProductList = ({
   fontSize,
   title,
   image,
+  imagePath,
   price,
   onPress,
   id,
@@ -35,36 +36,36 @@ const ProductList = ({
   const history = useHistory();
   return (
     <View
-      style={{
-        ...style,
-        // justifyContent: "center",
-        marginHorizontal: 10,
-        boxShadow: "0px 0px 5px rgba(0,0,0,.4)",
-        marginVertical: 20,
-        borderRadius: 10,
-        overflow: "hidden",
-        backgroundColor: 'white'
-      }}
+      style={[
+        style,
+        {
+          marginHorizontal: 10,
+          boxShadow: "0px 0px 5px rgba(0,0,0,.4)",
+          marginVertical: 20,
+          borderRadius: 10,
+          overflow: "hidden",
+          backgroundColor: "white",
+        },
+      ]}
     >
-      
-        {/* <Link to={"/product/" + item.id} style={{textDecoration:"none", flex: 1,}}> */}
-        <Link
-          to={"/product/" + item.idMeal}
-          style={{
-            flex: 1,
-            width: "100%",
-            height: 250,
-            overflow: "hidden",
-            justifyContent: "flex-start",
-            alignItems: "flex-start",
-          }}
-        >
-          <Image
-            style={{ width: "100%", height: "100%", resizeMode: "cover" }}
-            source={{ uri: image }}
-          />
-        </Link>
-      
+      {/* <Link to={"/product/" + item.id} style={{textDecoration:"none", flex: 1,}}> */}
+      <Link
+        to={"/product/" + item.idMeal}
+        style={{
+          flex: 1,
+          width: "100%",
+          height: 250,
+          overflow: "hidden",
+          justifyContent: "flex-start",
+          alignItems: "flex-start",
+        }}
+      >
+        <Image
+          style={{ width: "100%", height: "100%", resizeMode: "cover" }}
+          source={image ? { uri: image } : imagePath}
+        />
+      </Link>
+
       {/* </Link> */}
       <View
         style={{
@@ -91,7 +92,7 @@ const ProductList = ({
           paddingBottom: 10,
         }}
       >
-        <View style={{ flex: 1,  }}>
+        <View style={{ flex: 1 }}>
           <TouchableOpacity>
             <Text
               style={{
