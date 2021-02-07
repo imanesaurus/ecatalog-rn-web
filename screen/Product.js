@@ -19,7 +19,6 @@ const Product = ({ match, rem }) => {
   const dispatch = useDispatch();
 
   const fetchDetails = useCallback(async () => {
-    await dispatch(isLoadingHandler());
     await dispatch(fetchDetailMenu(id));
   });
 

@@ -169,7 +169,6 @@ const Dashboard = () => {
                     return (
                       <ProductList
                         style={{
-                          flex: 1,
                           width: !isWeb ? 150 : _width / 6,
                           height: !isWeb ? 350 / 2 : _width / 5 - 20,
                         }}
@@ -294,7 +293,7 @@ const Dashboard = () => {
                   // data={products.reverse().slice(0, 8)}
                   data={availMenu.meals}
                   // data={products}
-                  keyExtractor={(item, index) => item.idCategory}
+                  keyExtractor={(item, index) => item.idMeal}
                   renderItem={({ item }) => (
                     <Slide bottom cascade>
                       <ProductList
