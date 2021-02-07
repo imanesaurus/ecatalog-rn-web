@@ -22,7 +22,6 @@ import {
 import { isMobile } from "../constant/isMobile";
 import useDimens from "../constant/useDimens";
 import About from "./About";
-import Category from "./Category";
 import Dashboard from "./Dashboard";
 import Drawer from "./Drawer";
 import Product from "./Product";
@@ -318,12 +317,6 @@ const Home = (props) => {
           path="/product/:id"
           component={({ match }) => (
             <Product rem={(x) => _rem(x)} match={match} />
-          )}
-        />
-        <Route
-          path="/category/:cid"
-          component={({ match }) => (
-            <Category rem={(x) => _rem(x)} match={match} />
           )}
         />
         <View style={[styles.footer, styles.absoluteBottom]}>
