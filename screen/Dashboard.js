@@ -266,7 +266,7 @@ const Dashboard = () => {
               </View> */}
 
             {!meals ? (
-              <Fade left>
+              <Slide bottom cascade>
                 <View style={styles.headerFlatlist}>
                   <Text
                     style={{
@@ -312,10 +312,11 @@ const Dashboard = () => {
                     </Slide>
                   )}
                 />
-              </Fade>
+              </Slide>
             ) : (
               <FlatList
                 ListHeaderComponent={
+                  <Slide left>
                   <Text
                     style={{
                       fontSize: isWeb ? _rem(22) : _rem(12),
@@ -324,8 +325,12 @@ const Dashboard = () => {
                   >
                     {selectedCategory.strCategory}
                   </Text>
+                  </Slide>
                 }
-                ListHeaderComponentStyle={{alignSelf: 'flex-start', marginHorizontal: 20}}
+                ListHeaderComponentStyle={{
+                  alignSelf: "flex-start",
+                  marginHorizontal: 20,
+                }}
                 contentContainerStyle={{
                   // marginHorizontal: !isWeb ? null : 100,
                   // paddingBottom: "25%",
