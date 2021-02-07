@@ -42,6 +42,24 @@ export const fetchMenu = (cid) => {
   };
 };
 
+export const fetchAllMenu = (cid) => {
+  return (dispatch) => {
+    try {
+      fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${cid}`)
+        .then((res) => res.json())
+        .then((json) =>
+          dispatch({
+            type: SET_LATEST_MENU,
+            latestMenu: json,
+            isFetching: false,
+          })
+        );
+    } catch (err) {
+      return err;
+    }
+  };
+};
+
 export const fetchDetailMenu = (id) => {
   return (dispatch) => {
     try {
@@ -56,8 +74,8 @@ export const fetchDetailMenu = (id) => {
   };
 };
 
-export const isLoadingHandler = () => {
+export const isLoadingHandler = (action) => {
   return (dispatch) => {
-    dispatch({ type: IS_LOADING, isFetching: true });
+    dispatch({ type: IS_LOADING, isFetching: action });
   };
 };
