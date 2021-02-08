@@ -1,10 +1,12 @@
 import React from "react";
 import {
+  Animated,
   Dimensions,
   Image,
   StyleSheet,
   Text,
   TouchableOpacity,
+  Easing,
   View,
 } from "react-native";
 import { Link } from "react-router-dom";
@@ -32,86 +34,139 @@ const ProductList = ({
 }) => {
   const [pressed, setPressed] = React.useState(false);
 
+  const SlideInView = ({ children, style }) => {
+    const slideAnim = React.useRef(new Animated.Value(40)).current;
+    React.useEffect(() => {
+      Animated.spring(slideAnim, {
+        toValue: 0,
+        // tension: 2,
+        duration: 5000,
+        useNativeDriver: true,
+        easing: Easing.back,
+      }).start();
+    }, [slideAnim]);
+
+    return (
+      <Animated.View
+        style={{ ...style, bottom: slideAnim, zIndex: -1, paddingBottom: 10 }}
+      >
+        {children}
+      </Animated.View>
+    );
+  };
+
+  const SmallAnimView = ({ children }) => {
+    const DEFAULT = style.height;
+    const SMALLER = style.height * 0.96;
+    const smallAnim = React.useRef(new Animated.Value(DEFAULT)).current;
+    const smallAnimOut = React.useRef(new Animated.Value(SMALLER)).current;
+
+    React.useEffect(() => {
+      Animated.spring(smallAnim, {
+        toValue: SMALLER,
+        // tension: 2,
+        duration: 5000,
+        useNativeDriver: true,
+        easing: Easing.back,
+      }).start();
+
+      Animated.spring(smallAnimOut, {
+        toValue: DEFAULT,
+        // tension: 2,
+        duration: 5000,
+        useNativeDriver: true,
+        easing: Easing.back,
+      }).start();
+    }, [smallAnim]);
+
+    return (
+      <Animated.View style={{ height: pressed ? smallAnim : smallAnimOut }}>
+        {children}
+      </Animated.View>
+    );
+  };
+
   return (
     <TouchableOpacity onPress={() => setPressed(!pressed)}>
-      <View
-        style={[
-          style,
-          {
-            flexGrow: 0,
-            flexShrink: 1,
-            marginHorizontal: 10,
-            boxShadow: "0px 0px 5px rgba(0,0,0,.4)",
-            marginTop: 20,
-            marginBottom: 10,
-            borderRadius: 10,
-            borderBottomLeftRadius: pressed ? 0 : null,
-            borderBottomRightRadius: pressed ? 0 : null,
-            overflow: "hidden",
-            backgroundColor: "white",
-          },
-        ]}
-      >
-        {/* <Link to={"/product/" + item.id} style={{textDecoration:"none", flex: 1,}}> */}
+      <SmallAnimView>
         <View
-          // to={"/product/" + item.idMeal}
-          style={{
-            flex: 1,
-            width: "100%",
-            height: 250,
-            overflow: "hidden",
-            justifyContent: "flex-start",
-            alignItems: "flex-start",
-          }}
+          style={[
+            style,
+            {
+              flexGrow: 0,
+              flexShrink: 1,
+              marginHorizontal: 10,
+              boxShadow: "0px 0px 5px rgba(0,0,0,.4)",
+              marginTop: 20,
+              marginBottom: 10,
+              borderRadius: 10,
+              borderBottomLeftRadius: pressed ? 0 : null,
+              borderBottomRightRadius: pressed ? 0 : null,
+              overflow: "hidden",
+              backgroundColor: "white",
+            },
+          ]}
         >
-          <Image
-            resizeMode={"cover"}
-            style={{ width: "100%", height: "100%", resizeMode: "cover" }}
-            source={image ? { uri: image } : imagePath}
-          />
-        </View>
-
-        {/* </Link> */}
-        <View
-          style={{
-            justifyContent: "center",
-            // alignItems: "center",
-            paddingVertical: 10,
-            paddingHorizontal: 5,
-          }}
-        >
-          <Text
-            numberOfLines={1}
-            adjustsFontSizeToFit
-            style={[styles.text, styles.title, { fontSize }]}
+          {/* <Link to={"/product/" + item.id} style={{textDecoration:"none", flex: 1,}}> */}
+          <View
+            // to={"/product/" + item.idMeal}
+            style={{
+              flex: 1,
+              width: "100%",
+              height: 250,
+              overflow: "hidden",
+              justifyContent: "flex-start",
+              alignItems: "flex-start",
+            }}
           >
-            {title}
-          </Text>
-        </View>
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "center",
-            // alignItems: "center",
-            paddingHorizontal: 10,
-            paddingBottom: 10,
-          }}
-        >
-          <View style={{ flex: 1 }}>
-            <TouchableOpacity>
-              <Text
-                style={{
-                  ...styles.text,
-                  fontWeight: "bold",
-                  fontSize,
-                  color: DarkAccent,
-                }}
-              >
-                Rp.{price}
-              </Text>
-            </TouchableOpacity>
+            <Image
+              resizeMode={"cover"}
+              style={{ width: "100%", height: "100%", resizeMode: "cover" }}
+              source={image ? { uri: image } : imagePath}
+            />
           </View>
-          {/* <View style={{ flex: 1 }}>
+
+          {/* </Link> */}
+          <View
+            style={{
+              justifyContent: "center",
+              // alignItems: "center",
+              paddingVertical: 10,
+              paddingHorizontal: 5,
+            }}
+          >
+            <Text
+              numberOfLines={1}
+              adjustsFontSizeToFit
+              style={[styles.text, styles.title, { fontSize }]}
+            >
+              {title}
+            </Text>
+          </View>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "center",
+              // alignItems: "center",
+              paddingHorizontal: 10,
+              paddingBottom: 10,
+            }}
+          >
+            <View style={{ flex: 1 }}>
+              <TouchableOpacity>
+                <Text
+                  style={{
+                    ...styles.text,
+                    fontWeight: "bold",
+                    fontSize,
+                    color: DarkAccent,
+                  }}
+                >
+                  Rp.{price}
+                </Text>
+              </TouchableOpacity>
+            </View>
+            {/* <View style={{ flex: 1 }}>
           <TouchableOpacity onPress={onPress}>
             <Text
               numberOfLines={1}
@@ -126,32 +181,35 @@ const ProductList = ({
             </Text>
           </TouchableOpacity>
         </View> */}
+          </View>
         </View>
-      </View>
+      </SmallAnimView>
       {!pressed ? null : (
-        <View
-          style={[
-            styles.bottomContainer,
-            {
-              borderBottomLeftRadius: pressed ? 10 : null,
-              borderBottomRightRadius: pressed ? 10 : null,
-              boxShadow: "0px 0px 5px rgba(0,0,0,.4)",
-              width: style.width
-            },
-          ]}
-        >
-          <TouchableOpacity
-          // to do add to cart handler 
-          // onPress={}
+        <SlideInView>
+          <View
+            style={[
+              styles.bottomContainer,
+              {
+                borderBottomLeftRadius: pressed ? 10 : null,
+                borderBottomRightRadius: pressed ? 10 : null,
+                boxShadow: "0px 0px 5px rgba(0,0,0,.4)",
+                width: style.width,
+              },
+            ]}
           >
-            <Text style={styles.bottomContainerText}>Add To Cart</Text>
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <Link to={"/product/" + item.idMeal} key={item.idMeal}>
-              <Text style={styles.bottomContainerText}>Info</Text>
-            </Link>
-          </TouchableOpacity>
-        </View>
+            <TouchableOpacity
+            // to do add to cart handler
+            // onPress={}
+            >
+              <Text style={styles.bottomContainerText}>Add To Cart</Text>
+            </TouchableOpacity>
+            <TouchableOpacity>
+              <Link to={"/product/" + item.idMeal} key={item.idMeal}>
+                <Text style={styles.bottomContainerText}>Info</Text>
+              </Link>
+            </TouchableOpacity>
+          </View>
+        </SlideInView>
       )}
     </TouchableOpacity>
   );
@@ -185,9 +243,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-evenly",
     alignSelf: "center",
+    alignItems: "center",
     backgroundColor: DarkAccent,
   },
   bottomContainerText: {
+    fontSize: isMobile ? 12 : 14,
     color: "white",
   },
 });

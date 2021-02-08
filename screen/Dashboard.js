@@ -141,7 +141,7 @@ const Dashboard = () => {
                 // flexGrow: 1,
               }}
             >
-              <Fade left>
+              <Fade right>
                 <View style={styles.headerFlatlist}>
                   <Text
                     style={{
@@ -186,7 +186,7 @@ const Dashboard = () => {
               </Slide>
             </View>
             <View style={styles.headerFlatlist}>
-              <Fade left>
+              <Fade right>
                 <Text
                   style={[
                     styles.headerFlatlistText,
@@ -265,7 +265,7 @@ const Dashboard = () => {
               </View> */}
 
             {!meals ? (
-              <Slide bottom cascade>
+              <Slide right cascade>
                 <View style={styles.headerFlatlist}>
                   <Text
                     style={{
@@ -295,58 +295,6 @@ const Dashboard = () => {
                   // data={products}
                   keyExtractor={(item, index) => item.idMeal}
                   renderItem={({ item }) => (
-                    <Slide bottom cascade>
-                      <ProductList
-                        style={{
-                          width: !isWeb ? 150 : _width / 6,
-                          height: !isWeb ? 350 / 2 : _width / 5 - 20,
-                        }}
-                        fontSize={!isWeb ? _rem(5) : _rem(8)}
-                        title={item.strMeal}
-                        image={item.strMealThumb}
-                        price={cartTotal(priceInt(100, 400) * 100)}
-                        onPress={() => addTocart(item)}
-                        item={item}
-                      />
-                    </Slide>
-                  )}
-                />
-              </Slide>
-            ) : (
-              <FlatList
-                ListHeaderComponent={
-                  <Slide left>
-                  <Text
-                    style={{
-                      fontSize: isWeb ? _rem(22) : _rem(12),
-                      color: LittleDarkAccent,
-                    }}
-                  >
-                    {selectedCategory.strCategory}
-                  </Text>
-                  </Slide>
-                }
-                ListHeaderComponentStyle={{
-                  alignSelf: "flex-start",
-                  marginHorizontal: 20,
-                }}
-                contentContainerStyle={{
-                  // marginHorizontal: !isWeb ? null : 100,
-                  // paddingBottom: "25%",
-                  justifyContent: isWeb ? null : "center",
-                  alignItems: "center",
-                  paddingLeft: isWeb ? PADDING_LEFT : null,
-                }}
-                scrollEnabled
-                showsVerticalScrollIndicator={false}
-                numColumns={isMobile ? 2 : 4}
-                // horizontal
-                // data={products.reverse().slice(0, 8)}
-                data={availLatMenu.meals}
-                // data={products}
-                keyExtractor={(item, index) => item.idMeal}
-                renderItem={({ item }) => (
-                  <Slide bottom cascade>
                     <ProductList
                       style={{
                         width: !isWeb ? 150 : _width / 6,
@@ -359,9 +307,61 @@ const Dashboard = () => {
                       onPress={() => addTocart(item)}
                       item={item}
                     />
-                  </Slide>
-                )}
-              />
+                  )}
+                />
+              </Slide>
+            ) : (
+              <Slide bottom cascade>
+                <FlatList
+                  ListHeaderComponent={
+                    <Slide right>
+                      <Text
+                        style={{
+                          fontSize: isWeb ? _rem(22) : _rem(12),
+                          color: LittleDarkAccent,
+                        }}
+                      >
+                        {selectedCategory.strCategory}
+                      </Text>
+                    </Slide>
+                  }
+                  ListHeaderComponentStyle={{
+                    alignSelf: "flex-start",
+                    marginHorizontal: 20,
+                  }}
+                  contentContainerStyle={{
+                    // marginHorizontal: !isWeb ? null : 100,
+                    // paddingBottom: "25%",
+                    justifyContent: isWeb ? null : "center",
+                    alignItems: "center",
+                    paddingLeft: isWeb ? PADDING_LEFT : null,
+                  }}
+                  scrollEnabled
+                  showsVerticalScrollIndicator={false}
+                  numColumns={isMobile ? 2 : 4}
+                  // horizontal
+                  // data={products.reverse().slice(0, 8)}
+                  data={availLatMenu.meals}
+                  // data={products}
+                  keyExtractor={(item, index) => item.idMeal}
+                  renderItem={({ item }) => (
+                    // <Slide bottom cascade>
+                    <ProductList
+                      style={{
+                        width: !isWeb ? 150 : _width / 6,
+                        height: !isWeb ? 350 / 2 : _width / 5 - 20,
+                      }}
+                      fontSize={!isWeb ? _rem(5) : _rem(8)}
+                      title={item.strMeal}
+                      image={item.strMealThumb}
+                      price={cartTotal(priceInt(100, 400) * 100)}
+                      onPress={() => addTocart(item)}
+                      item={item}
+                    />
+                    // </Slide>
+                  )}
+                />
+              </Slide>
             )}
           </View>
         </View>
