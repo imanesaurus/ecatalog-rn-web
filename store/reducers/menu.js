@@ -1,5 +1,6 @@
 import {
   IS_LOADING,
+  IS_LOADING_FALSE,
   SET_CATEGORY,
   SET_DETAIL_MENU,
   SET_LATEST_MENU,
@@ -38,12 +39,17 @@ export function menuReducer(state = initialState, action) {
       return {
         ...state,
         detailMenu: action.detailMenu,
-        isFetching: false,
+        isFetching: action.isFetching,
       };
     case IS_LOADING:
       return {
         ...state,
-        isFetching: action,
+        isFetching: true,
+      };
+    case IS_LOADING_FALSE:
+      return {
+        ...state,
+        isFetching: false,
       };
 
     default:
