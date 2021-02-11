@@ -3,6 +3,7 @@ import { Provider } from "react-redux";
 import { applyMiddleware, combineReducers, createStore } from "redux";
 import ReduxThunk from "redux-thunk";
 import Home from "./screen/Home";
+import { cartReducer } from "./store/reducers/cart";
 import { menuReducer } from "./store/reducers/Menu";
 
 // const linking = {
@@ -13,6 +14,7 @@ import { menuReducer } from "./store/reducers/Menu";
 // };
 const rootReducer = combineReducers({
   menu: menuReducer,
+  cart: cartReducer,
 });
 
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk)) 

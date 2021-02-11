@@ -32,13 +32,9 @@ const HEADER_HEIGHT = height * 0.09;
 const Home = (props) => {
   const match = props;
   const [_width, _height, isWeb] = useDimens();
-  const { navigation } = props;
   const [modalVisible, setModalVisible] = useState(false);
   const [drawerVisible, setDrawerVisible] = useState(false);
   const [buttonModal, setButtonModal] = useState(0);
-  const [ageFilter, setAgeFilter] = useState("Semua");
-  const [color, setColor] = useState("Semua");
-  const [inStock, setInstock] = useState("In Stock");
   const slide = new Animated.Value(drawerVisible ? -(_width / 2) : -10);
 
   const slideAnim = () => {
@@ -76,46 +72,6 @@ const Home = (props) => {
       return ((size * _width) / 380) * 2;
     } else {
       return (size * _height) / 380;
-    }
-  };
-
-  // Todo : optimize logic filter
-  const filteredProducts = async (itemValue) => {
-    await setAgeFilter(itemValue);
-    await console.log(itemValue);
-    if (itemValue === "Semua") {
-      await setProducts(availableProducts);
-    } else {
-      await setProducts(
-        availableProducts.filter(
-          (p) => p.age_group.toLowerCase().indexOf(itemValue.toLowerCase()) < 0
-        )
-      );
-    }
-  };
-  const filteredColors = async (itemValue) => {
-    setColor(itemValue);
-    if (itemValue === "Semua") {
-      setProducts(availableProducts);
-    } else {
-      await setProducts(
-        availableProducts.filter(
-          (p) => p.color.toLowerCase().indexOf(itemValue.toLowerCase()) >= 0
-        )
-      );
-    }
-  };
-  const filteredReady = (itemValue) => {
-    setInstock(itemValue);
-    if (itemValue === "Semua") {
-      setProducts(availableProducts);
-    } else {
-      setProducts(
-        availableProducts.filter(
-          (p) =>
-            p.availability.toLowerCase().indexOf(itemValue.toLowerCase()) >= 0
-        )
-      );
     }
   };
 
@@ -266,16 +222,15 @@ const Home = (props) => {
                   }}
                 >
                   Snow Motion Cafe adalah Cafe yang dengan vibe modern,
-                  dan design interior yang kece banget. Beroperasi di wilayah Luwuk Banggai
-                  Sulawesi Tengah. Didirikan pada tahun 2020.{" "}
+                  dan design interior yang kece banget. Didirikan pada tahun 2020.{" "}
                 </Text>
                 <Text style={{ fontSize: 14, fontStyle: "italic" }}>
-                  Manusia boleh berencana, tapi saldo juga yang menentukan"
+                “Don’t give up when you still have something to give. Nothing is really over until the moment you stop trying”
                 </Text>
                 <Text
                   style={{ marginBottom: 20, fontSize: 15, fontWeight: 700 }}
                 >
-                  - Seseorang -
+                  - Brian Dyson -
                 </Text>
 
                 <Button
@@ -385,6 +340,7 @@ const styles = StyleSheet.create({
     // boxShadow: "-2px -2px 10px rgb(0,0,0,0.5)",
     flexWrap: "wrap",
     marginTop: 20,
+    zIndex: -1
   },
   footerText: {
     justifyContent: "center",

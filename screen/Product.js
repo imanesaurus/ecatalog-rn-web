@@ -1,5 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import Fade from "react-reveal/Fade";
@@ -13,19 +13,14 @@ import { fetchDetailMenu, isLoadingHandler } from "../store/actions/menu";
 const Product = ({ match, rem }) => {
   const menuDetails = useSelector((state) => state.menu.detailMenu);
   const [_width, _height, isWeb] = useDimens();
-  const [isLoading, setIsLoading] = useState(false);
   const isLoadingStat = useSelector((state) => state.menu.isFetching);
   const id = match.params.id;
   const dispatch = useDispatch();
 
-  const fetchDetails = useCallback(async () => {
+  useEffect(async () => {
     await dispatch(isLoadingHandler())
     await dispatch(fetchDetailMenu(id));
-  }, [dispatch]);
-
-  useEffect(() => {
-    fetchDetails();
-  }, [dispatch]);
+  }, []);
 
   return (
     <View>
@@ -125,16 +120,6 @@ const Product = ({ match, rem }) => {
                     </Text>
                   </View>
                 </View>
-                {/* <CustomButton
-              title="Add to Cart"
-              bgcolor={AccentColor2}
-              textColor="white"
-              style={{
-                marginTop: 20,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            /> */}
               </View>
             </View>
           </View>

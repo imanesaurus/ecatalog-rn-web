@@ -1,43 +1,53 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { FlatList, StyleSheet, Text, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { Animated, FlatList, StyleSheet, Text, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import Fade from "react-reveal/Fade";
 import Slide from "react-reveal/Slide";
-import CartPopUp from "../components/CartPopUp";
+import BottomSheet from "../components/BottomSheet";
+import Cart from "../components/Cart";
 import CategoryList from "../components/CategoryList";
 import Loading from "../components/Loading";
 import ProductList from "../components/ProductList";
+import ProductsModal from "../components/ProductsModal";
 import SideBar from "../components/SideBar";
 import { DarkAccent, LittleDarkAccent } from "../constant/ColorsConst";
 import priceInt, { cartTotal } from "../constant/function";
 import { HEADER_MARGIN, isMobile } from "../constant/isMobile";
 import useDimens from "../constant/useDimens";
 import data from "../data/data.json";
-// import * as _Action from "../store/actions/menu"
-import {
-  fetchAllMenu,
-  fetchCategory,
-  fetchMenu,
-  isLoadingHandler,
-} from "../store/actions/menu";
+import { fetchAllMenu, fetchCategory, fetchMenu } from "../store/actions/menu";
 
 const PADDING_LEFT = "20%";
 
 const Dashboard = () => {
   const availCat = useSelector((state) => state.menu.categoryList);
-  const catLength = availCat.categories;
   const availLatMenu = useSelector((state) => state.menu.latestMenu);
   const availMenu = useSelector((state) => state.menu.availableMenu);
   const loading = useSelector((state) => state.menu.isFetching);
+  const order = useSelector((state) => state.cart.orderItems);
   const availablePromo = data.Promo;
   const [promo, setPromo] = useState(availablePromo);
   const [_width, _height, isWeb] = useDimens();
   const [visible, setVisible] = useState(false);
   const [cartItems, setCartItems] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
+  const [productModal, setProductModal] = useState(false);
   const [meals, setMeals] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState([]);
-  // const [isLoading, setIsLoading] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState([]);
+  const slide = React.useRef(new Animated.Value(-100)).current;
+  const slideAnim = () => {
+    Animated.spring(slide, {
+      toValue: 0,
+      // tension: 2,
+      duration: 5000,
+      useNativeDriver: true,
+      easing: Easing.back,
+    }).start();
+  };
+
+  const BASE_PRICE = priceInt(15000, 60000);
+  const PRICE = cartTotal(BASE_PRICE);
 
   const dispatch = useDispatch();
   const _rem = (size) => {
@@ -48,53 +58,28 @@ const Dashboard = () => {
     }
   };
 
-  const fetchNewManu = useCallback(async () => {
-    // await dispatch(isLoadingHandler());
-    dispatch(fetchCategory());
-    dispatch(fetchMenu("starter"));
-    // dispatch(fetchLatestMenu());
-  }, [dispatch]);
+  // const fetchNewManu = useCallback(async () => {
+  //   // await dispatch(isLoadingHandler());
+
+  //   // dispatch(fetchLatestMenu());
+  // }, []);
 
   useEffect(async () => {
-    await fetchNewManu();
+    // await fetchNewManu();
+    await dispatch(fetchCategory());
+    await dispatch(fetchMenu("starter"));
   }, []);
 
-  const modalHandler = () => {
+  const modalHandler = async () => {
     setModalVisible(!modalVisible);
   };
-  const addTocart = (item) => {
-    let currentCart = cartItems;
-    let upCart;
-    const selectedItem = cartItems.find((i) => i.id === item.id);
 
-    if (selectedItem) {
-      selectedItem.count += 1;
-    } else {
-      upCart = currentCart.push({ ...item, count: 1 });
-      setCartItems(currentCart);
+  const productModalHandler = (item) => {
+    setProductModal(!productModal);
+    if (productModal === false) {
+      setSelectedProduct(item);
     }
   };
-
-  const removeFromCart = (item) => {
-    // let currentCart = [...cartItems];
-    // currentCart = currentCart.filter((cartItem) => cartItem.id !== item.id);
-    // setCartItems(currentCart);
-    let currentCart = cartItems;
-    const selectedItem = cartItems.find((i) => i.id === item.id);
-
-    if (selectedItem.count < 2) {
-      let removedItem;
-      removedItem = currentCart.filter((i) => i !== item);
-      setCartItems(removedItem);
-    } else {
-      selectedItem.count -= 1;
-    }
-  };
-
-  const total = cartItems.reduce(
-    (prevValue, { price = 0, count = 0 }) => prevValue + price * count,
-    0
-  );
 
   const selectedCategoryHandler = (category) => {
     setSelectedCategory(category);
@@ -105,6 +90,41 @@ const Dashboard = () => {
     <View style={{ flex: 1 }}>
       {!loading ? (
         <View>
+          <ProductsModal
+            price={BASE_PRICE}
+            productModal={productModal}
+            productModalHandler={productModalHandler}
+            product={selectedProduct}
+          />
+          <BottomSheet
+            modalHandler={modalHandler}
+            modalVisible={modalVisible}
+            price={BASE_PRICE}
+            productModal={productModal}
+            product={selectedProduct}
+            productModalHandler={productModalHandler}
+            width={_width}
+            height={_height}
+            isWeb={isWeb}
+          />
+          {order.length > 0 ? (
+            <Cart
+              productModal={productModal}
+              productModalHandler={productModalHandler}
+              cartItems={cartItems}
+              onPress={modalHandler}
+              style={[
+                Bar(isWeb).bar,
+                {
+                  bottom: isWeb ? 20 : 75,
+                  top: null,
+                  marginVertical: isMobile ? null : 5,
+                  width: isWeb ? "16%" : "70%",
+                },
+              ]}
+              size={isWeb ? _width * 0.02 : _width * 0.06}
+            />
+          ) : null}
           <View
             style={{
               zIndex: 3,
@@ -121,15 +141,6 @@ const Dashboard = () => {
             />
           </View>
           <View style={[styles.body]}>
-            {visible ? (
-              <CartPopUp
-                isTotal={total > 0}
-                data={cartItems}
-                close={() => setVisible(false)}
-                removeCart={removeFromCart}
-                cartTotal={cartTotal(total)}
-              />
-            ) : null}
             <View
               style={{
                 // flex: 1,
@@ -174,10 +185,9 @@ const Dashboard = () => {
                         }}
                         fontSize={!isWeb ? _rem(5) : _rem(8)}
                         title={item.title}
-                        // image={item.image_link}
                         imagePath={require(`../assets/${item.image_link}`)}
-                        price={cartTotal(priceInt(400, 900) * 100)}
-                        onPress={() => addTocart(item)}
+                        price={PRICE}
+                        onPress={() => {}}
                         item={item}
                       />
                     );
@@ -204,12 +214,9 @@ const Dashboard = () => {
             </View>
             <Slide bottom cascade>
               <FlatList
-                // numColumns={4}
                 horizontal
                 contentContainerStyle={{
                   flex: 1,
-                  // justifyContent: "center",
-                  // alignItems: "center",
                   paddingTop: 20,
                   paddingLeft: isWeb ? PADDING_LEFT : null,
                 }}
@@ -236,34 +243,6 @@ const Dashboard = () => {
                 )}
               />
             </Slide>
-            {/* <View
-                style={{
-                  width: isMobile ? width * 0.9 : width * 0.5,
-                  flexDirection: "row",
-                  alignItems: "center",
-                  justifyContent: isMobile ? "center" : "space-evenly",
-                }}
-              >
-                <FilterPicker
-                  selectedValue={ageFilter}
-                  onValueChange={filteredProducts}
-                  title={"Usia"}
-                  age={true}
-                />
-                <FilterPicker
-                  _color={true}
-                  selectedValue={color}
-                  onValueChange={filteredColors}
-                  title={"Warna"}
-                />
-                <FilterPicker
-                  ready={true}
-                  selectedValue={inStock}
-                  onValueChange={filteredReady}
-                  title={"In Stock"}
-                />
-              </View> */}
-
             {!meals ? (
               <Slide right cascade>
                 <View style={styles.headerFlatlist}>
@@ -303,8 +282,8 @@ const Dashboard = () => {
                       fontSize={!isWeb ? _rem(5) : _rem(8)}
                       title={item.strMeal}
                       image={item.strMealThumb}
-                      price={cartTotal(priceInt(100, 400) * 100)}
-                      onPress={() => addTocart(item)}
+                      price={PRICE}
+                      onPress={() => productModalHandler(item)}
                       item={item}
                     />
                   )}
@@ -330,22 +309,17 @@ const Dashboard = () => {
                     marginHorizontal: 20,
                   }}
                   contentContainerStyle={{
-                    // marginHorizontal: !isWeb ? null : 100,
-                    // paddingBottom: "25%",
                     justifyContent: isWeb ? null : "center",
                     alignItems: "center",
                     paddingLeft: isWeb ? PADDING_LEFT : null,
                   }}
+                  style={{ marginBottom: 40 }}
                   scrollEnabled
                   showsVerticalScrollIndicator={false}
                   numColumns={isMobile ? 2 : 4}
-                  // horizontal
-                  // data={products.reverse().slice(0, 8)}
                   data={availLatMenu.meals}
-                  // data={products}
                   keyExtractor={(item, index) => item.idMeal}
                   renderItem={({ item }) => (
-                    // <Slide bottom cascade>
                     <ProductList
                       style={{
                         width: !isWeb ? 150 : _width / 6,
@@ -354,11 +328,10 @@ const Dashboard = () => {
                       fontSize={!isWeb ? _rem(5) : _rem(8)}
                       title={item.strMeal}
                       image={item.strMealThumb}
-                      price={cartTotal(priceInt(100, 400) * 100)}
-                      onPress={() => addTocart(item)}
+                      price={PRICE}
+                      onPress={() => productModalHandler(item)}
                       item={item}
                     />
-                    // </Slide>
                   )}
                 />
               </Slide>

@@ -36,19 +36,22 @@ const ProductList = ({
 
   const SlideInView = ({ children, style }) => {
     const slideAnim = React.useRef(new Animated.Value(40)).current;
-    React.useEffect(() => {
-      Animated.spring(slideAnim, {
-        toValue: 0,
-        // tension: 2,
-        duration: 5000,
-        useNativeDriver: true,
-        easing: Easing.back,
-      }).start();
-    }, [slideAnim]);
+    Animated.spring(slideAnim, {
+      toValue: 0,
+      // tension: 2,
+      duration: 5000,
+      useNativeDriver: true,
+      easing: Easing.back,
+    }).start();
 
     return (
       <Animated.View
-        style={{ ...style, bottom: slideAnim, zIndex: -1, paddingBottom: 10 }}
+        style={{
+          ...style,
+          bottom: slideAnim,
+          zIndex: -1,
+          paddingBottom: 10,
+        }}
       >
         {children}
       </Animated.View>
@@ -61,26 +64,26 @@ const ProductList = ({
     const smallAnim = React.useRef(new Animated.Value(DEFAULT)).current;
     const smallAnimOut = React.useRef(new Animated.Value(SMALLER)).current;
 
-    React.useEffect(() => {
-      Animated.spring(smallAnim, {
-        toValue: SMALLER,
-        // tension: 2,
-        duration: 5000,
-        useNativeDriver: true,
-        easing: Easing.back,
-      }).start();
+    Animated.spring(smallAnim, {
+      toValue: SMALLER,
+      // tension: 2,
+      duration: 5000,
+      useNativeDriver: true,
+      easing: Easing.back,
+    }).start();
 
-      Animated.spring(smallAnimOut, {
-        toValue: DEFAULT,
-        // tension: 2,
-        duration: 5000,
-        useNativeDriver: true,
-        easing: Easing.back,
-      }).start();
-    }, [smallAnim]);
+    Animated.spring(smallAnimOut, {
+      toValue: DEFAULT,
+      // tension: 2,
+      duration: 5000,
+      useNativeDriver: true,
+      easing: Easing.back,
+    }).start();
 
     return (
-      <Animated.View style={{ height: pressed ? smallAnim : smallAnimOut }}>
+      <Animated.View
+      // style={{ height: pressed ? smallAnim : smallAnimOut }}
+      >
         {children}
       </Animated.View>
     );
@@ -120,8 +123,7 @@ const ProductList = ({
             }}
           >
             <Image
-              resizeMode={"cover"}
-              style={{ width: "100%", height: "100%", resizeMode: "cover" }}
+              style={{ width: "100%", height: "100%" }}
               source={image ? { uri: image } : imagePath}
             />
           </View>
@@ -184,7 +186,7 @@ const ProductList = ({
           </View>
         </View>
       </SmallAnimView>
-      {!pressed ? null : (
+      {pressed ? (
         <SlideInView>
           <View
             style={[
@@ -197,10 +199,7 @@ const ProductList = ({
               },
             ]}
           >
-            <TouchableOpacity
-            // to do add to cart handler
-            // onPress={}
-            >
+            <TouchableOpacity onPress={onPress}>
               <Text style={styles.bottomContainerText}>Add To Cart</Text>
             </TouchableOpacity>
             <TouchableOpacity>
@@ -210,7 +209,7 @@ const ProductList = ({
             </TouchableOpacity>
           </View>
         </SlideInView>
-      )}
+      ) : null }
     </TouchableOpacity>
   );
 };
