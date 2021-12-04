@@ -9,7 +9,7 @@ import CategoryList from "../components/CategoryList";
 import Loading from "../components/Loading";
 import ProductList from "../components/ProductList";
 import ProductsModal from "../components/ProductsModal";
-import SideBar from "../components/SideBar";
+import SideBar from "../components/Sidebar";
 import { DarkAccent, LittleDarkAccent } from "../constant/ColorsConst";
 import priceInt, { cartTotal } from "../constant/function";
 import { HEADER_MARGIN, isMobile } from "../constant/isMobile";
