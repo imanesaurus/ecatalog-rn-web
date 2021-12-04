@@ -14,7 +14,7 @@ const CategoryList = ({
   item,
   selectedCategory,
 }) => {
-  const selected = selectedCategory.idCategory === item.idCategory;
+  const selected = selectedCategory.idCategory === item.idCategory;  
   return (
     <TouchableOpacity onPress={onPress}>
       {/* <Link to={"/category/" + cid} style={{ textDecoration: "none", flex: 1 }}> */}
@@ -25,18 +25,20 @@ const CategoryList = ({
           styles.container,
           {
             ...style,
+            flex: 1,
             backgroundColor: selected ? DarkAccent : "white",
           },
         ]}
       >
         <Image
-          resizeMode={"contain"}
+          // resizeMode={"contain"}
           source={{ uri: image }}
           style={{
             flex: 1,
             justifyContent: "center",
             width: "100%",
-            height: "100%",
+            height: style.height / 2,
+            resizeMode: 'contain',
             borderRadius: "50%",
             // paddingBottom: _adjustSizes(40),
             // paddingTop: _adjustSizes(40),

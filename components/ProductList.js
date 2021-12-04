@@ -34,7 +34,7 @@ const ProductList = ({
 }) => {
   const [pressed, setPressed] = React.useState(false);
 
-  const SlideInView = ({ children, style }) => {
+  const SlideInView = useCallback(({ children, style }) => {
     const slideAnim = React.useRef(new Animated.Value(40)).current;
     Animated.spring(slideAnim, {
       toValue: 0,
@@ -56,7 +56,7 @@ const ProductList = ({
         {children}
       </Animated.View>
     );
-  };
+  }, [pressed]);
 
   const SmallAnimView = ({ children }) => {
     const DEFAULT = style.height;
