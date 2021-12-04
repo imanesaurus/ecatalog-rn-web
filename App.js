@@ -4,7 +4,7 @@ import { applyMiddleware, combineReducers, createStore } from "redux";
 import ReduxThunk from "redux-thunk";
 import Home from "./screen/Home";
 import { cartReducer } from "./store/reducers/cart";
-import { menuReducer } from "./store/reducers/Menu";
+import { menuReducer } from "./store/reducers/menu";
 
 // const linking = {
 //   config: {
