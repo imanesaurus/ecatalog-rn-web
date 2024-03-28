@@ -185,9 +185,9 @@ const Dashboard = () => {
                         }}
                         fontSize={!isWeb ? _rem(5) : _rem(8)}
                         title={item.title}
-                        imagePath={require(`../assets/${item.image_link}`)}
+                        // imagePath={require(`../assets/${item.image_link}`)}
                         price={PRICE}
-                        onPress={() => {}}
+                        onPress={() => { }}
                         item={item}
                       />
                     );
